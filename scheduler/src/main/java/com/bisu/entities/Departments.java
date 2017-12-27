@@ -73,8 +73,8 @@ public class Departments  implements java.io.Serializable {
         return this.head;
     }
     
-    public void setHead(String code) {
-        this.code = code;
+    public void setHead(String head) {
+        this.head = head;
     }
     
     @Column(name="code", nullable=false , unique=true)
@@ -82,8 +82,8 @@ public class Departments  implements java.io.Serializable {
         return this.code;
     }
     
-    public void setCode(String head) {
-        this.head = head;
+    public void setCode(String code) {
+        this.code = code;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="departments")
