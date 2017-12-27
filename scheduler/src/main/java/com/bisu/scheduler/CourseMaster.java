@@ -35,14 +35,14 @@ public class CourseMaster extends javax.swing.JFrame {
         department = new Department();
         course = new Course();
         initComponents();
-        course_id.setEnabled(false);
+
         this.model = (DefaultTableModel) courseTable.getModel();
         JMenuItem menuItemEdit = new JMenuItem("Edit");
         JMenuItem menuItemDelete = new JMenuItem("Delete");
         menuItemEdit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
 
-                String id = courseTable.getValueAt(courseTable.getSelectedRow(), 0).toString();
+                String id = courseTable.getValueAt(courseTable.getSelectedRow(), 3).toString();
                 populate_inputs(Integer.parseInt(id));
                 save.setEnabled(true);
                 nav_pane.setSelectedIndex(0);
@@ -52,7 +52,7 @@ public class CourseMaster extends javax.swing.JFrame {
          menuItemDelete.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
 
-                String id = courseTable.getValueAt(courseTable.getSelectedRow(), 0).toString();
+                String id = courseTable.getValueAt(courseTable.getSelectedRow(), 3).toString();
                 populate_inputs(Integer.parseInt(id));
                 nav_pane.setEnabledAt(0, true);
                 nav_pane.setSelectedIndex(0);
@@ -66,7 +66,7 @@ public class CourseMaster extends javax.swing.JFrame {
     
     private void populate_inputs(Integer id){
         Courses course = (Courses) this.course.find(id);
-        course_id.setText(""+course.getId());
+        hiddenID.setText(""+course.getId());
         description.setText(course.getDescription());
         departmentItem.setSelectedItem(course.getDepartments().getDescription());
     
@@ -92,11 +92,12 @@ public class CourseMaster extends javax.swing.JFrame {
         nav_pane = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        course_id = new javax.swing.JTextField();
+        code = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         description = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         departmentItem = new javax.swing.JComboBox<>();
+        hiddenID = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         courseTable = new javax.swing.JTable();
@@ -105,6 +106,11 @@ public class CourseMaster extends javax.swing.JFrame {
         setTitle("Course Master");
 
         add.setText("New");
+        add.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addActionPerformed(evt);
+            }
+        });
 
         edit.setText("Edit");
 
@@ -162,7 +168,7 @@ public class CourseMaster extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Course Information"));
 
-        jLabel1.setText("Course ID:");
+        jLabel1.setText("Course Code:");
 
         jLabel2.setText("Description:");
 
@@ -170,30 +176,35 @@ public class CourseMaster extends javax.swing.JFrame {
 
         departmentItem.setModel(new javax.swing.DefaultComboBoxModel(comboItems().toArray()));
 
+        hiddenID.setText("hiddenID");
+        hiddenID.setVisible(false);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(hiddenID)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel3)))
                 .addGap(23, 23, 23)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(description, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
-                        .addComponent(course_id, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addComponent(code, javax.swing.GroupLayout.Alignment.LEADING))
                     .addComponent(departmentItem, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(course_id)
+                    .addComponent(code)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -203,24 +214,26 @@ public class CourseMaster extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(departmentItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(64, 64, 64))
+                .addGap(18, 18, 18)
+                .addComponent(hiddenID)
+                .addGap(30, 30, 30))
         );
 
         nav_pane.addTab("Details", jPanel3);
 
         courseTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "ID", "Description", "Department"
+                "Code", "Description", "Department", "ID"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -233,6 +246,11 @@ public class CourseMaster extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(courseTable);
+        if (courseTable.getColumnModel().getColumnCount() > 0) {
+            courseTable.getColumnModel().getColumn(3).setMinWidth(0);
+            courseTable.getColumnModel().getColumn(3).setPreferredWidth(0);
+            courseTable.getColumnModel().getColumn(3).setMaxWidth(0);
+        }
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -286,13 +304,15 @@ public class CourseMaster extends javax.swing.JFrame {
         List tableData;
         tableData = course.all();
 
-        Object row[] = new Object[3];
+        Object row[] = new Object[4];
         model.setRowCount(0);
         for (int i = 0; i < tableData.size(); i++) {
             Courses course = (Courses) tableData.get(i);
-            row[0] = course.getId();
+            row[0] = course.getCode();
             row[1] = course.getDescription();
             row[2] = course.getDepartments().getDescription();
+            row[3] = course.getId();
+
             model.addRow(row);
 
         }
@@ -303,14 +323,14 @@ public class CourseMaster extends javax.swing.JFrame {
         ComboItem selected = (ComboItem) departmentItem.getSelectedItem();
         Departments dept = (Departments) department.find(selected.getValue());
         Courses model;
-        if(Helper.isNumeric(course_id.getText())){
-           model = (Courses) this.course.find(Integer.parseInt(course_id.getText()));
+        if(Helper.isNumeric(hiddenID.getText())){
+           model = (Courses) this.course.find(Integer.parseInt(hiddenID.getText()));
         }
         else
         {
             model = new Courses();
         }
-   
+        model.setCode(code.getText());
         model.setDepartments(dept);
         model.setDescription(description.getText());
         course.save(model);
@@ -337,7 +357,7 @@ public class CourseMaster extends javax.swing.JFrame {
     }//GEN-LAST:event_nav_paneStateChanged
 
     private void clear(){
-        course_id.setText("");
+        hiddenID.setText("");
         description.setText("");
        
     
@@ -359,11 +379,17 @@ public class CourseMaster extends javax.swing.JFrame {
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
         // TODO add your handling code here:
         if(Helper.confirmationMessage()) {
-                course.delete((Courses) course.find(Integer.parseInt(course_id.getText())));
+                course.delete((Courses) course.find(Integer.parseInt(hiddenID.getText())));
                 Helper.deleteMessage();
                 nav_pane.setSelectedIndex(1);
             }
     }//GEN-LAST:event_deleteActionPerformed
+
+    private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
+        // TODO add your handling code here:
+        nav_pane.setSelectedIndex(0);
+        save.setEnabled(true);
+    }//GEN-LAST:event_addActionPerformed
 
     /**
      * @param args the command line arguments
@@ -413,12 +439,13 @@ public class CourseMaster extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add;
     private javax.swing.JButton cancel;
+    private javax.swing.JTextField code;
     private javax.swing.JTable courseTable;
-    private javax.swing.JTextField course_id;
     private javax.swing.JButton delete;
     private javax.swing.JComboBox<String> departmentItem;
     private javax.swing.JTextField description;
     private javax.swing.JButton edit;
+    private javax.swing.JLabel hiddenID;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

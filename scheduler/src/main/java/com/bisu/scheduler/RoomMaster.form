@@ -92,6 +92,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="New"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="save">
           <Properties>
@@ -222,7 +225,7 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabel1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Room ID:"/>
+                <Property name="text" type="java.lang.String" value="Room No:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">

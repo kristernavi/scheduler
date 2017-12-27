@@ -155,8 +155,13 @@
             </Component>
             <Component class="javax.swing.JLabel" name="hiddenID">
               <Properties>
-                <Property name="text" type="java.lang.String" value="hiddenID"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="&quot;hiddenID&quot;" type="code"/>
+                </Property>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="hiddenID.setVisible(false);"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>

@@ -49,6 +49,7 @@ public class RoomMaster extends javax.swing.JFrame {
                 String id = room_table.getValueAt(room_table.getSelectedRow(), 5).toString();
                 populate_inputs(Integer.parseInt(id));
                 nav_pane.setSelectedIndex(0);
+                save.setEnabled(true);
 
             }
         });
@@ -139,6 +140,11 @@ public class RoomMaster extends javax.swing.JFrame {
         setTitle("Room Master");
 
         add.setText("New");
+        add.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addActionPerformed(evt);
+            }
+        });
 
         save.setText("Save");
         save.addActionListener(new java.awt.event.ActionListener() {
@@ -191,7 +197,7 @@ public class RoomMaster extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Room Information"));
 
-        jLabel1.setText("Room ID:");
+        jLabel1.setText("Room No:");
 
         jLabel2.setText("Room Type:");
 
@@ -438,6 +444,13 @@ public class RoomMaster extends javax.swing.JFrame {
                 nav_pane.setSelectedIndex(1);
             }
     }//GEN-LAST:event_deleteActionPerformed
+
+    private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
+        // TODO add your handling code here:
+        this.clear();
+        nav_pane.setSelectedIndex(0);
+        save.setEnabled(true);
+    }//GEN-LAST:event_addActionPerformed
 
     /**
      * @param args the command line arguments

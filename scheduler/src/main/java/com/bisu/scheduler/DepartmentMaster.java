@@ -53,7 +53,7 @@ public class DepartmentMaster extends javax.swing.JFrame {
         menuItemDelete.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
 
-                String id = department_table.getValueAt(department_table.getSelectedRow(), 0).toString();
+                String id = department_table.getValueAt(department_table.getSelectedRow(), 3).toString();
                 populate_input(Integer.parseInt(id));
                 pane_nav.setEnabledAt(0, true);
                 pane_nav.setSelectedIndex(0);
@@ -123,6 +123,7 @@ public class DepartmentMaster extends javax.swing.JFrame {
         code.setEnabled(true);
 
         hiddenID.setText("hiddenID");
+        hiddenID.setVisible(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);

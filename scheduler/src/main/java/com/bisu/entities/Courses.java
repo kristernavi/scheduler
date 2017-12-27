@@ -25,6 +25,7 @@ public class Courses  implements java.io.Serializable {
      private Integer id;
      private Departments departments;
      private String description;
+     private String code;
 
     public Courses() {
     }
@@ -64,6 +65,15 @@ public class Courses  implements java.io.Serializable {
     
     public void setDescription(String description) {
         this.description = description;
+    }
+    
+    @Column(name="code", nullable=false)
+    public String getCode() {
+        return this.code;
+    }
+    
+    public void setCode(String code) {
+        this.code = code;
     }
 
 
