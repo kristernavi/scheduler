@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.18)
 # Database: bisu_db
-# Generation Time: 2017-12-27 02:54:00 +0000
+# Generation Time: 2017-12-27 04:52:59 +0000
 # ************************************************************
 
 
@@ -27,12 +27,14 @@ DROP TABLE IF EXISTS `courses`;
 
 CREATE TABLE `courses` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `department_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `courses_code_unique` (`code`),
   KEY `courses_department_id_foreign` (`department_id`),
   CONSTRAINT `courses_department_id_foreign` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -43,10 +45,12 @@ DROP TABLE IF EXISTS `departments`;
 
 CREATE TABLE `departments` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `head` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `head` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `departments_code_unique` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -58,22 +62,22 @@ DROP TABLE IF EXISTS `faculties`;
 CREATE TABLE `faculties` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `faculty_id` int(10) unsigned DEFAULT NULL,
-  `firstname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lastname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `middlename` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `designation` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `eligibility` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `specializationn` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `degree_earned` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `post_degree` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `min_load` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `firstname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `lastname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `middlename` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `designation` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `eligibility` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `specializationn` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `degree_earned` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `post_degree` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `min_load` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `max_load` int(11) NOT NULL,
   `department_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `faculties_faculty_id_unique` (`faculty_id`),
   KEY `faculties_department_id_foreign` (`department_id`),
   CONSTRAINT `faculties_department_id_foreign` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -84,10 +88,10 @@ DROP TABLE IF EXISTS `migrations`;
 
 CREATE TABLE `migrations` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
@@ -113,14 +117,14 @@ DROP TABLE IF EXISTS `rooms`;
 
 CREATE TABLE `rooms` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `location` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` enum('lecture','laboratory','lec_lab') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `location` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `type` enum('lecture','laboratory','lec_lab') COLLATE utf8_unicode_ci NOT NULL,
   `capacity` int(10) unsigned NOT NULL,
   `number` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `rooms_number_unique` (`number`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -133,14 +137,12 @@ CREATE TABLE `subject_pre_requisites` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `subject_id` int(10) unsigned NOT NULL,
   `pre_requisite_id` int(10) unsigned DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `subject_pre_requisites_pre_requisite_id_foreign` (`pre_requisite_id`),
   KEY `subject_pre_requisites_subject_id_foreign` (`subject_id`),
   CONSTRAINT `subject_pre_requisites_pre_requisite_id_foreign` FOREIGN KEY (`pre_requisite_id`) REFERENCES `subjects` (`id`),
   CONSTRAINT `subject_pre_requisites_subject_id_foreign` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -151,14 +153,14 @@ DROP TABLE IF EXISTS `subjects`;
 
 CREATE TABLE `subjects` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `course_id` int(10) unsigned DEFAULT NULL,
   `units` smallint(5) unsigned NOT NULL,
   `lec_hours` time DEFAULT NULL,
   `lab_hours` time DEFAULT NULL,
-  `type` enum('major','general','elective') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` enum('major','general','elective') COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -169,12 +171,12 @@ DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
