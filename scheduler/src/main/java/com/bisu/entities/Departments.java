@@ -28,6 +28,7 @@ public class Departments  implements java.io.Serializable {
      private String head;
      private Set<Faculties> facultieses = new HashSet<Faculties>(0);
      private Set<Courses> courseses = new HashSet<Courses>(0);
+     private String code;
 
     public Departments() {
     }
@@ -65,14 +66,23 @@ public class Departments  implements java.io.Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-
+    
     
     @Column(name="head", nullable=false)
     public String getHead() {
         return this.head;
     }
     
-    public void setHead(String head) {
+    public void setHead(String code) {
+        this.code = code;
+    }
+    
+    @Column(name="code", nullable=false , unique=true)
+    public String getCode() {
+        return this.code;
+    }
+    
+    public void setCode(String head) {
         this.head = head;
     }
 

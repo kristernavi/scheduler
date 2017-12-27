@@ -41,7 +41,7 @@ public class DepartmentMaster extends javax.swing.JFrame {
         menuItemEdit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
 
-                String id = department_table.getValueAt(department_table.getSelectedRow(), 0).toString();
+                String id = department_table.getValueAt(department_table.getSelectedRow(), 3).toString();
                 populate_input(Integer.parseInt(id));
                 pane_nav.setSelectedIndex(0);
                 save.setEnabled(true);
@@ -72,9 +72,11 @@ public class DepartmentMaster extends javax.swing.JFrame {
     protected void populate_input(int id) {
 
         Departments entity = (Departments) department.find(id);
-        department_id.setText(entity.getId().toString());
+        hiddenID.setText(entity.getId().toString());
         description.setText(entity.getDescription());
         head.setText(entity.getHead());
+        code.setText(entity.getCode());
+        
 
     }
 
@@ -87,9 +89,10 @@ public class DepartmentMaster extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        department_id = new javax.swing.JTextField();
+        code = new javax.swing.JTextField();
         description = new javax.swing.JTextField();
         head = new javax.swing.JTextField();
+        hiddenID = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         department_table = new javax.swing.JTable();
@@ -111,51 +114,60 @@ public class DepartmentMaster extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Department Information"));
 
-        jLabel1.setText("Department ID:");
+        jLabel1.setText("Department Code:");
 
         jLabel2.setText("Description:");
 
         jLabel3.setText("Department Head:");
 
-        department_id.setEnabled(false);
+        code.setEnabled(true);
+
+        hiddenID.setText("hiddenID");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(description, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(description, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(28, 28, 28)
+                                .addComponent(code, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(head, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(28, 28, 28)
-                        .addComponent(department_id, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(head, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(51, 51, 51)
+                        .addComponent(hiddenID)))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(department_id)
+                    .addComponent(code)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(description))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(head, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(hiddenID)
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         pane_nav.addTab("Details", jPanel2);
@@ -165,11 +177,11 @@ public class DepartmentMaster extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Description", "Head"
+                "Code", "Description", "Head", "ID"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -182,6 +194,11 @@ public class DepartmentMaster extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(department_table);
+        if (department_table.getColumnModel().getColumnCount() > 0) {
+            department_table.getColumnModel().getColumn(3).setMinWidth(0);
+            department_table.getColumnModel().getColumn(3).setPreferredWidth(0);
+            department_table.getColumnModel().getColumn(3).setMaxWidth(0);
+        }
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -273,7 +290,7 @@ public class DepartmentMaster extends javax.swing.JFrame {
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pane_nav, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
+                .addComponent(pane_nav)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -295,9 +312,10 @@ public class DepartmentMaster extends javax.swing.JFrame {
         model.setRowCount(0);
         for (int i = 0; i < tableData.size(); i++) {
             Departments dept = (Departments) tableData.get(i);
-            row[0] = dept.getId();
+            row[0] = dept.getCode();
             row[1] = dept.getDescription();
             row[2] = dept.getHead();
+            row[3] = dept.getId();
             model.addRow(row);
 
         }
@@ -305,9 +323,10 @@ public class DepartmentMaster extends javax.swing.JFrame {
     }
 
     private void clear() {
-        department_id.setText("");
+        code.setText("");
         description.setText("");
         head.setText("");
+        hiddenID.setText("");
 
     }
 
@@ -317,10 +336,10 @@ public class DepartmentMaster extends javax.swing.JFrame {
         Departments entity;
         boolean clearable = false;
 
-        if (Helper.isNumeric(department_id.getText())) {
+        if (Helper.isNumeric(hiddenID.getText())) {
 
          
-            int id = Integer.parseInt(department_id.getText());
+            int id = Integer.parseInt(hiddenID.getText());
             entity = (Departments) department.find(id);
 
         } else {
@@ -330,6 +349,8 @@ public class DepartmentMaster extends javax.swing.JFrame {
 
         entity.setDescription(description.getText());
         entity.setHead(head.getText());
+        entity.setCode(code.getText());
+
         if (clearable) {
             this.clear();
             department.save(entity);
@@ -400,7 +421,7 @@ public class DepartmentMaster extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         Departments entity;
-        int id = Integer.parseInt(department_id.getText());
+        int id = Integer.parseInt(hiddenID.getText());
         entity = (Departments) department.find(id);
         
         if (Helper.messageBox("Are you want to delete the record?", "Confirmation", true)) {
@@ -448,12 +469,13 @@ public class DepartmentMaster extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add;
     private javax.swing.JButton cancel;
+    private javax.swing.JTextField code;
     private javax.swing.JButton delete;
-    private javax.swing.JTextField department_id;
     private javax.swing.JTable department_table;
     private javax.swing.JTextField description;
     private javax.swing.JButton edit;
     private javax.swing.JTextField head;
+    private javax.swing.JLabel hiddenID;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
