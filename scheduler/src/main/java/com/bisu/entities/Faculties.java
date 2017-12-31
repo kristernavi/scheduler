@@ -1,5 +1,5 @@
 package com.bisu.entities;
-// Generated Dec 26, 2017 11:32:06 PM by Hibernate Tools 4.3.1
+// Generated Dec 29, 2017 2:25:44 AM by Hibernate Tools 4.3.1
 
 
 import javax.persistence.Column;
@@ -19,50 +19,46 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name="faculties"
     ,catalog="bisu_db"
-    , uniqueConstraints = @UniqueConstraint(columnNames="faculty_id") 
+    , uniqueConstraints = @UniqueConstraint(columnNames="prc_no") 
 )
 public class Faculties  implements java.io.Serializable {
 
 
      private Integer id;
      private Departments departments;
-     private Integer facultyId;
+     private String prcNo;
      private String firstname;
      private String lastname;
      private String middlename;
+     private String rank;
      private String designation;
      private String eligibility;
-     private String specializationn;
+     private String specialization;
      private String degreeEarned;
      private String postDegree;
-     private String minLoad;
-     private int maxLoad;
+     private short minLoad;
+     private short maxLoad;
 
     public Faculties() {
     }
 
 	
-    public Faculties(String firstname, String lastname, String middlename, String designation, String eligibility, String specializationn, String degreeEarned, String postDegree, String minLoad, int maxLoad) {
+    public Faculties(String firstname, String lastname, short minLoad, short maxLoad) {
         this.firstname = firstname;
         this.lastname = lastname;
-        this.middlename = middlename;
-        this.designation = designation;
-        this.eligibility = eligibility;
-        this.specializationn = specializationn;
-        this.degreeEarned = degreeEarned;
-        this.postDegree = postDegree;
         this.minLoad = minLoad;
         this.maxLoad = maxLoad;
     }
-    public Faculties(Departments departments, Integer facultyId, String firstname, String lastname, String middlename, String designation, String eligibility, String specializationn, String degreeEarned, String postDegree, String minLoad, int maxLoad) {
+    public Faculties(Departments departments, String prcNo, String firstname, String lastname, String middlename, String rank, String designation, String eligibility, String specialization, String degreeEarned, String postDegree, short minLoad, short maxLoad) {
        this.departments = departments;
-       this.facultyId = facultyId;
+       this.prcNo = prcNo;
        this.firstname = firstname;
        this.lastname = lastname;
        this.middlename = middlename;
+       this.rank = rank;
        this.designation = designation;
        this.eligibility = eligibility;
-       this.specializationn = specializationn;
+       this.specialization = specialization;
        this.degreeEarned = degreeEarned;
        this.postDegree = postDegree;
        this.minLoad = minLoad;
@@ -92,13 +88,13 @@ public class Faculties  implements java.io.Serializable {
     }
 
     
-    @Column(name="faculty_id", unique=true)
-    public Integer getFacultyId() {
-        return this.facultyId;
+    @Column(name="prc_no", unique=true)
+    public String getPrcNo() {
+        return this.prcNo;
     }
     
-    public void setFacultyId(Integer facultyId) {
-        this.facultyId = facultyId;
+    public void setPrcNo(String prcNo) {
+        this.prcNo = prcNo;
     }
 
     
@@ -122,7 +118,7 @@ public class Faculties  implements java.io.Serializable {
     }
 
     
-    @Column(name="middlename", nullable=false)
+    @Column(name="middlename")
     public String getMiddlename() {
         return this.middlename;
     }
@@ -132,7 +128,17 @@ public class Faculties  implements java.io.Serializable {
     }
 
     
-    @Column(name="designation", nullable=false)
+    @Column(name="rank")
+    public String getRank() {
+        return this.rank;
+    }
+    
+    public void setRank(String rank) {
+        this.rank = rank;
+    }
+
+    
+    @Column(name="designation")
     public String getDesignation() {
         return this.designation;
     }
@@ -142,7 +148,7 @@ public class Faculties  implements java.io.Serializable {
     }
 
     
-    @Column(name="eligibility", nullable=false)
+    @Column(name="eligibility")
     public String getEligibility() {
         return this.eligibility;
     }
@@ -152,17 +158,17 @@ public class Faculties  implements java.io.Serializable {
     }
 
     
-    @Column(name="specializationn", nullable=false)
-    public String getSpecializationn() {
-        return this.specializationn;
+    @Column(name="specialization")
+    public String getSpecialization() {
+        return this.specialization;
     }
     
-    public void setSpecializationn(String specializationn) {
-        this.specializationn = specializationn;
+    public void setSpecialization(String specialization) {
+        this.specialization = specialization;
     }
 
     
-    @Column(name="degree_earned", nullable=false)
+    @Column(name="degree_earned")
     public String getDegreeEarned() {
         return this.degreeEarned;
     }
@@ -172,7 +178,7 @@ public class Faculties  implements java.io.Serializable {
     }
 
     
-    @Column(name="post_degree", nullable=false)
+    @Column(name="post_degree")
     public String getPostDegree() {
         return this.postDegree;
     }
@@ -183,21 +189,21 @@ public class Faculties  implements java.io.Serializable {
 
     
     @Column(name="min_load", nullable=false)
-    public String getMinLoad() {
+    public short getMinLoad() {
         return this.minLoad;
     }
     
-    public void setMinLoad(String minLoad) {
+    public void setMinLoad(short minLoad) {
         this.minLoad = minLoad;
     }
 
     
     @Column(name="max_load", nullable=false)
-    public int getMaxLoad() {
+    public short getMaxLoad() {
         return this.maxLoad;
     }
     
-    public void setMaxLoad(int maxLoad) {
+    public void setMaxLoad(short maxLoad) {
         this.maxLoad = maxLoad;
     }
 

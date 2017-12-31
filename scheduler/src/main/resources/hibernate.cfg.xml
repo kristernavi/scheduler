@@ -53,8 +53,9 @@ Contributor(s):
     <mapping class="com.bisu.entities.Subjects"/>
     <mapping class="com.bisu.entities.Users"/>
     <mapping class="com.bisu.entities.Courses"/>
+    <mapping class="com.bisu.entities.TeachersLoadingDetails"/>
     <mapping class="com.bisu.entities.Departments"/>
-    <mapping class="com.bisu.entities.SubjectPreRequisites"/>
+    <mapping class="com.bisu.entities.TeachersLoadings"/>
     <mapping class="com.bisu.entities.Faculties"/>
   </session-factory>
 </hibernate-configuration>

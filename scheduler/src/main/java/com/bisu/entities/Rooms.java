@@ -1,5 +1,5 @@
 package com.bisu.entities;
-// Generated Dec 26, 2017 11:32:06 PM by Hibernate Tools 4.3.1
+// Generated Dec 29, 2017 2:25:44 AM by Hibernate Tools 4.3.1
 
 
 import javax.persistence.Column;
