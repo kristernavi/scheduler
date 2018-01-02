@@ -65,20 +65,20 @@ public class SubjectMaster extends javax.swing.JFrame {
         popupMenu.add(menuItemDelete);
         nav_pane.setSelectedIndex(1);
     }
-    
+
     private List comboSemItems(){
-    
+
        List<ComboItem> combo = new ArrayList<ComboItem>();
        combo.add(new ComboItem(0,"Select Semester"));
        combo.add(new ComboItem(1,"First Semester"));
        combo.add(new ComboItem(2,"Second Semester"));
 
-       
+
        return combo;
     }
-    
+
     private List comboYearItems(){
-    
+
        List<ComboItem> combo = new ArrayList<ComboItem>();
        combo.add(new ComboItem(0,"Select Year"));
        combo.add(new ComboItem(1,"First Year"));
@@ -87,17 +87,17 @@ public class SubjectMaster extends javax.swing.JFrame {
        combo.add(new ComboItem(4,"Fourth Year"));
        combo.add(new ComboItem(5,"Fifth Year"));
 
-       
-       
-       
+
+
+
        return combo;
     }
-    
+
      private List comboItems(){
-    
+
        List<ComboItem> combo = new ArrayList<ComboItem>();
        combo.add(new ComboItem(0,"Select Course"));
-       
+
        try{
            for(Object obj: course.all()){
            Courses model = (Courses) obj;
@@ -105,18 +105,18 @@ public class SubjectMaster extends javax.swing.JFrame {
        }
        }
        catch(Exception e){
-       
+
        }
-       
-       
+
+
        return combo;
     }
-     
+
      private List comboSubjectItems(){
-    
+
        List<ComboItem> combo = new ArrayList<ComboItem>();
        combo.add(new ComboItem(0,"Select Subject"));
-       
+
        try{
            for(Object obj: subject.all()){
            Subjects model = (Subjects) obj;
@@ -124,10 +124,10 @@ public class SubjectMaster extends javax.swing.JFrame {
        }
        }
        catch(Exception e){
-       
+
        }
-       
-       
+
+
        return combo;
     }
 
@@ -290,26 +290,37 @@ public class SubjectMaster extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Subject Information"));
 
         jLabel1.setText("Subject Code:");
+        jPanel1.add(jLabel1);
 
         jLabel2.setText("Description");
+        jPanel1.add(jLabel2);
 
         jLabel3.setText("Course");
+        jPanel1.add(jLabel3);
 
         jLabel4.setText("Units:");
+        jPanel1.add(jLabel4);
 
         jLabel5.setText("Lecture Hours:");
+        jPanel1.add(jLabel5);
 
         jLabel6.setText("Laboratory Hours:");
+        jPanel1.add(jLabel6);
 
         jLabel7.setText("Subject Type:");
+        jPanel1.add(jLabel7);
 
         jLabel8.setText("Pre-requisite Subject:");
+        jPanel1.add(jLabel8);
+        jPanel1.add(code);
+        jPanel1.add(description);
 
         units.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 unitsActionPerformed(evt);
             }
         });
+        jPanel1.add(units);
 
         coursetItems.setModel(new javax.swing.DefaultComboBoxModel(comboItems().toArray()));
         coursetItems.addActionListener(new java.awt.event.ActionListener() {
@@ -317,21 +328,28 @@ public class SubjectMaster extends javax.swing.JFrame {
                 coursetItemsActionPerformed(evt);
             }
         });
+        jPanel1.add(coursetItems);
 
         typeGroup.add(major);
         major.setText("Major");
         major.setActionCommand("major");
+        jPanel1.add(major);
 
         typeGroup.add(gen_ed);
         gen_ed.setText("General Education");
         gen_ed.setActionCommand("general");
+        jPanel1.add(gen_ed);
 
         typeGroup.add(elective);
         elective.setText("Elective");
         elective.setActionCommand("elective");
+        jPanel1.add(elective);
+        jPanel1.add(lec_hr);
+        jPanel1.add(lab_hr);
 
         hiddenID.setText("jLabel11");
         hiddenID.setVisible(false);
+        jPanel1.add(hiddenID);
 
         subjectItems.setModel(new javax.swing.DefaultComboBoxModel(comboSubjectItems().toArray()));
         subjectItems.addActionListener(new java.awt.event.ActionListener() {
@@ -339,133 +357,25 @@ public class SubjectMaster extends javax.swing.JFrame {
                 subjectItemsActionPerformed(evt);
             }
         });
+        jPanel1.add(subjectItems);
 
         jLabel9.setText("Year Level:");
+        jPanel1.add(jLabel9);
 
         yearCB.setModel(new javax.swing.DefaultComboBoxModel(comboYearItems().toArray()));
+        jPanel1.add(yearCB);
 
         jLabel10.setText("Course:");
+        jPanel1.add(jLabel10);
 
         jComboBox8.setModel(new javax.swing.DefaultComboBoxModel(comboItems().toArray()));
+        jPanel1.add(jComboBox8);
 
         semCb.setModel(new javax.swing.DefaultComboBoxModel(comboSemItems().toArray()));
+        jPanel1.add(semCb);
 
         jLabel11.setText("Semester:");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(337, 337, 337)
-                        .addComponent(hiddenID))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lab_hr, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel9)
-                                            .addComponent(jLabel10))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(yearCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jComboBox8, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(68, 68, 68)
-                                        .addComponent(jLabel11)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(semCb, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(100, 100, 100))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel5)
-                                            .addComponent(jLabel7)
-                                            .addComponent(jLabel8))
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(coursetItems, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(units, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                                .addComponent(major)
-                                                                .addGap(18, 18, 18)
-                                                                .addComponent(gen_ed))
-                                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                                .addComponent(lec_hr, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                .addComponent(jLabel6)))
-                                                        .addGap(1, 1, 1)
-                                                        .addComponent(elective))
-                                                    .addComponent(description, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(code, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(18, 18, 18)
-                                                .addComponent(subjectItems, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4))
-                                .addGap(139, 139, 139)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(yearCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11)
-                    .addComponent(semCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(jComboBox8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(code, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(description, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(coursetItems, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(units, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(lec_hr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lab_hr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(major)
-                    .addComponent(gen_ed)
-                    .addComponent(elective))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(subjectItems, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
-                .addComponent(hiddenID)
-                .addGap(20, 20, 20))
-        );
+        jPanel1.add(jLabel11);
 
         nav_pane.addTab("Details", jPanel1);
 
@@ -517,7 +427,7 @@ public class SubjectMaster extends javax.swing.JFrame {
             row[4] = dept.getUnits();
             row[5] = dept.getLecHours();
             row[6] = dept.getLabHours();
-            
+
             row[8] = dept.getId();
 
             model.addRow(row);
@@ -535,8 +445,8 @@ public class SubjectMaster extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
-       
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void subjectItemsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subjectItemsActionPerformed
@@ -550,7 +460,7 @@ public class SubjectMaster extends javax.swing.JFrame {
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
         // TODO add your handling code here:
         Subjects model;
-        
+
         if(Helper.isNumeric(hiddenID.getText())){
             model = (Subjects) subject.find(Integer.parseInt(hiddenID.getText()));
         }
@@ -580,7 +490,7 @@ public class SubjectMaster extends javax.swing.JFrame {
 
     private void nav_paneMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nav_paneMouseReleased
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_nav_paneMouseReleased
 
     private void nav_paneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_nav_paneStateChanged
@@ -612,7 +522,7 @@ public class SubjectMaster extends javax.swing.JFrame {
             }
             popupMenu.show(evt.getComponent(), evt.getX(), evt.getY());
         }
-        
+
     }//GEN-LAST:event_subjectsTableMouseReleased
 
     private void clear(){
@@ -621,8 +531,8 @@ public class SubjectMaster extends javax.swing.JFrame {
         lab_hr.setText("1");
         lec_hr.setText("1");
         units.setText("1");
-        
-    
+
+
     }
     /**
      * @param args the command line arguments
@@ -631,7 +541,7 @@ public class SubjectMaster extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
