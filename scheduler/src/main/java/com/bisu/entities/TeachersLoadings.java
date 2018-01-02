@@ -1,5 +1,5 @@
 package com.bisu.entities;
-// Generated Dec 29, 2017 2:25:44 AM by Hibernate Tools 4.3.1
+// Generated Jan 2, 2018 1:50:30 AM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -10,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -24,21 +26,24 @@ public class TeachersLoadings  implements java.io.Serializable {
 
 
      private Integer id;
-     private int teacherId;
-     private int subjectId;
+     private Faculties faculties;
+     private SchoolYears schoolYears;
+     private Subjects subjects;
      private Set<TeachersLoadingDetails> teachersLoadingDetailses = new HashSet<TeachersLoadingDetails>(0);
 
     public TeachersLoadings() {
     }
 
 	
-    public TeachersLoadings(int teacherId, int subjectId) {
-        this.teacherId = teacherId;
-        this.subjectId = subjectId;
+    public TeachersLoadings(Faculties faculties, SchoolYears schoolYears, Subjects subjects) {
+        this.faculties = faculties;
+        this.schoolYears = schoolYears;
+        this.subjects = subjects;
     }
-    public TeachersLoadings(int teacherId, int subjectId, Set<TeachersLoadingDetails> teachersLoadingDetailses) {
-       this.teacherId = teacherId;
-       this.subjectId = subjectId;
+    public TeachersLoadings(Faculties faculties, SchoolYears schoolYears, Subjects subjects, Set<TeachersLoadingDetails> teachersLoadingDetailses) {
+       this.faculties = faculties;
+       this.schoolYears = schoolYears;
+       this.subjects = subjects;
        this.teachersLoadingDetailses = teachersLoadingDetailses;
     }
    
@@ -54,24 +59,34 @@ public class TeachersLoadings  implements java.io.Serializable {
         this.id = id;
     }
 
-    
-    @Column(name="teacher_id", nullable=false)
-    public int getTeacherId() {
-        return this.teacherId;
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="teacher_id", nullable=false)
+    public Faculties getFaculties() {
+        return this.faculties;
     }
     
-    public void setTeacherId(int teacherId) {
-        this.teacherId = teacherId;
+    public void setFaculties(Faculties faculties) {
+        this.faculties = faculties;
     }
 
-    
-    @Column(name="subject_id", nullable=false)
-    public int getSubjectId() {
-        return this.subjectId;
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="school_year_id", nullable=false)
+    public SchoolYears getSchoolYears() {
+        return this.schoolYears;
     }
     
-    public void setSubjectId(int subjectId) {
-        this.subjectId = subjectId;
+    public void setSchoolYears(SchoolYears schoolYears) {
+        this.schoolYears = schoolYears;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="subject_id", nullable=false)
+    public Subjects getSubjects() {
+        return this.subjects;
+    }
+    
+    public void setSubjects(Subjects subjects) {
+        this.subjects = subjects;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="teachersLoadings")

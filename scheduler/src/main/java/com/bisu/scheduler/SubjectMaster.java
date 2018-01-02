@@ -66,6 +66,33 @@ public class SubjectMaster extends javax.swing.JFrame {
         nav_pane.setSelectedIndex(1);
     }
     
+    private List comboSemItems(){
+    
+       List<ComboItem> combo = new ArrayList<ComboItem>();
+       combo.add(new ComboItem(0,"Select Semester"));
+       combo.add(new ComboItem(1,"First Semester"));
+       combo.add(new ComboItem(2,"Second Semester"));
+
+       
+       return combo;
+    }
+    
+    private List comboYearItems(){
+    
+       List<ComboItem> combo = new ArrayList<ComboItem>();
+       combo.add(new ComboItem(0,"Select Year"));
+       combo.add(new ComboItem(1,"First Year"));
+       combo.add(new ComboItem(2,"Second Year"));
+       combo.add(new ComboItem(3,"Third Year"));
+       combo.add(new ComboItem(4,"Fourth Year"));
+       combo.add(new ComboItem(5,"Fifth Year"));
+
+       
+       
+       
+       return combo;
+    }
+    
      private List comboItems(){
     
        List<ComboItem> combo = new ArrayList<ComboItem>();
@@ -145,10 +172,10 @@ public class SubjectMaster extends javax.swing.JFrame {
         hiddenID = new javax.swing.JLabel();
         subjectItems = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
-        jComboBox9 = new javax.swing.JComboBox<>();
+        yearCB = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         jComboBox8 = new javax.swing.JComboBox<>();
-        jComboBox10 = new javax.swing.JComboBox<>();
+        semCb = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -315,13 +342,13 @@ public class SubjectMaster extends javax.swing.JFrame {
 
         jLabel9.setText("Year Level:");
 
-        jComboBox9.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        yearCB.setModel(new javax.swing.DefaultComboBoxModel(comboYearItems().toArray()));
 
         jLabel10.setText("Course:");
 
-        jComboBox8.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox8.setModel(new javax.swing.DefaultComboBoxModel(comboItems().toArray()));
 
-        jComboBox10.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        semCb.setModel(new javax.swing.DefaultComboBoxModel(comboSemItems().toArray()));
 
         jLabel11.setText("Semester:");
 
@@ -346,12 +373,12 @@ public class SubjectMaster extends javax.swing.JFrame {
                                             .addComponent(jLabel10))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jComboBox9, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(yearCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(jComboBox8, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(68, 68, 68)
                                         .addComponent(jLabel11)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jComboBox10, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(semCb, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(100, 100, 100))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -396,9 +423,9 @@ public class SubjectMaster extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jComboBox9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(yearCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11)
-                    .addComponent(jComboBox10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(semCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
@@ -643,9 +670,7 @@ public class SubjectMaster extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox10;
     private javax.swing.JComboBox<String> jComboBox8;
-    private javax.swing.JComboBox<String> jComboBox9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -666,9 +691,11 @@ public class SubjectMaster extends javax.swing.JFrame {
     private javax.swing.JRadioButton major;
     private javax.swing.JTabbedPane nav_pane;
     private javax.swing.JButton save;
+    private javax.swing.JComboBox<String> semCb;
     private javax.swing.JComboBox<String> subjectItems;
     private javax.swing.JTable subjectsTable;
     private javax.swing.ButtonGroup typeGroup;
     private javax.swing.JTextField units;
+    private javax.swing.JComboBox<String> yearCB;
     // End of variables declaration//GEN-END:variables
 }

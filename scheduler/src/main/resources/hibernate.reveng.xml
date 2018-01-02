@@ -41,12 +41,13 @@ Contributor(s):
 -->
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="bisu_db"/>
-  <table-filter match-name="rooms"/>
-  <table-filter match-name="faculties"/>
-  <table-filter match-name="departments"/>
-  <table-filter match-name="teachers_loadings"/>
-  <table-filter match-name="courses"/>
+  <table-filter match-name="school_years"/>
   <table-filter match-name="subjects"/>
-  <table-filter match-name="teachers_loading_details"/>
+  <table-filter match-name="rooms"/>
   <table-filter match-name="users"/>
+  <table-filter match-name="courses"/>
+  <table-filter match-name="teachers_loadings"/>
+  <table-filter match-name="faculties"/>
+  <table-filter match-name="teachers_loading_details"/>
+  <table-filter match-name="departments"/>
 </hibernate-reverse-engineering>

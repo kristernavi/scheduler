@@ -1,5 +1,5 @@
 package com.bisu.entities;
-// Generated Dec 29, 2017 2:25:44 AM by Hibernate Tools 4.3.1
+// Generated Jan 2, 2018 1:50:30 AM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -27,9 +27,9 @@ public class TeachersLoadingDetails  implements java.io.Serializable {
 
      private Integer id;
      private TeachersLoadings teachersLoadings;
-     private int roomId;
      private Date hourStart;
      private Date hourEnd;
+     private Rooms room;
      private boolean m;
      private boolean t;
      private boolean w;
@@ -40,9 +40,8 @@ public class TeachersLoadingDetails  implements java.io.Serializable {
     }
 
 	
-    public TeachersLoadingDetails(TeachersLoadings teachersLoadings, int roomId, boolean m, boolean t, boolean w, boolean th, boolean f) {
+    public TeachersLoadingDetails(TeachersLoadings teachersLoadings, boolean m, boolean t, boolean w, boolean th, boolean f) {
         this.teachersLoadings = teachersLoadings;
-        this.roomId = roomId;
         this.m = m;
         this.t = t;
         this.w = w;
@@ -51,7 +50,6 @@ public class TeachersLoadingDetails  implements java.io.Serializable {
     }
     public TeachersLoadingDetails(TeachersLoadings teachersLoadings, int roomId, Date hourStart, Date hourEnd, boolean m, boolean t, boolean w, boolean th, boolean f) {
        this.teachersLoadings = teachersLoadings;
-       this.roomId = roomId;
        this.hourStart = hourStart;
        this.hourEnd = hourEnd;
        this.m = m;
@@ -84,14 +82,7 @@ public class TeachersLoadingDetails  implements java.io.Serializable {
     }
 
     
-    @Column(name="room_id", nullable=false)
-    public int getRoomId() {
-        return this.roomId;
-    }
-    
-    public void setRoomId(int roomId) {
-        this.roomId = roomId;
-    }
+  
 
     @Temporal(TemporalType.TIME)
     @Column(name="hour_start", length=8)
@@ -161,6 +152,16 @@ public class TeachersLoadingDetails  implements java.io.Serializable {
     
     public void setF(boolean f) {
         this.f = f;
+    }
+    
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="room_id", nullable=false)
+    public Rooms getRooms() {
+        return this.room;
+    }
+    
+    public void setRooms(Rooms room) {
+        this.room = room;
     }
 
 

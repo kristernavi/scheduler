@@ -1,5 +1,5 @@
 package com.bisu.entities;
-// Generated Dec 29, 2017 2:25:44 AM by Hibernate Tools 4.3.1
+// Generated Jan 2, 2018 1:50:30 AM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -32,32 +32,40 @@ public class Subjects  implements java.io.Serializable {
      private Subjects subjects;
      private String description;
      private String code;
+     private short yearLevel;
+     private short semester;
      private short units;
      private Integer lecHours;
      private Integer labHours;
      private String type;
      private Set<Subjects> subjectses = new HashSet<Subjects>(0);
+     private Set<TeachersLoadings> teachersLoadingses = new HashSet<TeachersLoadings>(0);
 
     public Subjects() {
     }
 
 	
-    public Subjects(String description, String code, short units, String type) {
+    public Subjects(String description, String code, short yearLevel, short semester, short units, String type) {
         this.description = description;
         this.code = code;
+        this.yearLevel = yearLevel;
+        this.semester = semester;
         this.units = units;
         this.type = type;
     }
-    public Subjects(Courses courses, Subjects subjects, String description, String code, short units, Integer lecHours, Integer labHours, String type, Set<Subjects> subjectses) {
+    public Subjects(Courses courses, Subjects subjects, String description, String code, short yearLevel, short semester, short units, Integer lecHours, Integer labHours, String type, Set<Subjects> subjectses, Set<TeachersLoadings> teachersLoadingses) {
        this.courses = courses;
        this.subjects = subjects;
        this.description = description;
        this.code = code;
+       this.yearLevel = yearLevel;
+       this.semester = semester;
        this.units = units;
        this.lecHours = lecHours;
        this.labHours = labHours;
        this.type = type;
        this.subjectses = subjectses;
+       this.teachersLoadingses = teachersLoadingses;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -113,6 +121,26 @@ public class Subjects  implements java.io.Serializable {
     }
 
     
+    @Column(name="year_level", nullable=false)
+    public short getYearLevel() {
+        return this.yearLevel;
+    }
+    
+    public void setYearLevel(short yearLevel) {
+        this.yearLevel = yearLevel;
+    }
+
+    
+    @Column(name="semester", nullable=false)
+    public short getSemester() {
+        return this.semester;
+    }
+    
+    public void setSemester(short semester) {
+        this.semester = semester;
+    }
+
+    
     @Column(name="units", nullable=false)
     public short getUnits() {
         return this.units;
@@ -159,6 +187,15 @@ public class Subjects  implements java.io.Serializable {
     
     public void setSubjectses(Set<Subjects> subjectses) {
         this.subjectses = subjectses;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="subjects")
+    public Set<TeachersLoadings> getTeachersLoadingses() {
+        return this.teachersLoadingses;
+    }
+    
+    public void setTeachersLoadingses(Set<TeachersLoadings> teachersLoadingses) {
+        this.teachersLoadingses = teachersLoadingses;
     }
 
 

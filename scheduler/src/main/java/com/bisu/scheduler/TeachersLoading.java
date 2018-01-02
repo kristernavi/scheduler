@@ -5,6 +5,25 @@
  */
 package com.bisu.scheduler;
 
+import com.bisu.dao.Course;
+import com.bisu.dao.Loading;
+import com.bisu.dao.LoadingDetail;
+import com.bisu.dao.Room;
+import com.bisu.dao.Subject;
+import com.bisu.dao.Teacher;
+import com.bisu.dao.SchoolYear;
+import com.bisu.entities.Courses;
+import com.bisu.entities.Faculties;
+import com.bisu.entities.Rooms;
+import com.bisu.entities.Subjects;
+import com.bisu.entities.TeachersLoadingDetails;
+import com.bisu.entities.TeachersLoadings;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerDateModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -17,9 +36,34 @@ public class TeachersLoading extends javax.swing.JFrame {
      * Creates new form TeachersLoading
      */
         DefaultTableModel model;
-
+        Subject subject;
+        Course course;
+        Room room;
+        Teacher teacher;
+        Loading load;
+        LoadingDetail loadDetail;
+        SchoolYear schoolYear;
     public TeachersLoading() {
+        loadDetail = new LoadingDetail();
+        schoolYear = new SchoolYear();
+        course = new Course();
+        subject = new Subject();
+        room = new Room();
+        load = new Loading();
+        teacher = new Teacher();
+        Date date = new Date();
+        SpinnerDateModel sm = new SpinnerDateModel(date, null, null, Calendar.MINUTE);  
         initComponents();
+        end_timespinner.setModel(sm);
+        start_timespinner.setModel(sm);
+        JSpinner.DateEditor de = new JSpinner.DateEditor(end_timespinner, "hh:mm a");
+        de.getTextField().setEditable( true );
+        end_timespinner.setEditor(de);
+         JSpinner.DateEditor de2 = new JSpinner.DateEditor(start_timespinner, "hh:mm a");
+        de2.getTextField().setEditable( true );
+        start_timespinner.setEditor(de2);
+        
+                            
         model = (DefaultTableModel) scheduleTable.getModel();
     }
 
@@ -50,19 +94,17 @@ public class TeachersLoading extends javax.swing.JFrame {
         wednesday = new javax.swing.JCheckBox();
         tuesday = new javax.swing.JCheckBox();
         friday = new javax.swing.JCheckBox();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        roomCb = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox<>();
-        jComboBox5 = new javax.swing.JComboBox<>();
-        jComboBox6 = new javax.swing.JComboBox<>();
-        jComboBox7 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jComboBox8 = new javax.swing.JComboBox<>();
+        end_timespinner = new javax.swing.JSpinner();
+        start_timespinner = new javax.swing.JSpinner();
+        instructorCb = new javax.swing.JComboBox<>();
+        subjectCb = new javax.swing.JComboBox<>();
+        courseCb = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox9 = new javax.swing.JComboBox<>();
+        year_levelCb = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox10 = new javax.swing.JComboBox<>();
+        semesterCb = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         scheduleTable = new javax.swing.JTable();
@@ -71,6 +113,11 @@ public class TeachersLoading extends javax.swing.JFrame {
         setTitle("Teachers Loading");
 
         jButton1.setText("New");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Save");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -114,17 +161,9 @@ public class TeachersLoading extends javax.swing.JFrame {
 
         friday.setText("Friday");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        roomCb.setModel(new javax.swing.DefaultComboBoxModel(comboRoomItem().toArray()));
 
         jLabel9.setText("End:");
-
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -141,7 +180,7 @@ public class TeachersLoading extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(roomCb, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(41, 41, 41)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,20 +194,15 @@ public class TeachersLoading extends javax.swing.JFrame {
                                 .addComponent(monday, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel7))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE))
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(start_timespinner, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addComponent(jLabel9)
+                                .addGap(18, 18, 18)
+                                .addComponent(end_timespinner, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -180,9 +214,8 @@ public class TeachersLoading extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(roomCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(monday))
@@ -198,44 +231,45 @@ public class TeachersLoading extends javax.swing.JFrame {
                 .addComponent(add_schedule)
                 .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(142, 142, 142))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(33, 33, 33)
-                                .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(28, 28, 28)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(start_timespinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(end_timespinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {friday, monday, thursday, tuesday, wednesday});
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        instructorCb.setModel(new javax.swing.DefaultComboBoxModel(comboTeacherItem().toArray()));
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jComboBox8.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        courseCb.setModel(new javax.swing.DefaultComboBoxModel(comboCourseItem().toArray()));
+        courseCb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                courseCbActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Year Level:");
 
-        jComboBox9.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        year_levelCb.setModel(new javax.swing.DefaultComboBoxModel(comboYearItems().toArray()));
+        year_levelCb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                year_levelCbActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Course:");
 
-        jComboBox10.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        semesterCb.setModel(new javax.swing.DefaultComboBoxModel(comboSemItems().toArray()));
+        semesterCb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                semesterCbActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Semester:");
 
@@ -257,38 +291,39 @@ public class TeachersLoading extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jComboBox9, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jComboBox8, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(year_levelCb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(courseCb, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(68, 68, 68)
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBox10, 0, 108, Short.MAX_VALUE))
-                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(semesterCb, 0, 138, Short.MAX_VALUE))
+                            .addComponent(instructorCb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(subjectCb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(29, 29, 29))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(40, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jComboBox9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6)
-                        .addComponent(jComboBox10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(semesterCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(year_levelCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jComboBox8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(courseCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(subjectCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(instructorCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -299,7 +334,7 @@ public class TeachersLoading extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Room", "Hr Start", "Hr End", "Mon", "Tue", "Wed", "Thu", "Fri", "Action", "id"
+                "Room", "Hr Start", "Hr End", "Mon", "Tue", "Wed", "Thu", "Fri", "Action", "room_id"
             }
         ) {
             Class[] types = new Class [] {
@@ -367,7 +402,7 @@ public class TeachersLoading extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(0, 5, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -378,10 +413,118 @@ public class TeachersLoading extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+    private List comboSemItems(){
+    
+       List<ComboItem> combo = new ArrayList<ComboItem>();
+       combo.add(new ComboItem(0,"Select Semester"));
+       combo.add(new ComboItem(1,"First Semester"));
+       combo.add(new ComboItem(2,"Second Semester"));
 
+       
+       return combo;
+    }
+    private List comboRoomItem(){
+   
+       List<ComboItem> combo = new ArrayList<ComboItem>();
+       combo.add(new ComboItem(0,"Select Room"));
+       
+       try{
+           for(Object obj: room.all()){
+           Rooms model = (Rooms) obj;
+           combo.add(new ComboItem(model.getId(),""+model.getNumber()));
+       }
+       }
+       catch(Exception e){
+       
+       }
+       
+       
+       return combo;
+   }
+    
+   private List comboCourseItem(){
+   
+       List<ComboItem> combo = new ArrayList<ComboItem>();
+       combo.add(new ComboItem(0,"Select Course"));
+       
+       try{
+           for(Object obj: course.all()){
+           Courses model = (Courses) obj;
+           combo.add(new ComboItem(model.getId(),""+model.getCode()));
+       }
+       }
+       catch(Exception e){
+       
+       }
+       
+       
+       return combo;
+   }
+  
+    
+   private List comboTeacherItem(){
+   
+       List<ComboItem> combo = new ArrayList<ComboItem>();
+       combo.add(new ComboItem(0,"Select Instructor"));
+       
+       try{
+           for(Object obj: teacher.all()){
+           Faculties model = (Faculties) obj;
+           combo.add(new ComboItem(model.getId(),model.getFirstname() +" "+ model.getLastname()));
+       }
+       }
+       catch(Exception e){
+       
+       }
+       
+       
+       return combo;
+   }
+   
+   private List comboSubjectItem(Integer year_level, Integer semester, Integer course){
+   
+       List<ComboItem> combo = new ArrayList<ComboItem>();
+       combo.add(new ComboItem(0,"Select Subject"));
+       Courses courseModel = (Courses)this.course.find(course);
+       List subject = this.subject.loading_course(year_level, semester, courseModel);
+       System.out.println(""+subject.size());
+       
+       try{
+          
+           for(Object obj: subject){
+           Subjects model = (Subjects) obj;
+           combo.add(new ComboItem(model.getId(),model.getCode()+" - "+model.getDescription()));
+       }
+       }
+       catch(Exception e){
+       
+       }
+       
+       
+       return combo;
+   }
+    
+    
+    private List comboYearItems(){
+    
+       List<ComboItem> combo = new ArrayList<ComboItem>();
+       combo.add(new ComboItem(0,"Select Year"));
+       combo.add(new ComboItem(1,"First Year"));
+       combo.add(new ComboItem(2,"Second Year"));
+       combo.add(new ComboItem(3,"Third Year"));
+       combo.add(new ComboItem(4,"Fourth Year"));
+       combo.add(new ComboItem(5,"Fifth Year"));
+
+       
+       
+       
+       return combo;
+    }
+    
     private void add_scheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_scheduleActionPerformed
         Object row[] = new Object[10];
-        
+        ComboItem item = (ComboItem) roomCb.getSelectedItem();
         row[0] = "room";
         row[1] = "hour start";
         row[2] = "hour end";
@@ -391,7 +534,7 @@ public class TeachersLoading extends javax.swing.JFrame {
         row[6] = thursday.isSelected(); //th
         row[7] = friday.isSelected(); //f
         row[8] = "Delete";
-        row[9] = "room_id";
+        row[9] = item.getValue();
         model.addRow(row);
         scheduleClear();
     }//GEN-LAST:event_add_scheduleActionPerformed
@@ -405,8 +548,67 @@ public class TeachersLoading extends javax.swing.JFrame {
     }
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        ComboItem faculty_item = (ComboItem) instructorCb.getSelectedItem();
+        ComboItem subject_item = (ComboItem) subjectCb.getSelectedItem();
+        
+        Faculties instructor = (Faculties) teacher.find(faculty_item.getValue());
+        Subjects subject = (Subjects)this.subject.find(subject_item.getValue());
+        TeachersLoadings sched = new TeachersLoadings();
+        sched.setFaculties(instructor);
+        sched.setSchoolYears(schoolYear.getActive());
+        sched.setSubjects(subject);
+        TeachersLoadings res = (TeachersLoadings)load.save(sched);
+        
+        for(int i = 0; i<scheduleTable.getRowCount(); i++){
+           TeachersLoadingDetails detail = new TeachersLoadingDetails();
+           Integer room_id = (Integer)scheduleTable.getValueAt(i, 9);
+           Rooms room = (Rooms)this.room.find(room_id);
+           Date date = new Date();
+           detail.setHourEnd(date);
+           detail.setHourStart(date);
+           detail.setRooms(room);
+           detail.setM((Boolean)scheduleTable.getValueAt(i, 3));
+           detail.setT((Boolean)scheduleTable.getValueAt(i, 4));
+           detail.setW((Boolean)scheduleTable.getValueAt(i, 5));
+           detail.setTh((Boolean)scheduleTable.getValueAt(i, 6));
+           detail.setF((Boolean)scheduleTable.getValueAt(i, 7));
+           detail.setTeachersLoadings(res);
+           loadDetail.save(detail);
+        
+        }
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void year_levelCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_year_levelCbActionPerformed
+        // TODO add your handling code here:
+        subject_populate();
+    }//GEN-LAST:event_year_levelCbActionPerformed
+
+    private void semesterCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_semesterCbActionPerformed
+        // TODO add your handling code here:
+        subject_populate();
+        
+    }//GEN-LAST:event_semesterCbActionPerformed
+
+    private void courseCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseCbActionPerformed
+        // TODO add your handling code here:
+        subject_populate();
+    }//GEN-LAST:event_courseCbActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void subject_populate(){
+        ComboItem year_level = (ComboItem)year_levelCb.getSelectedItem();
+        ComboItem semester = (ComboItem)semesterCb.getSelectedItem();        
+        ComboItem course = (ComboItem)courseCb.getSelectedItem();
+        
+        if(year_level.getValue() > 0  && semester.getValue() > 0 && course.getValue() > 0){
+            subjectCb.setModel(new javax.swing.DefaultComboBoxModel(comboSubjectItem(year_level.getValue(),semester.getValue(),course.getValue()).toArray()));
+
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -444,21 +646,14 @@ public class TeachersLoading extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add_schedule;
+    private javax.swing.JComboBox<String> courseCb;
     private javax.swing.ButtonGroup daysGroup;
+    private javax.swing.JSpinner end_timespinner;
     private javax.swing.JCheckBox friday;
+    private javax.swing.JComboBox<String> instructorCb;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox10;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JComboBox<String> jComboBox5;
-    private javax.swing.JComboBox<String> jComboBox6;
-    private javax.swing.JComboBox<String> jComboBox7;
-    private javax.swing.JComboBox<String> jComboBox8;
-    private javax.swing.JComboBox<String> jComboBox9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -473,9 +668,14 @@ public class TeachersLoading extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JCheckBox monday;
+    private javax.swing.JComboBox<String> roomCb;
     private javax.swing.JTable scheduleTable;
+    private javax.swing.JComboBox<String> semesterCb;
+    private javax.swing.JSpinner start_timespinner;
+    private javax.swing.JComboBox<String> subjectCb;
     private javax.swing.JCheckBox thursday;
     private javax.swing.JCheckBox tuesday;
     private javax.swing.JCheckBox wednesday;
+    private javax.swing.JComboBox<String> year_levelCb;
     // End of variables declaration//GEN-END:variables
 }

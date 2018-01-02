@@ -1,7 +1,9 @@
 package com.bisu.entities;
-// Generated Dec 29, 2017 2:25:44 AM by Hibernate Tools 4.3.1
+// Generated Jan 2, 2018 1:50:30 AM by Hibernate Tools 4.3.1
 
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +12,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -38,6 +41,7 @@ public class Faculties  implements java.io.Serializable {
      private String postDegree;
      private short minLoad;
      private short maxLoad;
+     private Set<TeachersLoadings> teachersLoadingses = new HashSet<TeachersLoadings>(0);
 
     public Faculties() {
     }
@@ -49,7 +53,7 @@ public class Faculties  implements java.io.Serializable {
         this.minLoad = minLoad;
         this.maxLoad = maxLoad;
     }
-    public Faculties(Departments departments, String prcNo, String firstname, String lastname, String middlename, String rank, String designation, String eligibility, String specialization, String degreeEarned, String postDegree, short minLoad, short maxLoad) {
+    public Faculties(Departments departments, String prcNo, String firstname, String lastname, String middlename, String rank, String designation, String eligibility, String specialization, String degreeEarned, String postDegree, short minLoad, short maxLoad, Set<TeachersLoadings> teachersLoadingses) {
        this.departments = departments;
        this.prcNo = prcNo;
        this.firstname = firstname;
@@ -63,6 +67,7 @@ public class Faculties  implements java.io.Serializable {
        this.postDegree = postDegree;
        this.minLoad = minLoad;
        this.maxLoad = maxLoad;
+       this.teachersLoadingses = teachersLoadingses;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -205,6 +210,15 @@ public class Faculties  implements java.io.Serializable {
     
     public void setMaxLoad(short maxLoad) {
         this.maxLoad = maxLoad;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="faculties")
+    public Set<TeachersLoadings> getTeachersLoadingses() {
+        return this.teachersLoadingses;
+    }
+    
+    public void setTeachersLoadingses(Set<TeachersLoadings> teachersLoadingses) {
+        this.teachersLoadingses = teachersLoadingses;
     }
 
 
