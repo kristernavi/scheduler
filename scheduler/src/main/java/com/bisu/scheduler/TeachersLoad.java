@@ -3,7 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bisu.scheduler;
+package com.bisu.scheduler;
+
+import com.bisu.dao.Department;
+import com.bisu.dao.Loading;
+import com.bisu.dao.Teacher;
+import com.bisu.entities.TeachersLoadings;
+import com.bisu.entities.Departments;
+import com.bisu.entities.Faculties;
+import com.bisu.entities.TeachersLoadingDetails;
+import com.bisu.extras.Helper;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.temporal.Temporal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,8 +33,16 @@ public class TeachersLoad extends javax.swing.JFrame {
     /**
      * Creates new form TeachersLoad
      */
+    private Department department;
+    private Teacher teacher;
+    DefaultTableModel model;
+    private Loading load;
     public TeachersLoad() {
+        department = new Department();
+        teacher = new Teacher();
+        load = new Loading();
         initComponents();
+        this.model = (DefaultTableModel) this.scheduleTable.getModel();
     }
 
     /**
@@ -28,15 +55,15 @@ public class TeachersLoad extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        departmentCb = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        instuctorCb = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         scrollbar1 = new java.awt.Scrollbar();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        scheduleTable = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -48,16 +75,20 @@ public class TeachersLoad extends javax.swing.JFrame {
 
         jLabel1.setText("Department:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        departmentCb.setModel(new javax.swing.DefaultComboBoxModel(comboDepartmentItem().toArray()));
+        departmentCb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                departmentCbActionPerformed(evt);
             }
         });
 
         jLabel2.setText("Instuctor:");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        instuctorCb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                instuctorCbActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Regular LOad:");
 
@@ -70,8 +101,8 @@ public class TeachersLoad extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
 
-        jTable1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        scheduleTable.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        scheduleTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -79,9 +110,9 @@ public class TeachersLoad extends javax.swing.JFrame {
                 "Time", "Days", "Room", "Subjects", "Course"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
+        jScrollPane1.setViewportView(scheduleTable);
+        if (scheduleTable.getColumnModel().getColumnCount() > 0) {
+            scheduleTable.getColumnModel().getColumn(0).setResizable(false);
         }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -118,8 +149,8 @@ public class TeachersLoad extends javax.swing.JFrame {
                             .addComponent(jLabel2))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(departmentCb, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(instuctorCb, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -159,17 +190,16 @@ public class TeachersLoad extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(departmentCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addComponent(jLabel5)
+                                .addComponent(jLabel6)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(instuctorCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -178,14 +208,107 @@ public class TeachersLoad extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void populateTable(Faculties instructor){
+        List tableData;
+        tableData = load.getByInstructor(instructor);
+
+        Object row[] = new Object[5];
+        model.setRowCount(0);
+        for (int i = 0; i < tableData.size(); i++) {
+            TeachersLoadings loads = (TeachersLoadings) tableData.get(i);
+            Set<TeachersLoadingDetails> details = loads.getTeachersLoadingDetailses();
+           
+            for(Iterator<TeachersLoadingDetails> it = details.iterator(); it.hasNext();){
+                TeachersLoadingDetails detail = it.next();
+                long diff =  detail.getHourEnd().getTime() - detail.getHourStart().getTime();
+                row[0] = Helper.formatDuration(diff);
+                if(detail.isM()){
+                 row[1] = "M";
+                }
+                else if(detail.isT()){
+                row[1] = "T";
+                }
+                else if(detail.isW()){
+                row[1] = "W";
+                }
+                else if(detail.isTh()){
+                row[1] = "Th";
+                }
+                else {
+                row[1] = "F";
+                }
+                
+                row[2] = detail.getRooms().getNumber();
+                row[3] = loads.getSubjects().getDescription();
+                row[4] = loads.getSubjects().getCourses().getCode();
+                model.addRow(row);
+            }
+           
+
+        }
+
+    }
+    
+    private List comboDepartmentItem(){
+   
+       List<ComboItem> combo = new ArrayList<ComboItem>();
+       combo.add(new ComboItem(0,"Select Department"));
+       
+       try{
+           for(Object obj: department.all()){
+           Departments model = (Departments) obj;
+           combo.add(new ComboItem(model.getId(),model.getCode()+" - "+model.getDescription()));
+       }
+       }
+       catch(Exception e){
+       
+       }
+       
+       
+       return combo;
+   }
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void departmentCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_departmentCbActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+        ComboItem selected = (ComboItem) departmentCb.getSelectedItem();
+        if(selected.getValue() > 0){
+            Departments dept = (Departments)department.find(selected.getValue());
+            instuctorCb.setModel(new javax.swing.DefaultComboBoxModel(comboInstructorItem(dept).toArray()));
+        }
+    }//GEN-LAST:event_departmentCbActionPerformed
 
+    private void instuctorCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instuctorCbActionPerformed
+        // TODO add your handling code here:
+        ComboItem selected = (ComboItem) instuctorCb.getSelectedItem();
+        if(selected.getValue() > 0){
+            Faculties instructor = (Faculties) teacher.find(selected.getValue());
+            this.populateTable(instructor);
+        }
+      
+    }//GEN-LAST:event_instuctorCbActionPerformed
+
+    private List comboInstructorItem(Departments dept){
+        
+       List<ComboItem> combo = new ArrayList<ComboItem>();
+       combo.add(new ComboItem(0,"Select Instructor"));
+       
+       try{
+           for(Object obj: teacher.getByDepartment(dept)){
+           Faculties model = (Faculties) obj;
+           combo.add(new ComboItem(model.getId(),model.getFirstname()+"  "+model.getLastname()));
+       }
+       }
+       catch(Exception e){
+       
+       }
+       
+       
+       return combo;
+   }
     /**
      * @param args the command line arguments
      */
@@ -222,9 +345,9 @@ public class TeachersLoad extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> departmentCb;
+    private javax.swing.JComboBox<String> instuctorCb;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -233,9 +356,9 @@ public class TeachersLoad extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable scheduleTable;
     private java.awt.Scrollbar scrollbar1;
     // End of variables declaration//GEN-END:variables
 }
