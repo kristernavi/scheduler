@@ -150,7 +150,7 @@ public class MainMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu4);
 
-        jMenu5.setText("Utility");
+        jMenu5.setText("School Year");
 
         jMenuItem22.setText("Activation of Inactive Instructor");
         jMenu5.add(jMenuItem22);

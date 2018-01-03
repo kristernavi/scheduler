@@ -514,7 +514,6 @@ public class TeachersLoading extends javax.swing.JFrame {
        combo.add(new ComboItem(2,"Second Year"));
        combo.add(new ComboItem(3,"Third Year"));
        combo.add(new ComboItem(4,"Fourth Year"));
-       combo.add(new ComboItem(5,"Fifth Year"));
 
        
        
