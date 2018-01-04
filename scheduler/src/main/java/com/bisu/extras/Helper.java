@@ -6,9 +6,11 @@
 package com.bisu.extras;
 
 import com.bisu.contracts.HibernateUtil;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import javax.swing.JOptionPane;
 import org.hibernate.Session;
-
 
 /**
  *
@@ -37,16 +39,19 @@ public class Helper {
         JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
 
     }
-    public static boolean confirmationMessage(){
-    
-       return messageBox("Are you want to continue the action?", "Confirmation", true);
+
+    public static boolean confirmationMessage() {
+
+        return messageBox("Are you want to continue the action?", "Confirmation", true);
     }
-    public static void successMessage(){
-    
-       messageBox("Record Succefully Save", "Processing Complete");
+
+    public static void successMessage() {
+
+        messageBox("Record Succefully Save", "Processing Complete");
     }
-    public static void deleteMessage(){
-       messageBox("Record Succefully Deleted", "Processing Complete");
+
+    public static void deleteMessage() {
+        messageBox("Record Succefully Deleted", "Processing Complete");
     }
 
     public static boolean isNumeric(String str) {
@@ -57,11 +62,22 @@ public class Helper {
         }
         return false;
     }
-    public static Session openSession(){
+
+    public static Session openSession() {
         return HibernateUtil.getSessionFactory().getCurrentSession();
     }
-    
-    public static void closeSession(){
+
+    public static void closeSession() {
         openSession().close();
+    }
+
+    public static String formatDuration(long duration) {
+        long hours = TimeUnit.MILLISECONDS.toHours(duration);
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(duration) % 60;
+        return String.format("%02d:%02d", hours, minutes);
+    }
+    public static String timeFormat(Date date){
+        SimpleDateFormat formats = new SimpleDateFormat("hh:mm a");
+        return  formats.format(date);
     }
 }

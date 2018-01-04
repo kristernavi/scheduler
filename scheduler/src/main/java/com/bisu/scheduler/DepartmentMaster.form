@@ -266,6 +266,8 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="cancel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -279,6 +281,7 @@
                       <Component id="delete" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cancel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="edit" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -325,6 +328,11 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Menu"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

@@ -85,7 +85,6 @@ public class SubjectMaster extends javax.swing.JFrame {
        combo.add(new ComboItem(2,"Second Year"));
        combo.add(new ComboItem(3,"Third Year"));
        combo.add(new ComboItem(4,"Fourth Year"));
-       combo.add(new ComboItem(5,"Fifth Year"));
 
 
 
@@ -154,7 +153,6 @@ public class SubjectMaster extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -169,14 +167,15 @@ public class SubjectMaster extends javax.swing.JFrame {
         elective = new javax.swing.JRadioButton();
         lec_hr = new javax.swing.JTextField();
         lab_hr = new javax.swing.JTextField();
-        hiddenID = new javax.swing.JLabel();
-        subjectItems = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         yearCB = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
-        jComboBox8 = new javax.swing.JComboBox<>();
         semCb = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
+        hiddenID = new javax.swing.JLabel();
+        description1 = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -274,7 +273,7 @@ public class SubjectMaster extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1241, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -282,7 +281,7 @@ public class SubjectMaster extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         nav_pane.addTab("List", jPanel2);
@@ -290,37 +289,30 @@ public class SubjectMaster extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Subject Information"));
 
         jLabel1.setText("Subject Code:");
-        jPanel1.add(jLabel1);
 
         jLabel2.setText("Description");
-        jPanel1.add(jLabel2);
-
-        jLabel3.setText("Course");
-        jPanel1.add(jLabel3);
 
         jLabel4.setText("Units:");
-        jPanel1.add(jLabel4);
 
         jLabel5.setText("Lecture Hours:");
-        jPanel1.add(jLabel5);
 
         jLabel6.setText("Laboratory Hours:");
-        jPanel1.add(jLabel6);
 
         jLabel7.setText("Subject Type:");
-        jPanel1.add(jLabel7);
 
-        jLabel8.setText("Pre-requisite Subject:");
-        jPanel1.add(jLabel8);
-        jPanel1.add(code);
-        jPanel1.add(description);
+        jLabel8.setText("Pre-requisite:");
+
+        code.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                codeActionPerformed(evt);
+            }
+        });
 
         units.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 unitsActionPerformed(evt);
             }
         });
-        jPanel1.add(units);
 
         coursetItems.setModel(new javax.swing.DefaultComboBoxModel(comboItems().toArray()));
         coursetItems.addActionListener(new java.awt.event.ActionListener() {
@@ -328,54 +320,178 @@ public class SubjectMaster extends javax.swing.JFrame {
                 coursetItemsActionPerformed(evt);
             }
         });
-        jPanel1.add(coursetItems);
 
         typeGroup.add(major);
         major.setText("Major");
         major.setActionCommand("major");
-        jPanel1.add(major);
 
         typeGroup.add(gen_ed);
         gen_ed.setText("General Education");
         gen_ed.setActionCommand("general");
-        jPanel1.add(gen_ed);
 
         typeGroup.add(elective);
         elective.setText("Elective");
         elective.setActionCommand("elective");
-        jPanel1.add(elective);
-        jPanel1.add(lec_hr);
-        jPanel1.add(lab_hr);
+
+        jLabel9.setText("Year Level:");
+
+        yearCB.setModel(new javax.swing.DefaultComboBoxModel(comboYearItems().toArray()));
+
+        jLabel10.setText("Course:");
+
+        semCb.setModel(new javax.swing.DefaultComboBoxModel(comboSemItems().toArray()));
+        semCb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                semCbActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setText("Semester:");
 
         hiddenID.setText("jLabel11");
         hiddenID.setVisible(false);
-        jPanel1.add(hiddenID);
 
-        subjectItems.setModel(new javax.swing.DefaultComboBoxModel(comboSubjectItems().toArray()));
-        subjectItems.addActionListener(new java.awt.event.ActionListener() {
+        description1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                subjectItemsActionPerformed(evt);
+                description1ActionPerformed(evt);
             }
         });
-        jPanel1.add(subjectItems);
 
-        jLabel9.setText("Year Level:");
-        jPanel1.add(jLabel9);
+        jLabel12.setText("Department:");
 
-        yearCB.setModel(new javax.swing.DefaultComboBoxModel(comboYearItems().toArray()));
-        jPanel1.add(yearCB);
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
 
-        jLabel10.setText("Course:");
-        jPanel1.add(jLabel10);
-
-        jComboBox8.setModel(new javax.swing.DefaultComboBoxModel(comboItems().toArray()));
-        jPanel1.add(jComboBox8);
-
-        semCb.setModel(new javax.swing.DefaultComboBoxModel(comboSemItems().toArray()));
-        jPanel1.add(semCb);
-
-        jLabel11.setText("Semester:");
-        jPanel1.add(jLabel11);
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel10))
+                                .addGap(32, 32, 32)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(coursetItems, 0, 161, Short.MAX_VALUE)
+                                        .addGap(79, 406, Short.MAX_VALUE))
+                                    .addComponent(yearCB, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel5)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel4))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(description, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                                        .addComponent(code))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(lec_hr, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(units, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(287, 287, 287)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)
+                                .addComponent(lab_hr, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addGap(18, 18, 18)
+                                .addComponent(semCb, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(major)
+                                .addGap(18, 18, 18)
+                                .addComponent(gen_ed)
+                                .addGap(5, 5, 5)
+                                .addComponent(elective))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.LEADING, 0, 225, Short.MAX_VALUE)
+                                .addComponent(description1, javax.swing.GroupLayout.Alignment.LEADING)))))
+                .addContainerGap(134, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(199, 199, 199)
+                        .addComponent(hiddenID))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel12)))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(yearCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11)
+                    .addComponent(semCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(coursetItems, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(code, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(description, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(units, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(lec_hr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(lab_hr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(gen_ed)
+                    .addComponent(elective)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(major)))
+                .addGap(5, 5, 5)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(description1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addComponent(hiddenID)
+                .addGap(33, 33, 33))
+        );
 
         nav_pane.addTab("Details", jPanel1);
 
@@ -386,15 +502,15 @@ public class SubjectMaster extends javax.swing.JFrame {
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(nav_pane)
-                .addContainerGap())
+                .addComponent(nav_pane, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nav_pane)
+                .addComponent(nav_pane, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -448,10 +564,6 @@ public class SubjectMaster extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void subjectItemsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subjectItemsActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_subjectItemsActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -525,6 +637,22 @@ public class SubjectMaster extends javax.swing.JFrame {
 
     }//GEN-LAST:event_subjectsTableMouseReleased
 
+    private void codeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_codeActionPerformed
+
+    private void semCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_semCbActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_semCbActionPerformed
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void description1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_description1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_description1ActionPerformed
+
     private void clear(){
        code.setText("");
         description.setText("");
@@ -573,6 +701,7 @@ public class SubjectMaster extends javax.swing.JFrame {
     private javax.swing.JTextField code;
     private javax.swing.JComboBox<String> coursetItems;
     private javax.swing.JTextField description;
+    private javax.swing.JTextField description1;
     private javax.swing.JRadioButton elective;
     private javax.swing.JRadioButton gen_ed;
     private javax.swing.JLabel hiddenID;
@@ -580,12 +709,12 @@ public class SubjectMaster extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox8;
+    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -602,7 +731,6 @@ public class SubjectMaster extends javax.swing.JFrame {
     private javax.swing.JTabbedPane nav_pane;
     private javax.swing.JButton save;
     private javax.swing.JComboBox<String> semCb;
-    private javax.swing.JComboBox<String> subjectItems;
     private javax.swing.JTable subjectsTable;
     private javax.swing.ButtonGroup typeGroup;
     private javax.swing.JTextField units;

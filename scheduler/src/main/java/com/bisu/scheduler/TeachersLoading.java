@@ -18,6 +18,7 @@ import com.bisu.entities.Rooms;
 import com.bisu.entities.Subjects;
 import com.bisu.entities.TeachersLoadingDetails;
 import com.bisu.entities.TeachersLoadings;
+import com.bisu.extras.Helper;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -52,10 +53,11 @@ public class TeachersLoading extends javax.swing.JFrame {
         load = new Loading();
         teacher = new Teacher();
         Date date = new Date();
-        SpinnerDateModel sm = new SpinnerDateModel(date, null, null, Calendar.MINUTE);  
+        SpinnerDateModel sm2 = new SpinnerDateModel(date, null, null, Calendar.MINUTE); 
+        SpinnerDateModel sm1 = new SpinnerDateModel(date, null, null, Calendar.MINUTE);  
         initComponents();
-        end_timespinner.setModel(sm);
-        start_timespinner.setModel(sm);
+        end_timespinner.setModel(sm1);
+        start_timespinner.setModel(sm2);
         JSpinner.DateEditor de = new JSpinner.DateEditor(end_timespinner, "hh:mm a");
         de.getTextField().setEditable( true );
         end_timespinner.setEditor(de);
@@ -211,35 +213,36 @@ public class TeachersLoading extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(roomCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(monday))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tuesday)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(wednesday)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(thursday)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(friday)
-                .addGap(9, 9, 9)
-                .addComponent(add_schedule)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(roomCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(monday))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tuesday)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(wednesday)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(thursday)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(friday)
+                        .addGap(9, 9, 9)
+                        .addComponent(add_schedule))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(start_timespinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(end_timespinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(start_timespinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(end_timespinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {friday, monday, thursday, tuesday, wednesday});
@@ -334,14 +337,14 @@ public class TeachersLoading extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Room", "Hr Start", "Hr End", "Mon", "Tue", "Wed", "Thu", "Fri", "Action", "room_id"
+                "Room", "Hr Start", "Hr End", "Mon", "Tue", "Wed", "Thu", "Fri", "Action", "room_id", "d1", "d2"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -357,6 +360,12 @@ public class TeachersLoading extends javax.swing.JFrame {
             scheduleTable.getColumnModel().getColumn(9).setMinWidth(0);
             scheduleTable.getColumnModel().getColumn(9).setPreferredWidth(0);
             scheduleTable.getColumnModel().getColumn(9).setMaxWidth(0);
+            scheduleTable.getColumnModel().getColumn(10).setMinWidth(0);
+            scheduleTable.getColumnModel().getColumn(10).setPreferredWidth(0);
+            scheduleTable.getColumnModel().getColumn(10).setMaxWidth(0);
+            scheduleTable.getColumnModel().getColumn(11).setMinWidth(0);
+            scheduleTable.getColumnModel().getColumn(11).setPreferredWidth(0);
+            scheduleTable.getColumnModel().getColumn(11).setMaxWidth(0);
         }
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -522,11 +531,14 @@ public class TeachersLoading extends javax.swing.JFrame {
     }
     
     private void add_scheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_scheduleActionPerformed
-        Object row[] = new Object[10];
+        Object row[] = new Object[12];
         ComboItem item = (ComboItem) roomCb.getSelectedItem();
-        row[0] = "room";
-        row[1] = "hour start";
-        row[2] = "hour end";
+        Date d1 = (Date)this.start_timespinner.getValue();
+        Date d2 = (Date)this.end_timespinner.getValue();
+        
+        row[0] = item.getLabel();
+        row[1] = Helper.timeFormat(d1);
+        row[2] = Helper.timeFormat(d2);
         row[3] = monday.isSelected(); //m
         row[4] = tuesday.isSelected(); //t
         row[5] = wednesday.isSelected(); //w
@@ -534,6 +546,9 @@ public class TeachersLoading extends javax.swing.JFrame {
         row[7] = friday.isSelected(); //f
         row[8] = "Delete";
         row[9] = item.getValue();
+        row[10] = d1;
+        row[11] = d2;
+
         model.addRow(row);
         scheduleClear();
     }//GEN-LAST:event_add_scheduleActionPerformed
@@ -562,9 +577,10 @@ public class TeachersLoading extends javax.swing.JFrame {
            TeachersLoadingDetails detail = new TeachersLoadingDetails();
            Integer room_id = (Integer)scheduleTable.getValueAt(i, 9);
            Rooms room = (Rooms)this.room.find(room_id);
-           Date date = new Date();
-           detail.setHourEnd(date);
-           detail.setHourStart(date);
+           Date date1 = (Date)  scheduleTable.getValueAt(i, 10);
+           Date date2 = (Date) scheduleTable.getValueAt(i, 11);
+           detail.setHourStart(date1);
+           detail.setHourEnd(date2);
            detail.setRooms(room);
            detail.setM((Boolean)scheduleTable.getValueAt(i, 3));
            detail.setT((Boolean)scheduleTable.getValueAt(i, 4));
@@ -575,6 +591,7 @@ public class TeachersLoading extends javax.swing.JFrame {
            loadDetail.save(detail);
         
         }
+        Helper.successMessage();
         
     }//GEN-LAST:event_jButton3ActionPerformed
 

@@ -102,6 +102,7 @@ public class DepartmentMaster extends javax.swing.JFrame {
         delete = new javax.swing.JButton();
         cancel = new javax.swing.JButton();
         edit = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Department Master");
@@ -254,6 +255,8 @@ public class DepartmentMaster extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Menu");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -269,7 +272,9 @@ public class DepartmentMaster extends javax.swing.JFrame {
                 .addComponent(delete)
                 .addGap(18, 18, 18)
                 .addComponent(cancel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(22, 22, 22))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -280,7 +285,8 @@ public class DepartmentMaster extends javax.swing.JFrame {
                     .addComponent(save)
                     .addComponent(delete)
                     .addComponent(cancel)
-                    .addComponent(edit))
+                    .addComponent(edit)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
 
@@ -477,6 +483,7 @@ public class DepartmentMaster extends javax.swing.JFrame {
     private javax.swing.JButton edit;
     private javax.swing.JTextField head;
     private javax.swing.JLabel hiddenID;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

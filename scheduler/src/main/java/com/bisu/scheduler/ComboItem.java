@@ -7,7 +7,7 @@ package com.bisu.scheduler;
 
 /**
  *
- * @author ivankrister
+ * @author ANGGIE
  */
 public class ComboItem {
     
