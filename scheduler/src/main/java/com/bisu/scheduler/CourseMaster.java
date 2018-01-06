@@ -31,6 +31,22 @@ public class CourseMaster extends javax.swing.JFrame {
     private Department department;
     private Course course;
     DefaultTableModel model;
+    MainMenu mainMenu;
+    
+    public CourseMaster(MainMenu mainMenu) {
+    this();
+    this.mainMenu = mainMenu;
+        int op = this.getDefaultCloseOperation(); // HIDE_ON_CLOSE
+    this.setDefaultCloseOperation(this.DO_NOTHING_ON_CLOSE);
+    
+    }
+    public void offScreen(){
+     this.mainMenu.setVisible(false);
+    }
+    public void onScreen(){
+      this.mainMenu.setVisible(true);
+      this.setVisible(false);
+    }
     public CourseMaster() {
         department = new Department();
         course = new Course();

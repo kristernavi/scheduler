@@ -37,6 +37,24 @@ public class TeachersLoad extends javax.swing.JFrame {
     private Teacher teacher;
     DefaultTableModel model;
     private Loading load;
+    
+    MainMenu mainMenu;
+    
+    public TeachersLoad(MainMenu mainMenu) {
+    this();
+    this.mainMenu = mainMenu;
+    }
+    public void offScreen(){
+     this.mainMenu.setVisible(false);
+    }
+    public void onScreen(){
+      this.mainMenu.setVisible(true);
+      this.setVisible(false);
+          int op = this.getDefaultCloseOperation(); // HIDE_ON_CLOSE
+    this.setDefaultCloseOperation(this.DO_NOTHING_ON_CLOSE);
+    
+    }
+    
     public TeachersLoad() {
         department = new Department();
         teacher = new Teacher();

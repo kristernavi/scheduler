@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -22,7 +23,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name="departments"
     ,catalog="bisu_db"
-    , uniqueConstraints = @UniqueConstraint(columnNames="code") 
+    ,uniqueConstraints=@UniqueConstraint(columnNames={"code","id"}) 
 )
 public class Departments  implements java.io.Serializable {
 
@@ -64,6 +65,7 @@ public class Departments  implements java.io.Serializable {
     }
 
     @NotNull
+    @NotBlank
     @Size(min = 2, max = 50)
     @Column(name="description", nullable=false)
     public String getDescription() {
@@ -75,7 +77,8 @@ public class Departments  implements java.io.Serializable {
     }
 
     @NotNull
-    @Size(min = 2, max = 30)
+    @NotBlank
+    @Size(min = 2, max = 15)
     @Column(name="code", unique=true, nullable=false)
     public String getCode() {
         return this.code;
@@ -85,7 +88,9 @@ public class Departments  implements java.io.Serializable {
         this.code = code;
     }
 
-    
+    @NotNull
+    @NotBlank
+    @Size(min = 2, max = 30)
     @Column(name="head", nullable=false)
     public String getHead() {
         return this.head;

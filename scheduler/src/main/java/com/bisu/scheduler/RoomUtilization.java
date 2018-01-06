@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bisu.scheduler;
+package com.bisu.scheduler;
 
 /**
  *
@@ -14,6 +14,22 @@ public class RoomUtilization extends javax.swing.JFrame {
     /**
      * Creates new form RoomUtilization
      */
+    MainMenu mainMenu;
+    
+    public RoomUtilization(MainMenu mainMenu) {
+    this();
+    this.mainMenu = mainMenu;
+        int op = this.getDefaultCloseOperation(); // HIDE_ON_CLOSE
+    this.setDefaultCloseOperation(this.DO_NOTHING_ON_CLOSE);
+    
+    }
+    public void offScreen(){
+     this.mainMenu.setVisible(false);
+    }
+    public void onScreen(){
+      this.mainMenu.setVisible(true);
+      this.setVisible(false);
+    }
     public RoomUtilization() {
         initComponents();
     }

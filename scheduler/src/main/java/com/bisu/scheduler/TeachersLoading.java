@@ -36,14 +36,33 @@ public class TeachersLoading extends javax.swing.JFrame {
     /**
      * Creates new form TeachersLoading
      */
-        DefaultTableModel model;
-        Subject subject;
-        Course course;
-        Room room;
-        Teacher teacher;
-        Loading load;
-        LoadingDetail loadDetail;
-        SchoolYear schoolYear;
+    DefaultTableModel model;
+    Subject subject;
+    Course course;
+    Room room;
+    Teacher teacher;
+    Loading load;
+    LoadingDetail loadDetail;
+    SchoolYear schoolYear;
+    MainMenu mainMenu;
+
+    public TeachersLoading(MainMenu mainMenu) {
+        this();
+        this.mainMenu = mainMenu;
+        int op = this.getDefaultCloseOperation(); // HIDE_ON_CLOSE
+        this.setDefaultCloseOperation(this.DO_NOTHING_ON_CLOSE);
+
+    }
+
+    public void offScreen() {
+        this.mainMenu.setVisible(false);
+    }
+
+    public void onScreen() {
+        this.mainMenu.setVisible(true);
+        this.setVisible(false);
+    }
+
     public TeachersLoading() {
         loadDetail = new LoadingDetail();
         schoolYear = new SchoolYear();
@@ -53,19 +72,18 @@ public class TeachersLoading extends javax.swing.JFrame {
         load = new Loading();
         teacher = new Teacher();
         Date date = new Date();
-        SpinnerDateModel sm2 = new SpinnerDateModel(date, null, null, Calendar.MINUTE); 
-        SpinnerDateModel sm1 = new SpinnerDateModel(date, null, null, Calendar.MINUTE);  
+        SpinnerDateModel sm2 = new SpinnerDateModel(date, null, null, Calendar.MINUTE);
+        SpinnerDateModel sm1 = new SpinnerDateModel(date, null, null, Calendar.MINUTE);
         initComponents();
         end_timespinner.setModel(sm1);
         start_timespinner.setModel(sm2);
         JSpinner.DateEditor de = new JSpinner.DateEditor(end_timespinner, "hh:mm a");
-        de.getTextField().setEditable( true );
+        de.getTextField().setEditable(true);
         end_timespinner.setEditor(de);
-         JSpinner.DateEditor de2 = new JSpinner.DateEditor(start_timespinner, "hh:mm a");
-        de2.getTextField().setEditable( true );
+        JSpinner.DateEditor de2 = new JSpinner.DateEditor(start_timespinner, "hh:mm a");
+        de2.getTextField().setEditable(true);
         start_timespinner.setEditor(de2);
-        
-                            
+
         model = (DefaultTableModel) scheduleTable.getModel();
     }
 
@@ -422,121 +440,108 @@ public class TeachersLoading extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    private List comboSemItems(){
-    
-       List<ComboItem> combo = new ArrayList<ComboItem>();
-       combo.add(new ComboItem(0,"Select Semester"));
-       combo.add(new ComboItem(1,"First Semester"));
-       combo.add(new ComboItem(2,"Second Semester"));
 
-       
-       return combo;
-    }
-    private List comboRoomItem(){
-   
-       List<ComboItem> combo = new ArrayList<ComboItem>();
-       combo.add(new ComboItem(0,"Select Room"));
-       
-       try{
-           for(Object obj: room.all()){
-           Rooms model = (Rooms) obj;
-           combo.add(new ComboItem(model.getId(),""+model.getNumber()));
-       }
-       }
-       catch(Exception e){
-       
-       }
-       
-       
-       return combo;
-   }
-    
-   private List comboCourseItem(){
-   
-       List<ComboItem> combo = new ArrayList<ComboItem>();
-       combo.add(new ComboItem(0,"Select Course"));
-       
-       try{
-           for(Object obj: course.all()){
-           Courses model = (Courses) obj;
-           combo.add(new ComboItem(model.getId(),""+model.getCode()));
-       }
-       }
-       catch(Exception e){
-       
-       }
-       
-       
-       return combo;
-   }
-  
-    
-   private List comboTeacherItem(){
-   
-       List<ComboItem> combo = new ArrayList<ComboItem>();
-       combo.add(new ComboItem(0,"Select Instructor"));
-       
-       try{
-           for(Object obj: teacher.all()){
-           Faculties model = (Faculties) obj;
-           combo.add(new ComboItem(model.getId(),model.getFirstname() +" "+ model.getLastname()));
-       }
-       }
-       catch(Exception e){
-       
-       }
-       
-       
-       return combo;
-   }
-   
-   private List comboSubjectItem(Integer year_level, Integer semester, Integer course){
-   
-       List<ComboItem> combo = new ArrayList<ComboItem>();
-       combo.add(new ComboItem(0,"Select Subject"));
-       Courses courseModel = (Courses)this.course.find(course);
-       List subject = this.subject.loading_course(year_level, semester, courseModel);
-       System.out.println(""+subject.size());
-       
-       try{
-          
-           for(Object obj: subject){
-           Subjects model = (Subjects) obj;
-           combo.add(new ComboItem(model.getId(),model.getCode()+" - "+model.getDescription()));
-       }
-       }
-       catch(Exception e){
-       
-       }
-       
-       
-       return combo;
-   }
-    
-    
-    private List comboYearItems(){
-    
-       List<ComboItem> combo = new ArrayList<ComboItem>();
-       combo.add(new ComboItem(0,"Select Year"));
-       combo.add(new ComboItem(1,"First Year"));
-       combo.add(new ComboItem(2,"Second Year"));
-       combo.add(new ComboItem(3,"Third Year"));
-       combo.add(new ComboItem(4,"Fourth Year"));
-       combo.add(new ComboItem(5,"Fifth Year"));
+    private List comboSemItems() {
 
-       
-       
-       
-       return combo;
+        List<ComboItem> combo = new ArrayList<ComboItem>();
+        combo.add(new ComboItem(0, "Select Semester"));
+        combo.add(new ComboItem(1, "First Semester"));
+        combo.add(new ComboItem(2, "Second Semester"));
+
+        return combo;
     }
-    
+
+    private List comboRoomItem() {
+
+        List<ComboItem> combo = new ArrayList<ComboItem>();
+        combo.add(new ComboItem(0, "Select Room"));
+
+        try {
+            for (Object obj : room.all()) {
+                Rooms model = (Rooms) obj;
+                combo.add(new ComboItem(model.getId(), "" + model.getNumber()));
+            }
+        } catch (Exception e) {
+
+        }
+
+        return combo;
+    }
+
+    private List comboCourseItem() {
+
+        List<ComboItem> combo = new ArrayList<ComboItem>();
+        combo.add(new ComboItem(0, "Select Course"));
+
+        try {
+            for (Object obj : course.all()) {
+                Courses model = (Courses) obj;
+                combo.add(new ComboItem(model.getId(), "" + model.getCode()));
+            }
+        } catch (Exception e) {
+
+        }
+
+        return combo;
+    }
+
+    private List comboTeacherItem() {
+
+        List<ComboItem> combo = new ArrayList<ComboItem>();
+        combo.add(new ComboItem(0, "Select Instructor"));
+
+        try {
+            for (Object obj : teacher.all()) {
+                Faculties model = (Faculties) obj;
+                combo.add(new ComboItem(model.getId(), model.getFirstname() + " " + model.getLastname()));
+            }
+        } catch (Exception e) {
+
+        }
+
+        return combo;
+    }
+
+    private List comboSubjectItem(Integer year_level, Integer semester, Integer course) {
+
+        List<ComboItem> combo = new ArrayList<ComboItem>();
+        combo.add(new ComboItem(0, "Select Subject"));
+        Courses courseModel = (Courses) this.course.find(course);
+        List subject = this.subject.loading_course(year_level, semester, courseModel);
+        System.out.println("" + subject.size());
+
+        try {
+
+            for (Object obj : subject) {
+                Subjects model = (Subjects) obj;
+                combo.add(new ComboItem(model.getId(), model.getCode() + " - " + model.getDescription()));
+            }
+        } catch (Exception e) {
+
+        }
+
+        return combo;
+    }
+
+    private List comboYearItems() {
+
+        List<ComboItem> combo = new ArrayList<ComboItem>();
+        combo.add(new ComboItem(0, "Select Year"));
+        combo.add(new ComboItem(1, "First Year"));
+        combo.add(new ComboItem(2, "Second Year"));
+        combo.add(new ComboItem(3, "Third Year"));
+        combo.add(new ComboItem(4, "Fourth Year"));
+        combo.add(new ComboItem(5, "Fifth Year"));
+
+        return combo;
+    }
+
     private void add_scheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_scheduleActionPerformed
         Object row[] = new Object[12];
         ComboItem item = (ComboItem) roomCb.getSelectedItem();
-        Date d1 = (Date)this.start_timespinner.getValue();
-        Date d2 = (Date)this.end_timespinner.getValue();
-        
+        Date d1 = (Date) this.start_timespinner.getValue();
+        Date d2 = (Date) this.end_timespinner.getValue();
+
         row[0] = item.getLabel();
         row[1] = Helper.timeFormat(d1);
         row[2] = Helper.timeFormat(d2);
@@ -553,8 +558,8 @@ public class TeachersLoading extends javax.swing.JFrame {
         model.addRow(row);
         scheduleClear();
     }//GEN-LAST:event_add_scheduleActionPerformed
-    
-    private void scheduleClear(){
+
+    private void scheduleClear() {
         monday.setSelected(false);
         tuesday.setSelected(false);
         wednesday.setSelected(false);
@@ -565,35 +570,35 @@ public class TeachersLoading extends javax.swing.JFrame {
         // TODO add your handling code here:
         ComboItem faculty_item = (ComboItem) instructorCb.getSelectedItem();
         ComboItem subject_item = (ComboItem) subjectCb.getSelectedItem();
-        
+
         Faculties instructor = (Faculties) teacher.find(faculty_item.getValue());
-        Subjects subject = (Subjects)this.subject.find(subject_item.getValue());
+        Subjects subject = (Subjects) this.subject.find(subject_item.getValue());
         TeachersLoadings sched = new TeachersLoadings();
         sched.setFaculties(instructor);
         sched.setSchoolYears(schoolYear.getActive());
         sched.setSubjects(subject);
-        TeachersLoadings res = (TeachersLoadings)load.save(sched);
-        
-        for(int i = 0; i<scheduleTable.getRowCount(); i++){
-           TeachersLoadingDetails detail = new TeachersLoadingDetails();
-           Integer room_id = (Integer)scheduleTable.getValueAt(i, 9);
-           Rooms room = (Rooms)this.room.find(room_id);
-           Date date1 = (Date)  scheduleTable.getValueAt(i, 10);
-           Date date2 = (Date) scheduleTable.getValueAt(i, 11);
-           detail.setHourStart(date1);
-           detail.setHourEnd(date2);
-           detail.setRooms(room);
-           detail.setM((Boolean)scheduleTable.getValueAt(i, 3));
-           detail.setT((Boolean)scheduleTable.getValueAt(i, 4));
-           detail.setW((Boolean)scheduleTable.getValueAt(i, 5));
-           detail.setTh((Boolean)scheduleTable.getValueAt(i, 6));
-           detail.setF((Boolean)scheduleTable.getValueAt(i, 7));
-           detail.setTeachersLoadings(res);
-           loadDetail.save(detail);
-        
+        TeachersLoadings res = (TeachersLoadings) load.save(sched);
+
+        for (int i = 0; i < scheduleTable.getRowCount(); i++) {
+            TeachersLoadingDetails detail = new TeachersLoadingDetails();
+            Integer room_id = (Integer) scheduleTable.getValueAt(i, 9);
+            Rooms room = (Rooms) this.room.find(room_id);
+            Date date1 = (Date) scheduleTable.getValueAt(i, 10);
+            Date date2 = (Date) scheduleTable.getValueAt(i, 11);
+            detail.setHourStart(date1);
+            detail.setHourEnd(date2);
+            detail.setRooms(room);
+            detail.setM((Boolean) scheduleTable.getValueAt(i, 3));
+            detail.setT((Boolean) scheduleTable.getValueAt(i, 4));
+            detail.setW((Boolean) scheduleTable.getValueAt(i, 5));
+            detail.setTh((Boolean) scheduleTable.getValueAt(i, 6));
+            detail.setF((Boolean) scheduleTable.getValueAt(i, 7));
+            detail.setTeachersLoadings(res);
+            loadDetail.save(detail);
+
         }
         Helper.successMessage();
-        
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void year_levelCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_year_levelCbActionPerformed
@@ -604,7 +609,7 @@ public class TeachersLoading extends javax.swing.JFrame {
     private void semesterCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_semesterCbActionPerformed
         // TODO add your handling code here:
         subject_populate();
-        
+
     }//GEN-LAST:event_semesterCbActionPerformed
 
     private void courseCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseCbActionPerformed
@@ -616,16 +621,17 @@ public class TeachersLoading extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void subject_populate(){
-        ComboItem year_level = (ComboItem)year_levelCb.getSelectedItem();
-        ComboItem semester = (ComboItem)semesterCb.getSelectedItem();        
-        ComboItem course = (ComboItem)courseCb.getSelectedItem();
-        
-        if(year_level.getValue() > 0  && semester.getValue() > 0 && course.getValue() > 0){
-            subjectCb.setModel(new javax.swing.DefaultComboBoxModel(comboSubjectItem(year_level.getValue(),semester.getValue(),course.getValue()).toArray()));
+    private void subject_populate() {
+        ComboItem year_level = (ComboItem) year_levelCb.getSelectedItem();
+        ComboItem semester = (ComboItem) semesterCb.getSelectedItem();
+        ComboItem course = (ComboItem) courseCb.getSelectedItem();
+
+        if (year_level.getValue() > 0 && semester.getValue() > 0 && course.getValue() > 0) {
+            subjectCb.setModel(new javax.swing.DefaultComboBoxModel(comboSubjectItem(year_level.getValue(), semester.getValue(), course.getValue()).toArray()));
 
         }
     }
+
     /**
      * @param args the command line arguments
      */

@@ -15,10 +15,52 @@ public class MainMenu extends javax.swing.JFrame {
      * Creates new form MAINMENU
      */
     DepartmentMaster departmentMaster;
+    ClassProgram classProgram ;
+    CourseMaster courseMaster;
+    FacultyMaster facultyMaster;
+    RoomMaster roomMaster;
+    SchoolYear schoolYear;
+    SubjectMaster subjectMaster;
+    TeachersLoad load;
+    TeachersLoading loading;
+    RoomUtilization roomUtil;
     public MainMenu() {
         initComponents();
-        departmentMaster =  new DepartmentMaster();
+        roomUtil = new RoomUtilization(this);
+        roomUtil.setVisible(false);
+        
+        departmentMaster =  new DepartmentMaster(this);
         departmentMaster.setVisible(false);
+        
+        
+        classProgram = new ClassProgram(this);
+        classProgram.setVisible(false);
+        
+        courseMaster = new CourseMaster(this);
+        this.courseMaster.setVisible(false);
+        
+        this.facultyMaster = new FacultyMaster(this);
+        this.facultyMaster.setVisible(false);
+        
+        this.roomMaster = new RoomMaster(this);
+        this.roomMaster.setVisible(false);
+        
+        
+        
+        this.schoolYear = new SchoolYear(this);
+        this.schoolYear.setVisible(false);
+        
+        this.subjectMaster = new SubjectMaster(this);
+        this.subjectMaster.setVisible(false);
+        
+        this.load = new TeachersLoad(this);
+        this.load.setVisible(false);
+        
+        this.loading = new TeachersLoading(this);
+        this.loading.setVisible(false);
+        
+        
+        
     }
 
     /**
@@ -39,18 +81,18 @@ public class MainMenu extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenu10 = new javax.swing.JMenu();
         department = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
-        jMenuItem14 = new javax.swing.JMenuItem();
-        jMenuItem16 = new javax.swing.JMenuItem();
-        jMenuItem17 = new javax.swing.JMenuItem();
+        course = new javax.swing.JMenuItem();
+        subject = new javax.swing.JMenuItem();
+        faculty = new javax.swing.JMenuItem();
+        room = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem18 = new javax.swing.JMenuItem();
+        t_load = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        jMenuItem19 = new javax.swing.JMenuItem();
-        jMenuItem20 = new javax.swing.JMenuItem();
-        jMenuItem21 = new javax.swing.JMenuItem();
+        class_program = new javax.swing.JMenuItem();
+        room_util = new javax.swing.JMenuItem();
+        t_loading = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
-        jMenuItem22 = new javax.swing.JMenuItem();
+        sy = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -109,22 +151,37 @@ public class MainMenu extends javax.swing.JFrame {
         });
         jMenu10.add(department);
 
-        jMenuItem13.setText("Course Master");
-        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+        course.setText("Course Master");
+        course.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem13ActionPerformed(evt);
+                courseActionPerformed(evt);
             }
         });
-        jMenu10.add(jMenuItem13);
+        jMenu10.add(course);
 
-        jMenuItem14.setText("Subject Master");
-        jMenu10.add(jMenuItem14);
+        subject.setText("Subject Master");
+        subject.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subjectActionPerformed(evt);
+            }
+        });
+        jMenu10.add(subject);
 
-        jMenuItem16.setText("Faculty Master");
-        jMenu10.add(jMenuItem16);
+        faculty.setText("Faculty Master");
+        faculty.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                facultyActionPerformed(evt);
+            }
+        });
+        jMenu10.add(faculty);
 
-        jMenuItem17.setText("Room Master");
-        jMenu10.add(jMenuItem17);
+        room.setText("Room Master");
+        room.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                roomActionPerformed(evt);
+            }
+        });
+        jMenu10.add(room);
 
         jMenu2.add(jMenu10);
 
@@ -132,28 +189,53 @@ public class MainMenu extends javax.swing.JFrame {
 
         jMenu3.setText("Transactions");
 
-        jMenuItem18.setText("Teachers Loading");
-        jMenu3.add(jMenuItem18);
+        t_load.setText("Teachers Loading");
+        t_load.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                t_loadActionPerformed(evt);
+            }
+        });
+        jMenu3.add(t_load);
 
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Reports");
 
-        jMenuItem19.setText("Class Program");
-        jMenu4.add(jMenuItem19);
+        class_program.setText("Class Program");
+        class_program.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                class_programActionPerformed(evt);
+            }
+        });
+        jMenu4.add(class_program);
 
-        jMenuItem20.setText("Room Utilization");
-        jMenu4.add(jMenuItem20);
+        room_util.setText("Room Utilization");
+        room_util.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                room_utilActionPerformed(evt);
+            }
+        });
+        jMenu4.add(room_util);
 
-        jMenuItem21.setText("Teachers Load");
-        jMenu4.add(jMenuItem21);
+        t_loading.setText("Teachers Load");
+        t_loading.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                t_loadingActionPerformed(evt);
+            }
+        });
+        jMenu4.add(t_loading);
 
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("School Year");
 
-        jMenuItem22.setText("Activation of Inactive Instructor");
-        jMenu5.add(jMenuItem22);
+        sy.setText("Activation of Inactive");
+        sy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                syActionPerformed(evt);
+            }
+        });
+        jMenu5.add(sy);
 
         jMenuBar1.add(jMenu5);
 
@@ -170,14 +252,66 @@ public class MainMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+    private void courseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem13ActionPerformed
+        courseMaster.setVisible(true);
+        courseMaster.offScreen();
+    }//GEN-LAST:event_courseActionPerformed
 
     private void departmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_departmentActionPerformed
         // TODO add your handling code here:
         departmentMaster.setVisible(true);
+        departmentMaster.offScreen();
     }//GEN-LAST:event_departmentActionPerformed
+
+    private void subjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subjectActionPerformed
+        // TODO add your handling code here:
+        this.subjectMaster.setVisible(true);
+        this.subjectMaster.offScreen();
+    }//GEN-LAST:event_subjectActionPerformed
+
+    private void facultyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facultyActionPerformed
+        // TODO add your handling code here:
+        this.facultyMaster.setVisible(true);
+        this.facultyMaster.offScreen();
+    }//GEN-LAST:event_facultyActionPerformed
+
+    private void roomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roomActionPerformed
+        // TODO add your handling code here:
+        this.roomMaster.setVisible(true);
+        this.roomMaster.offScreen();
+    }//GEN-LAST:event_roomActionPerformed
+
+    private void t_loadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_loadActionPerformed
+        // TODO add your handling code here:
+        this.load.setVisible(true);
+        this.load.offScreen();
+        
+    }//GEN-LAST:event_t_loadActionPerformed
+
+    private void t_loadingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_loadingActionPerformed
+        // TODO add your handling code here:
+        this.loading.setVisible(true);
+        this.loading.offScreen();
+    }//GEN-LAST:event_t_loadingActionPerformed
+
+    private void class_programActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_class_programActionPerformed
+        // TODO add your handling code here:
+        this.classProgram.setVisible(true);
+        this.classProgram.offScreen();
+    }//GEN-LAST:event_class_programActionPerformed
+
+    private void syActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_syActionPerformed
+        // TODO add your handling code here:
+        this.schoolYear.setVisible(true);
+        this.schoolYear.offScreen();
+    }//GEN-LAST:event_syActionPerformed
+
+    private void room_utilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_room_utilActionPerformed
+        // TODO add your handling code here:
+        this.roomUtil.setVisible(true);
+        this.roomUtil.offScreen();
+    }//GEN-LAST:event_room_utilActionPerformed
 
     /**
      * @param args the command line arguments
@@ -216,7 +350,10 @@ public class MainMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem class_program;
+    private javax.swing.JMenuItem course;
     private javax.swing.JMenuItem department;
+    private javax.swing.JMenuItem faculty;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu2;
@@ -225,17 +362,14 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
-    private javax.swing.JMenuItem jMenuItem16;
-    private javax.swing.JMenuItem jMenuItem17;
-    private javax.swing.JMenuItem jMenuItem18;
-    private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem20;
-    private javax.swing.JMenuItem jMenuItem21;
-    private javax.swing.JMenuItem jMenuItem22;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JMenuItem room;
+    private javax.swing.JMenuItem room_util;
+    private javax.swing.JMenuItem subject;
+    private javax.swing.JMenuItem sy;
+    private javax.swing.JMenuItem t_load;
+    private javax.swing.JMenuItem t_loading;
     // End of variables declaration//GEN-END:variables
 }

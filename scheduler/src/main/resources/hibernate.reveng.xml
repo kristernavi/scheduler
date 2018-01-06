@@ -50,4 +50,5 @@ Contributor(s):
   <table-filter match-name="faculties"/>
   <table-filter match-name="teachers_loading_details"/>
   <table-filter match-name="departments"/>
+  <table-filter match-name="subject_departments"/>
 </hibernate-reverse-engineering>

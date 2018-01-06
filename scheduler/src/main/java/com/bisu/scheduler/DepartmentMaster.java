@@ -11,11 +11,16 @@ import com.bisu.extras.Helper;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.Set;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 /**
  *
@@ -26,7 +31,9 @@ public class DepartmentMaster extends javax.swing.JFrame {
     Department department;
     DefaultTableModel model;
     JPopupMenu popupMenu;
-
+    MainMenu mainMenu;
+    
+    
     public DepartmentMaster() {
         department = new Department();
 
@@ -69,6 +76,20 @@ public class DepartmentMaster extends javax.swing.JFrame {
 
     }
 
+    public DepartmentMaster(MainMenu mainMenu) {
+    this();
+    this.mainMenu = mainMenu;
+        int op = this.getDefaultCloseOperation(); // HIDE_ON_CLOSE
+    this.setDefaultCloseOperation(this.DO_NOTHING_ON_CLOSE);
+    
+    }
+    public void offScreen(){
+     this.mainMenu.setVisible(false);
+    }
+    public void onScreen(){
+      this.mainMenu.setVisible(true);
+      this.setVisible(false);
+    }
     protected void populate_input(int id) {
 
         Departments entity = (Departments) department.find(id);
@@ -76,7 +97,6 @@ public class DepartmentMaster extends javax.swing.JFrame {
         description.setText(entity.getDescription());
         head.setText(entity.getHead());
         code.setText(entity.getCode());
-        
 
     }
 
@@ -150,7 +170,7 @@ public class DepartmentMaster extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(51, 51, 51)
                         .addComponent(hiddenID)))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(218, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -255,7 +275,12 @@ public class DepartmentMaster extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Menu");
+        jButton1.setText("Back to Main Menu");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -270,11 +295,11 @@ public class DepartmentMaster extends javax.swing.JFrame {
                 .addComponent(save)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(delete)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cancel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(67, 67, 67)
                 .addComponent(jButton1)
-                .addGap(22, 22, 22))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -345,7 +370,6 @@ public class DepartmentMaster extends javax.swing.JFrame {
 
         if (Helper.isNumeric(hiddenID.getText())) {
 
-         
             int id = Integer.parseInt(hiddenID.getText());
             entity = (Departments) department.find(id);
 
@@ -357,16 +381,45 @@ public class DepartmentMaster extends javax.swing.JFrame {
         entity.setDescription(description.getText());
         entity.setHead(head.getText());
         entity.setCode(code.getText());
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 
-        if (clearable) {
-            this.clear();
-            department.save(entity);
-            Helper.messageBox("Record Succefully Save", "Processing Complete");
+        Validator validator = factory.getValidator();
+
+        //...
+        Set<ConstraintViolation<Departments>> constraintViolations = validator.validate(entity);
+        //System.out.println(constraintViolations);
+        if (!constraintViolations.isEmpty()) {
+            String msg = "";
+            for (ConstraintViolation<Departments> constraintViolation : constraintViolations) {
+                String name = constraintViolation.getPropertyPath().toString();
+                name = name.substring(0, 1).toUpperCase()+name.substring(1);
+                msg += name + " " + constraintViolation.getMessage() + "\n";
+                
+            }
+            
+
+            Helper.errorMessage(msg, "Error");
         } else {
+            try {
+                if (clearable) {
+                    department.save(entity);
+                    Helper.messageBox("Record Succefully Save", "Processing Complete");
+                } else {
 
-            if (Helper.messageBox("Are you want to edit the record?", "Confirmation", true)) {
-                department.save(entity);
-                Helper.messageBox("Record Succefully Save", "Processing Complete");
+                    if (Helper.messageBox("Are you want to edit the record?", "Confirmation", true)) {
+                        department.save(entity);
+                        Helper.messageBox("Record Succefully Save", "Processing Complete");
+                    }
+
+                }
+            } catch (Exception ex) {
+                Helper.errorMessage("Code must be unique", "Error");
+                clearable = false;
+            } finally{
+                if(clearable){
+                this.clear();
+                }
+                Helper.closeSession();
             }
 
         }
@@ -430,13 +483,18 @@ public class DepartmentMaster extends javax.swing.JFrame {
         Departments entity;
         int id = Integer.parseInt(hiddenID.getText());
         entity = (Departments) department.find(id);
-        
+
         if (Helper.messageBox("Are you want to delete the record?", "Confirmation", true)) {
-                department.delete(entity);
-                Helper.messageBox("Record Succefully Deleted", "Processing Complete");
-                pane_nav.setSelectedIndex(1);
-            }
+            department.delete(entity);
+            Helper.messageBox("Record Succefully Deleted", "Processing Complete");
+            pane_nav.setSelectedIndex(1);
+        }
     }//GEN-LAST:event_deleteActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.onScreen();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -39,7 +39,10 @@ public class Helper {
         JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
 
     }
+    public static void errorMessage(String infoMessage, String titleBar){
+                JOptionPane.showMessageDialog(null, infoMessage, "Error: " + titleBar, JOptionPane.ERROR_MESSAGE);
 
+    }
     public static boolean confirmationMessage() {
 
         return messageBox("Are you want to continue the action?", "Confirmation", true);

@@ -10,6 +10,7 @@ import com.bisu.entities.SchoolYears;
 import com.bisu.entities.Subjects;
 import java.util.List;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -21,21 +22,30 @@ public class SchoolYear extends AbstractModel {
     public SchoolYear() {
         super(SchoolYears.class);
     }
-    
-    public SchoolYears getActive(){
-    
+
+    public SchoolYears getActive() {
+
         List result;
         begin();
-        
+
         Criteria cr = session().createCriteria(SchoolYears.class);
         cr.add(Restrictions.eq("actived", true));
         cr.setFirstResult(0);
         cr.setMaxResults(1);
         result = cr.list();
-        
 
         end();
         return (SchoolYears) result.get(0);
     }
-    
+
+    public Integer setAllInactive() {
+        List result;
+        begin();
+        Query query = session().createSQLQuery(
+                "Select * from school_years");
+        result = query.list();
+        end();
+        return result.size();
+    }
+
 }

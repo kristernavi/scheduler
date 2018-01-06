@@ -14,6 +14,22 @@ public class FacultyMaster extends javax.swing.JFrame {
     /**
      * Creates new form FacultyMaster
      */
+    MainMenu mainMenu;
+    
+    public FacultyMaster(MainMenu mainMenu) {
+    this();
+    this.mainMenu = mainMenu;
+        int op = this.getDefaultCloseOperation(); // HIDE_ON_CLOSE
+    this.setDefaultCloseOperation(this.DO_NOTHING_ON_CLOSE);
+    
+    }
+    public void offScreen(){
+     this.mainMenu.setVisible(false);
+    }
+    public void onScreen(){
+      this.mainMenu.setVisible(true);
+      this.setVisible(false);
+    }
     public FacultyMaster() {
         initComponents();
     }

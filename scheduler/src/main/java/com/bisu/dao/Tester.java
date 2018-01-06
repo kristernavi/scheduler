@@ -6,6 +6,14 @@
 package com.bisu.dao;
 
 import com.bisu.entities.Departments;
+import com.bisu.entities.Rooms;
+import com.bisu.entities.Subjects;
+import com.bisu.extras.Helper;
+import java.util.Set;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 /**
  *
@@ -17,11 +25,19 @@ public class Tester {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        Department depart = new Department();
-       
+        Subjects s = new Subjects();
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+
+        Validator validator = factory.getValidator();
+
+        //...
+        Set<ConstraintViolation<Subjects>> constraintViolations = validator.validate(s);
+        System.out.println(constraintViolations);
         
-        System.out.println(""+depart.getModel().getSimpleName());
+        Course c = new Course();
+        
+        System.err.println(""+c.all().size());
+        
     }
     
 }

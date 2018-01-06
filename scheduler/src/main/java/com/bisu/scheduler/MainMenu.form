@@ -55,28 +55,37 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="departmentActionPerformed"/>
                   </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem13">
+                <MenuItem class="javax.swing.JMenuItem" name="course">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Course Master"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem13ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="courseActionPerformed"/>
                   </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem14">
+                <MenuItem class="javax.swing.JMenuItem" name="subject">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Subject Master"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subjectActionPerformed"/>
+                  </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem16">
+                <MenuItem class="javax.swing.JMenuItem" name="faculty">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Faculty Master"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="facultyActionPerformed"/>
+                  </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem17">
+                <MenuItem class="javax.swing.JMenuItem" name="room">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Room Master"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="roomActionPerformed"/>
+                  </Events>
                 </MenuItem>
               </SubComponents>
             </Menu>
@@ -87,10 +96,13 @@
             <Property name="text" type="java.lang.String" value="Transactions"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem18">
+            <MenuItem class="javax.swing.JMenuItem" name="t_load">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Teachers Loading"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="t_loadActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -99,20 +111,29 @@
             <Property name="text" type="java.lang.String" value="Reports"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem19">
+            <MenuItem class="javax.swing.JMenuItem" name="class_program">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Class Program"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="class_programActionPerformed"/>
+              </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem20">
+            <MenuItem class="javax.swing.JMenuItem" name="room_util">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Room Utilization"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="room_utilActionPerformed"/>
+              </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem21">
+            <MenuItem class="javax.swing.JMenuItem" name="t_loading">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Teachers Load"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="t_loadingActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -121,10 +142,13 @@
             <Property name="text" type="java.lang.String" value="School Year"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem22">
+            <MenuItem class="javax.swing.JMenuItem" name="sy">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Activation of Inactive Instructor"/>
+                <Property name="text" type="java.lang.String" value="Activation of Inactive"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="syActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

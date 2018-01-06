@@ -12,10 +12,15 @@ import com.bisu.extras.Helper;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.Set;
 import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 /**
  *
@@ -29,6 +34,23 @@ public class RoomMaster extends javax.swing.JFrame {
     protected Room room;
     DefaultTableModel model;
 
+    MainMenu mainMenu;
+    
+    public RoomMaster(MainMenu mainMenu) {
+    this();
+    this.mainMenu = mainMenu;
+        int op = this.getDefaultCloseOperation(); // HIDE_ON_CLOSE
+    this.setDefaultCloseOperation(this.DO_NOTHING_ON_CLOSE);
+    
+    }
+    public void offScreen(){
+     this.mainMenu.setVisible(false);
+    }
+    public void onScreen(){
+      this.mainMenu.setVisible(true);
+      this.setVisible(false);
+    }
+    
     public RoomMaster() {
         room = new Room();
         initComponents();
@@ -40,7 +62,7 @@ public class RoomMaster extends javax.swing.JFrame {
         room_table.getColumnModel().getColumn(5).setWidth(0);
         room_table.getColumnModel().getColumn(5).setMinWidth(0);
         room_table.getColumnModel().getColumn(5).setMaxWidth(0);
-        
+
         JMenuItem menuItemEdit = new JMenuItem("Edit");
         JMenuItem menuItemDelete = new JMenuItem("Delete");
         menuItemEdit.addActionListener(new ActionListener() {
@@ -385,22 +407,62 @@ public class RoomMaster extends javax.swing.JFrame {
             model = new Rooms();
             clearable = true;
         }
-        model.setCapacity(Integer.parseInt(capacity.getText()));
+        Integer cap = 0;
+        Integer num = 0;
+        String type = "";
+        if (Helper.isNumeric(capacity.getText()) && !capacity.getText().equals("")) {
+            cap = Integer.parseInt(capacity.getText());
+
+        } 
+        if (Helper.isNumeric(room_id.getText()) && !room_id.getText().equals("")) {
+            num = Integer.parseInt(room_id.getText());
+
+        }
+        if(typeGroup.getSelection() != null){
+            type = typeGroup.getSelection().getActionCommand();
+        }
+        model.setCapacity(cap);
         model.setDescription(description.getText());
         model.setLocation(location.getText());
-        model.setType(typeGroup.getSelection().getActionCommand());
-        model.setNumber(Integer.parseInt(room_id.getText()));
-        if (clearable) {
-            this.clear();
-            room.save(model);
-            Helper.messageBox("Record Succefully Save", "Processing Complete");
-        } else {
+        model.setType(type);
+        model.setNumber(num);
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 
-            if (Helper.messageBox("Are you want to edit the record?", "Confirmation", true)) {
-                room.save(model);
-                Helper.messageBox("Record Succefully Save", "Processing Complete");
+        Validator validator = factory.getValidator();
+        
+        Set<ConstraintViolation<Rooms>> constraintViolations = validator.validate(model);
+        if (true) {
+            String msg = "";
+            for (ConstraintViolation<Rooms> constraintViolation : constraintViolations) {
+                String name = constraintViolation.getPropertyPath().toString();
+                name = name.substring(0, 1).toUpperCase() + name.substring(1);
+                msg += name + " " + constraintViolation.getMessage() + "\n";
+
             }
 
+            Helper.errorMessage(msg, "Error");
+        } else {
+            try {
+                if (clearable) {
+                    room.save(model);
+                    Helper.messageBox("Record Succefully Save", "Processing Complete");
+                } else {
+
+                    if (Helper.messageBox("Are you want to edit the record?", "Confirmation", true)) {
+                        room.save(model);
+                        Helper.messageBox("Record Succefully Save", "Processing Complete");
+                    }
+
+                }
+            } catch (Exception ex) {
+                Helper.errorMessage("Room Number must be unique", "Error");
+                clearable = false;
+            } finally {
+                if (clearable) {
+                    this.clear();
+                }
+                Helper.closeSession();
+            }
         }
     }//GEN-LAST:event_saveActionPerformed
 
@@ -425,7 +487,7 @@ public class RoomMaster extends javax.swing.JFrame {
             if (pane.getSelectedIndex() == 1) {
                 nav_pane.setEnabledAt(0, false);
                 save.setEnabled(false);
-               // edit.setEnabled(false);
+                // edit.setEnabled(false);
                 delete.setEnabled(false);
                 cancel.setEnabled(false);
                 add.setEnabled(true);
@@ -437,12 +499,12 @@ public class RoomMaster extends javax.swing.JFrame {
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
         // TODO add your handling code here:
-        
+
         if (Helper.confirmationMessage()) {
-                room.delete((Rooms) room.find(Integer.parseInt(hidden_id.getText())));
-                Helper.deleteMessage();
-                nav_pane.setSelectedIndex(1);
-            }
+            room.delete((Rooms) room.find(Integer.parseInt(hidden_id.getText())));
+            Helper.deleteMessage();
+            nav_pane.setSelectedIndex(1);
+        }
     }//GEN-LAST:event_deleteActionPerformed
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
