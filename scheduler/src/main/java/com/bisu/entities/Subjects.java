@@ -183,7 +183,7 @@ public class Subjects implements java.io.Serializable {
     }
 
     @Digits(integer = 2, fraction = 0)
-    @Min(value = 1)
+    @Min(value = 0)
     @Max(value = 99)
     @Column(name = "lab_hours")
     public Integer getLabHours() {

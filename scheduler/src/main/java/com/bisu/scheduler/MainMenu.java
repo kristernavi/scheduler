@@ -284,15 +284,15 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void t_loadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_loadActionPerformed
         // TODO add your handling code here:
-        this.load.setVisible(true);
-        this.load.offScreen();
+        this.loading.setVisible(true);
+        this.loading.offScreen();
         
     }//GEN-LAST:event_t_loadActionPerformed
 
     private void t_loadingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_loadingActionPerformed
         // TODO add your handling code here:
-        this.loading.setVisible(true);
-        this.loading.offScreen();
+        this.load.setVisible(true);
+        this.load.offScreen();
     }//GEN-LAST:event_t_loadingActionPerformed
 
     private void class_programActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_class_programActionPerformed
