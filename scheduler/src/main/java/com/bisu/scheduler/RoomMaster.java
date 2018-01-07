@@ -138,6 +138,7 @@ public class RoomMaster extends javax.swing.JFrame {
         save = new javax.swing.JButton();
         delete = new javax.swing.JButton();
         cancel = new javax.swing.JButton();
+        cancel1 = new javax.swing.JButton();
         nav_pane = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -184,6 +185,13 @@ public class RoomMaster extends javax.swing.JFrame {
 
         cancel.setText("Cancel");
 
+        cancel1.setText("Back");
+        cancel1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancel1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -195,9 +203,10 @@ public class RoomMaster extends javax.swing.JFrame {
                 .addComponent(save)
                 .addGap(13, 13, 13)
                 .addComponent(delete)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(cancel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(cancel1))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -207,7 +216,8 @@ public class RoomMaster extends javax.swing.JFrame {
                     .addComponent(add)
                     .addComponent(save)
                     .addComponent(delete)
-                    .addComponent(cancel))
+                    .addComponent(cancel)
+                    .addComponent(cancel1))
                 .addContainerGap())
         );
 
@@ -431,7 +441,7 @@ public class RoomMaster extends javax.swing.JFrame {
         Validator validator = factory.getValidator();
         
         Set<ConstraintViolation<Rooms>> constraintViolations = validator.validate(model);
-        if (true) {
+        if (!constraintViolations.isEmpty()) {
             String msg = "";
             for (ConstraintViolation<Rooms> constraintViolation : constraintViolations) {
                 String name = constraintViolation.getPropertyPath().toString();
@@ -457,11 +467,11 @@ public class RoomMaster extends javax.swing.JFrame {
             } catch (Exception ex) {
                 Helper.errorMessage("Room Number must be unique", "Error");
                 clearable = false;
+                Helper.closeSession();
             } finally {
                 if (clearable) {
                     this.clear();
                 }
-                Helper.closeSession();
             }
         }
     }//GEN-LAST:event_saveActionPerformed
@@ -513,6 +523,11 @@ public class RoomMaster extends javax.swing.JFrame {
         nav_pane.setSelectedIndex(0);
         save.setEnabled(true);
     }//GEN-LAST:event_addActionPerformed
+
+    private void cancel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel1ActionPerformed
+        // TODO add your handling code here:
+        this.onScreen();
+    }//GEN-LAST:event_cancel1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -574,6 +589,7 @@ public class RoomMaster extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add;
     private javax.swing.JButton cancel;
+    private javax.swing.JButton cancel1;
     private javax.swing.JTextField capacity;
     private javax.swing.JButton delete;
     private javax.swing.JTextField description;

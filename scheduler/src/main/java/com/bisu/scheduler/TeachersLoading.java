@@ -12,6 +12,7 @@ import com.bisu.dao.Room;
 import com.bisu.dao.Subject;
 import com.bisu.dao.Teacher;
 import com.bisu.dao.SchoolYear;
+import com.bisu.dao.SubjectCourse;
 import com.bisu.entities.Courses;
 import com.bisu.entities.Faculties;
 import com.bisu.entities.Rooms;
@@ -45,6 +46,7 @@ public class TeachersLoading extends javax.swing.JFrame {
     LoadingDetail loadDetail;
     SchoolYear schoolYear;
     MainMenu mainMenu;
+    SubjectCourse sc;
 
     public TeachersLoading(MainMenu mainMenu) {
         this();
@@ -68,6 +70,7 @@ public class TeachersLoading extends javax.swing.JFrame {
         schoolYear = new SchoolYear();
         course = new Course();
         subject = new Subject();
+        sc = new SubjectCourse();
         room = new Room();
         load = new Loading();
         teacher = new Teacher();
@@ -128,6 +131,7 @@ public class TeachersLoading extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         scheduleTable = new javax.swing.JTable();
+        jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Teachers Loading");
@@ -386,6 +390,13 @@ public class TeachersLoading extends javax.swing.JFrame {
             scheduleTable.getColumnModel().getColumn(11).setMaxWidth(0);
         }
 
+        jButton6.setText("Back");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -402,17 +413,21 @@ public class TeachersLoading extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton5)))
+                        .addComponent(jButton5)
+                        .addGap(38, 38, 38)
+                        .addComponent(jButton6)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                 .addContainerGap(34, Short.MAX_VALUE)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3)
-                    .addComponent(jButton5))
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(jButton3)
+                        .addComponent(jButton5))
+                    .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -507,8 +522,11 @@ public class TeachersLoading extends javax.swing.JFrame {
         List<ComboItem> combo = new ArrayList<ComboItem>();
         combo.add(new ComboItem(0, "Select Subject"));
         Courses courseModel = (Courses) this.course.find(course);
-        List subject = this.subject.loading_course(year_level, semester, courseModel);
-        System.out.println("" + subject.size());
+        List<Integer> ids = sc.getByCourse(courseModel);
+        List subject = null;
+        if(ids.size() > 0){
+            subject = this.subject.loading_course(year_level, semester, ids);
+        }
 
         try {
 
@@ -621,6 +639,11 @@ public class TeachersLoading extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        this.onScreen();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
     private void subject_populate() {
         ComboItem year_level = (ComboItem) year_levelCb.getSelectedItem();
         ComboItem semester = (ComboItem) semesterCb.getSelectedItem();
@@ -677,6 +700,7 @@ public class TeachersLoading extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

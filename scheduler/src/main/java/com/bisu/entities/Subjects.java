@@ -26,8 +26,8 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "subjects",
-         catalog = "bisu_db",
-         uniqueConstraints = @UniqueConstraint(columnNames = "code")
+        catalog = "bisu_db",
+        uniqueConstraints = @UniqueConstraint(columnNames = "code")
 )
 public class Subjects implements java.io.Serializable {
 
@@ -45,6 +45,8 @@ public class Subjects implements java.io.Serializable {
     private String preRequisite;
     private Set<Subjects> subjectses = new HashSet<Subjects>(0);
     private Set<TeachersLoadings> teachersLoadingses = new HashSet<TeachersLoadings>(0);
+    private Set<SubjectDepartments> subjectDepartmentses = new HashSet<SubjectDepartments>(0);
+    private Set<SubjectCourses> subjectCourseses = new HashSet<SubjectCourses>(0);
 
     public Subjects() {
     }
@@ -230,6 +232,24 @@ public class Subjects implements java.io.Serializable {
 
     public void setTeachersLoadingses(Set<TeachersLoadings> teachersLoadingses) {
         this.teachersLoadingses = teachersLoadingses;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "subjects")
+    public Set<SubjectDepartments> getSubjectDepartmentses() {
+        return this.subjectDepartmentses;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "subjects")
+    public Set<SubjectCourses> getSubjectCourseses() {
+        return this.subjectCourseses;
+    }
+
+    public void setSubjectCourseses(Set<SubjectCourses> subjectCourseses) {
+        this.subjectCourseses = subjectCourseses;
+    }
+
+    public void setSubjectDepartmentses(Set<SubjectDepartments> subjectDepartmentses) {
+        this.subjectDepartmentses = subjectDepartmentses;
     }
 
 }

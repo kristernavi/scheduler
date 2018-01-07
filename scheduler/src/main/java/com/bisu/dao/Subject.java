@@ -7,6 +7,7 @@ package com.bisu.dao;
 
 import com.bisu.contracts.AbstractModel;
 import com.bisu.entities.Courses;
+import com.bisu.entities.SubjectCourses;
 import com.bisu.entities.Subjects;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -22,7 +23,7 @@ public class Subject extends AbstractModel{
         super(Subjects.class);
     }
     
-    public List loading_course(Integer year_level, Integer semester, Courses course) {
+    public List loading_course(Integer year_level, Integer semester,List<Integer> sc) {
         
         List results;
         begin();
@@ -30,7 +31,23 @@ public class Subject extends AbstractModel{
         Criteria cr = session().createCriteria(Subjects.class);
         cr.add(Restrictions.eq("yearLevel", year_level.shortValue()));
         cr.add(Restrictions.eq("semester", semester.shortValue()));
-        cr.add(Restrictions.eq("courses", course));
+        cr.add(Restrictions.in("id", sc));
+        results = cr.list();
+        
+        
+
+        end();
+        return results;
+    }
+    
+    public List getBySubjectCourse(List<Integer> sc) {
+        
+        List results;
+        begin();
+        
+        Criteria cr = session().createCriteria(Subjects.class);
+        cr.add(Restrictions.in("id", sc));
+        
         results = cr.list();
         
         

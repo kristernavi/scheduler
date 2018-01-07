@@ -106,6 +106,7 @@ public class CourseMaster extends javax.swing.JFrame {
         save = new javax.swing.JButton();
         delete = new javax.swing.JButton();
         cancel = new javax.swing.JButton();
+        cancel1 = new javax.swing.JButton();
         nav_pane = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -149,6 +150,13 @@ public class CourseMaster extends javax.swing.JFrame {
 
         cancel.setText("Cancel");
 
+        cancel1.setText("Back");
+        cancel1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancel1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -164,7 +172,9 @@ public class CourseMaster extends javax.swing.JFrame {
                 .addComponent(delete)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cancel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cancel1)
+                .addGap(27, 27, 27))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,7 +185,8 @@ public class CourseMaster extends javax.swing.JFrame {
                     .addComponent(edit)
                     .addComponent(save)
                     .addComponent(delete)
-                    .addComponent(cancel))
+                    .addComponent(cancel)
+                    .addComponent(cancel1))
                 .addContainerGap())
         );
 
@@ -293,7 +304,7 @@ public class CourseMaster extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         nav_pane.addTab("List", jPanel4);
@@ -422,6 +433,11 @@ public class CourseMaster extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_descriptionActionPerformed
 
+    private void cancel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel1ActionPerformed
+        // TODO add your handling code here:
+        this.onScreen();
+    }//GEN-LAST:event_cancel1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -470,6 +486,7 @@ public class CourseMaster extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add;
     private javax.swing.JButton cancel;
+    private javax.swing.JButton cancel1;
     private javax.swing.JTextField code;
     private javax.swing.JTextField code1;
     private javax.swing.JTable courseTable;

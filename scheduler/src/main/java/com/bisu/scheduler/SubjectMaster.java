@@ -7,7 +7,9 @@ package com.bisu.scheduler;
 
 import com.bisu.dao.Course;
 import com.bisu.dao.Subject;
+import com.bisu.dao.SubjectCourse;
 import com.bisu.entities.Courses;
+import com.bisu.entities.SubjectCourses;
 import com.bisu.entities.Subjects;
 import com.bisu.extras.Helper;
 import java.awt.event.ActionEvent;
@@ -37,8 +39,10 @@ public class SubjectMaster extends javax.swing.JFrame {
     private Subject subject;
     private Course course;
     DefaultTableModel model;
+    DefaultTableModel model2;
     JPopupMenu popupMenu;
     MainMenu mainMenu;
+    SubjectCourse subjectCourse;
     
     public SubjectMaster(MainMenu mainMenu) {
     this();
@@ -57,9 +61,11 @@ public class SubjectMaster extends javax.swing.JFrame {
     public SubjectMaster() {
         this.course = new Course();
         subject = new Subject();
+        this.subjectCourse = new SubjectCourse();
         initComponents();
         popupMenu = new JPopupMenu();
         model = (DefaultTableModel) subjectsTable.getModel();
+        model2 = (DefaultTableModel) courseTable.getModel();
         JMenuItem menuItemEdit = new JMenuItem("Edit");
         JMenuItem menuItemDelete = new JMenuItem("Delete");
         menuItemEdit.addActionListener(new ActionListener() {
@@ -211,7 +217,9 @@ public class SubjectMaster extends javax.swing.JFrame {
         requisite = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
-        save1 = new javax.swing.JButton();
+        addCourse = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        courseTable = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         subjectsTable = new javax.swing.JTable();
@@ -249,6 +257,11 @@ public class SubjectMaster extends javax.swing.JFrame {
         cancel.setText("Cancel");
 
         cancel1.setText("Back To Main Menu");
+        cancel1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancel1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -265,7 +278,7 @@ public class SubjectMaster extends javax.swing.JFrame {
                 .addComponent(delete)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cancel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
                 .addComponent(cancel1)
                 .addGap(27, 27, 27))
         );
@@ -374,12 +387,47 @@ public class SubjectMaster extends javax.swing.JFrame {
             }
         });
 
-        save1.setText("+");
-        save1.addActionListener(new java.awt.event.ActionListener() {
+        addCourse.setText("+");
+        addCourse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                save1ActionPerformed(evt);
+                addCourseActionPerformed(evt);
             }
         });
+
+        courseTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Code", "Action", "id"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                true, true, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        courseTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                courseTableMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(courseTable);
+        if (courseTable.getColumnModel().getColumnCount() > 0) {
+            courseTable.getColumnModel().getColumn(2).setMinWidth(0);
+            courseTable.getColumnModel().getColumn(2).setPreferredWidth(0);
+            courseTable.getColumnModel().getColumn(2).setMaxWidth(0);
+        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -388,6 +436,34 @@ public class SubjectMaster extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(major)
+                                .addGap(18, 18, 18)
+                                .addComponent(gen_ed)
+                                .addGap(5, 5, 5)
+                                .addComponent(elective))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.LEADING, 0, 225, Short.MAX_VALUE)
+                                .addComponent(requisite, javax.swing.GroupLayout.Alignment.LEADING)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)
+                                .addComponent(lab_hr, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addGap(18, 18, 18)
+                                .addComponent(semCb, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(hiddenID)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -400,8 +476,9 @@ public class SubjectMaster extends javax.swing.JFrame {
                                 .addGap(32, 32, 32)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(coursetItems, 0, 161, Short.MAX_VALUE)
-                                        .addGap(79, 406, Short.MAX_VALUE))
+                                        .addComponent(coursetItems, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(addCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(yearCB, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel5)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -415,49 +492,12 @@ public class SubjectMaster extends javax.swing.JFrame {
                                         .addComponent(code))
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(lec_hr, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(units, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(units, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel12))
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(287, 287, 287)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addComponent(lab_hr, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel11)
-                                .addGap(18, 18, 18)
-                                .addComponent(semCb, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8))
-                        .addGap(20, 20, 20)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(major)
-                                .addGap(18, 18, 18)
-                                .addComponent(gen_ed)
-                                .addGap(5, 5, 5)
-                                .addComponent(elective))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.LEADING, 0, 225, Short.MAX_VALUE)
-                                    .addComponent(requisite, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(save1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(135, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(199, 199, 199)
-                        .addComponent(hiddenID))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel12)))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -468,11 +508,13 @@ public class SubjectMaster extends javax.swing.JFrame {
                     .addComponent(jLabel9)
                     .addComponent(yearCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11)
-                    .addComponent(semCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(semCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(hiddenID))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(coursetItems, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(coursetItems, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addCourse))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -505,11 +547,10 @@ public class SubjectMaster extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(save1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(hiddenID)
-                .addGap(33, 33, 33))
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(203, Short.MAX_VALUE))
         );
 
         nav_pane.addTab("Details", jPanel1);
@@ -568,14 +609,17 @@ public class SubjectMaster extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(nav_pane, javax.swing.GroupLayout.PREFERRED_SIZE, 709, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(nav_pane, javax.swing.GroupLayout.PREFERRED_SIZE, 709, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(nav_pane, javax.swing.GroupLayout.PREFERRED_SIZE, 437, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(nav_pane))
         );
 
         pack();
@@ -613,6 +657,7 @@ public class SubjectMaster extends javax.swing.JFrame {
         }
 
     }
+    
     private void unitsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unitsActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_unitsActionPerformed
@@ -645,12 +690,14 @@ public class SubjectMaster extends javax.swing.JFrame {
             model = new Subjects();
         }
         //  ComboItem selected_subject = (ComboItem) subjectItems.getSelectedItem();
-        ComboItem selected_course = (ComboItem) coursetItems.getSelectedItem();
+        ComboItem yr_lvl = (ComboItem) yearCB.getSelectedItem();
+        ComboItem semester = (ComboItem) semCb.getSelectedItem();
         // Subjects pre_requisite = null;
         Integer lec = 0;
         Integer lab = 0;
-        Courses course = null;
         Short unit = 0;
+        Short yr = Short.parseShort(""+yr_lvl.getValue());
+        Short sem = Short.parseShort(""+semester.getValue());
 //        if(selected_subject.getValue() != 0){
 //        pre_requisite = (Subjects) subject.find(selected_subject.getValue());
 //        }
@@ -663,19 +710,20 @@ public class SubjectMaster extends javax.swing.JFrame {
         if (Helper.isNumeric(lec_hr.getText())) {
             lec = Integer.parseInt(lec_hr.getText());
         }
+        
 
-        if (selected_course.getValue() != 0) {
-            course = (Courses) this.course.find(selected_course.getValue());
-        }
+       
         String type = "";
         if (this.typeGroup.getSelection() != null) {
             type = this.typeGroup.getSelection().getActionCommand();
         }
+       
         model.setCode(code.getText());
+        model.setYearLevel(yr);
+        model.setSemester(sem);
         model.setDescription(description.getText());
         model.setLabHours(lab);
         model.setLecHours(lec);
-        model.setCourses(course);
         model.setPreRequisite(requisite.getText());
         model.setUnits(unit);
         model.setType(type);
@@ -696,8 +744,23 @@ public class SubjectMaster extends javax.swing.JFrame {
 
             Helper.errorMessage(msg, "Error");
         } else {
+            if(courseTable.getRowCount() > 0){
+             
             subject.save(model);
+            for(int index = 0 ; index < courseTable.getRowCount(); index++){
+                SubjectCourses sc = new SubjectCourses();
+                Courses c = (Courses) this.course.find((Integer)courseTable.getValueAt(index, 2));
+                sc.setCourses(c);
+                sc.setSubjects(model);
+                model.getSubjectCourseses().add(sc);
+                subjectCourse.save(sc);
+            }
             Helper.successMessage();
+            this.clear();
+            }
+            else{
+                Helper.errorMessage("Course is required atleast 1", "error");
+            }
 
         }
     }//GEN-LAST:event_saveActionPerformed
@@ -771,9 +834,46 @@ public class SubjectMaster extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deleteActionPerformed
 
-    private void save1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_save1ActionPerformed
+    private void addCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCourseActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_save1ActionPerformed
+        ComboItem item = (ComboItem) coursetItems.getSelectedItem();
+        if(item.getValue() > 0 ){
+         
+            boolean addable = true;
+            for(int index = 0 ; index < this.courseTable.getRowCount() ; index++){
+                if(item.getValue() == this.courseTable.getValueAt(index, 2)){
+                Helper.errorMessage("Course already exsist", "Error");
+                addable = false;
+                }
+            }
+            if(addable){
+            Object row[] = new Object[3];
+            row[0] = item.getLabel();
+            row[1] = "Delete";
+            row[2] = item.getValue();
+            model2.addRow(row);
+            }
+
+        }
+        
+        else{
+            Helper.errorMessage("Select a course", "Error");
+        }
+    }//GEN-LAST:event_addCourseActionPerformed
+
+    private void courseTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_courseTableMouseClicked
+        // TODO add your handling code here:
+        int row = courseTable.rowAtPoint(evt.getPoint());
+        int col = courseTable.columnAtPoint(evt.getPoint());
+        if (row >= 0 && col >= 1) {
+            model2.removeRow(row);
+        }
+    }//GEN-LAST:event_courseTableMouseClicked
+
+    private void cancel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel1ActionPerformed
+        // TODO add your handling code here:
+      this.onScreen();
+    }//GEN-LAST:event_cancel1ActionPerformed
 
     private void clear() {
         code.setText("");
@@ -781,6 +881,11 @@ public class SubjectMaster extends javax.swing.JFrame {
         lab_hr.setText("1");
         lec_hr.setText("1");
         units.setText("1");
+        yearCB.setSelectedIndex(0);
+        this.semCb.setSelectedIndex(0);
+        this.model2.setRowCount(0);
+        this.coursetItems.setSelectedIndex(0);
+        this.requisite.setText("");
 
     }
 
@@ -821,9 +926,11 @@ public class SubjectMaster extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add;
+    private javax.swing.JButton addCourse;
     private javax.swing.JButton cancel;
     private javax.swing.JButton cancel1;
     private javax.swing.JTextField code;
+    private javax.swing.JTable courseTable;
     private javax.swing.JComboBox<String> coursetItems;
     private javax.swing.JButton delete;
     private javax.swing.JTextField description;
@@ -847,13 +954,13 @@ public class SubjectMaster extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField lab_hr;
     private javax.swing.JTextField lec_hr;
     private javax.swing.JRadioButton major;
     private javax.swing.JTabbedPane nav_pane;
     private javax.swing.JTextField requisite;
     private javax.swing.JButton save;
-    private javax.swing.JButton save1;
     private javax.swing.JComboBox<String> semCb;
     private javax.swing.JTable subjectsTable;
     private javax.swing.ButtonGroup typeGroup;

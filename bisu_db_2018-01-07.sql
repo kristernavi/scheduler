@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.18)
 # Database: bisu_db
-# Generation Time: 2018-01-02 10:39:26 +0000
+# Generation Time: 2018-01-07 06:04:10 +0000
 # ************************************************************
 
 
@@ -36,15 +36,6 @@ CREATE TABLE `courses` (
   CONSTRAINT `courses_department_id_foreign` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-LOCK TABLES `courses` WRITE;
-/*!40000 ALTER TABLE `courses` DISABLE KEYS */;
-
-INSERT INTO `courses` (`id`, `description`, `code`, `department_id`)
-VALUES
-	(1,'Good description','TT101',1);
-
-/*!40000 ALTER TABLE `courses` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table departments
@@ -61,15 +52,6 @@ CREATE TABLE `departments` (
   UNIQUE KEY `departments_code_unique` (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-LOCK TABLES `departments` WRITE;
-/*!40000 ALTER TABLE `departments` DISABLE KEYS */;
-
-INSERT INTO `departments` (`id`, `description`, `code`, `head`)
-VALUES
-	(1,'A fantasic descriotion here','Testing 101','My heade department');
-
-/*!40000 ALTER TABLE `departments` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table faculties
@@ -98,15 +80,6 @@ CREATE TABLE `faculties` (
   CONSTRAINT `faculties_department_id_foreign` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-LOCK TABLES `faculties` WRITE;
-/*!40000 ALTER TABLE `faculties` DISABLE KEYS */;
-
-INSERT INTO `faculties` (`id`, `prc_no`, `firstname`, `lastname`, `middlename`, `rank`, `designation`, `eligibility`, `specialization`, `degree_earned`, `post_degree`, `min_load`, `max_load`, `department_id`)
-VALUES
-	(1,'101020','Ivan','Garcia','Bungabong',NULL,NULL,NULL,NULL,NULL,NULL,1,1,1);
-
-/*!40000 ALTER TABLE `faculties` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table migrations
@@ -135,7 +108,10 @@ VALUES
 	(7,'2017_12_27_173936_create_school_years_table',1),
 	(8,'2017_12_28_150108_create_teachers_loadings_table',1),
 	(9,'2017_12_28_150355_create_teachers_loading_details_table',1),
-	(10,'2018_01_02_090409_table_forieng_key_to_details',2);
+	(10,'2018_01_02_090409_table_forieng_key_to_details',1),
+	(11,'2018_01_06_013617_add_prerequites_table_subjects',1),
+	(12,'2018_01_06_143610_create_subject_departments_table',1),
+	(13,'2018_01_06_160023_create_subject_courses_table',1);
 
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -157,15 +133,6 @@ CREATE TABLE `rooms` (
   UNIQUE KEY `rooms_number_unique` (`number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-LOCK TABLES `rooms` WRITE;
-/*!40000 ALTER TABLE `rooms` DISABLE KEYS */;
-
-INSERT INTO `rooms` (`id`, `description`, `location`, `type`, `capacity`, `number`)
-VALUES
-	(1,'Description','Location','lecture',30,222);
-
-/*!40000 ALTER TABLE `rooms` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table school_years
@@ -181,15 +148,42 @@ CREATE TABLE `school_years` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-LOCK TABLES `school_years` WRITE;
-/*!40000 ALTER TABLE `school_years` DISABLE KEYS */;
 
-INSERT INTO `school_years` (`id`, `year`, `semester`, `actived`)
-VALUES
-	(1,2018,2,1);
 
-/*!40000 ALTER TABLE `school_years` ENABLE KEYS */;
-UNLOCK TABLES;
+# Dump of table subject_courses
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `subject_courses`;
+
+CREATE TABLE `subject_courses` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `subject_id` int(10) unsigned NOT NULL,
+  `course_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `subject_courses_course_id_foreign` (`course_id`),
+  KEY `subject_courses_subject_id_foreign` (`subject_id`),
+  CONSTRAINT `subject_courses_course_id_foreign` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`),
+  CONSTRAINT `subject_courses_subject_id_foreign` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+
+# Dump of table subject_departments
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `subject_departments`;
+
+CREATE TABLE `subject_departments` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `subject_id` int(10) unsigned NOT NULL,
+  `department_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `subject_departments_department_id_foreign` (`department_id`),
+  KEY `subject_departments_subject_id_foreign` (`subject_id`),
+  CONSTRAINT `subject_departments_department_id_foreign` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`),
+  CONSTRAINT `subject_departments_subject_id_foreign` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 
 
 # Dump of table subjects
@@ -209,6 +203,7 @@ CREATE TABLE `subjects` (
   `lec_hours` int(10) unsigned DEFAULT NULL,
   `lab_hours` int(10) unsigned DEFAULT NULL,
   `type` enum('major','general','elective') COLLATE utf8_unicode_ci NOT NULL,
+  `pre_requisite` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `subjects_code_unique` (`code`),
   KEY `subjects_pre_requisite_id_foreign` (`pre_requisite_id`),
@@ -217,15 +212,6 @@ CREATE TABLE `subjects` (
   CONSTRAINT `subjects_pre_requisite_id_foreign` FOREIGN KEY (`pre_requisite_id`) REFERENCES `subjects` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-LOCK TABLES `subjects` WRITE;
-/*!40000 ALTER TABLE `subjects` DISABLE KEYS */;
-
-INSERT INTO `subjects` (`id`, `description`, `code`, `course_id`, `pre_requisite_id`, `year_level`, `semester`, `units`, `lec_hours`, `lab_hours`, `type`)
-VALUES
-	(1,'My beautifull description here','T101',1,NULL,1,1,0,3,3,'general');
-
-/*!40000 ALTER TABLE `subjects` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table teachers_loading_details
@@ -251,17 +237,6 @@ CREATE TABLE `teachers_loading_details` (
   CONSTRAINT `teachers_loading_details_room_id_foreign` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-LOCK TABLES `teachers_loading_details` WRITE;
-/*!40000 ALTER TABLE `teachers_loading_details` DISABLE KEYS */;
-
-INSERT INTO `teachers_loading_details` (`id`, `room_id`, `hour_start`, `hour_end`, `M`, `T`, `W`, `Th`, `F`, `loading_id`)
-VALUES
-	(1,1,'18:09:45','18:09:45',1,0,0,0,0,4),
-	(2,1,'18:09:45','18:09:45',0,1,0,0,0,4),
-	(3,1,'18:09:45','18:09:45',0,0,0,0,1,4);
-
-/*!40000 ALTER TABLE `teachers_loading_details` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table teachers_loadings
@@ -283,17 +258,6 @@ CREATE TABLE `teachers_loadings` (
   CONSTRAINT `teachers_loadings_teacher_id_foreign` FOREIGN KEY (`teacher_id`) REFERENCES `faculties` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-LOCK TABLES `teachers_loadings` WRITE;
-/*!40000 ALTER TABLE `teachers_loadings` DISABLE KEYS */;
-
-INSERT INTO `teachers_loadings` (`id`, `teacher_id`, `subject_id`, `school_year_id`)
-VALUES
-	(2,1,1,1),
-	(3,1,1,1),
-	(4,1,1,1);
-
-/*!40000 ALTER TABLE `teachers_loadings` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table users
