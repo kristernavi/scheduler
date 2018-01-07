@@ -109,7 +109,7 @@ public class Subjects implements java.io.Serializable {
 
     @NotNull
     @NotBlank
-    @Size(min = 2, max = 30)
+    @Size(min = 2, max = 100)
     @Column(name = "description", nullable = false)
     public String getDescription() {
         return this.description;

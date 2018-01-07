@@ -354,6 +354,12 @@ public class SubjectMaster extends javax.swing.JFrame {
         elective.setText("Elective");
         elective.setActionCommand("elective");
 
+        lab_hr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lab_hrActionPerformed(evt);
+            }
+        });
+
         jLabel9.setText("Year Level:");
 
         yearCB.setModel(new javax.swing.DefaultComboBoxModel(comboYearItems().toArray()));
@@ -611,7 +617,7 @@ public class SubjectMaster extends javax.swing.JFrame {
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(nav_pane, javax.swing.GroupLayout.PREFERRED_SIZE, 709, Short.MAX_VALUE)
+                .addComponent(nav_pane, javax.swing.GroupLayout.DEFAULT_SIZE, 709, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -874,6 +880,10 @@ public class SubjectMaster extends javax.swing.JFrame {
         // TODO add your handling code here:
       this.onScreen();
     }//GEN-LAST:event_cancel1ActionPerformed
+
+    private void lab_hrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lab_hrActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lab_hrActionPerformed
 
     private void clear() {
         code.setText("");

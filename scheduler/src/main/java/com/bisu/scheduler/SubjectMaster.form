@@ -413,6 +413,9 @@
             <Component class="javax.swing.JTextField" name="lec_hr">
             </Component>
             <Component class="javax.swing.JTextField" name="lab_hr">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lab_hrActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel9">
               <Properties>
