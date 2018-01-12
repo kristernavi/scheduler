@@ -159,6 +159,11 @@ public class FacultyMaster extends javax.swing.JFrame {
         });
 
         delete.setText("Delete");
+        delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteActionPerformed(evt);
+            }
+        });
 
         cancel.setText("Cancel");
 
@@ -651,6 +656,7 @@ public class FacultyMaster extends javax.swing.JFrame {
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
         // TODO add your handling code here:
         nav_pane.setSelectedIndex(0);
+        hiddenID.setText("hiddenID");
         save.setEnabled(true);
     }//GEN-LAST:event_addActionPerformed
 
@@ -667,6 +673,16 @@ public class FacultyMaster extends javax.swing.JFrame {
             popupMenu.show(evt.getComponent(), evt.getX(), evt.getY());
         }
     }//GEN-LAST:event_facultyTableMouseReleased
+
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+        // TODO add your handling code here:
+        
+        if(Helper.confirmationMessage()){
+            Faculties faculty = (Faculties) teacher.find(Integer.parseInt(hiddenID.getText()));
+            teacher.delete(faculty);
+            Helper.deleteMessage();
+        }
+    }//GEN-LAST:event_deleteActionPerformed
     private void populateTable(){
         List tableData;
         tableData = teacher.all();
@@ -697,6 +713,7 @@ public class FacultyMaster extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     private void clear(){
+        hiddenID.setText("hiddenID");
         firstname.setText("");
         lastname.setText("");
         middlename.setText("");
