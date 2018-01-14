@@ -5,6 +5,22 @@
  */
 package com.bisu.scheduler;
 
+import com.bisu.dao.Course;
+import com.bisu.dao.Loading;
+import com.bisu.dao.Subject;
+import com.bisu.dao.SubjectCourse;
+import com.bisu.dao.Teacher;
+import com.bisu.dao.SchoolYear;
+import com.bisu.entities.Courses;
+import com.bisu.entities.Faculties;
+import com.bisu.entities.SchoolYears;
+import com.bisu.entities.Subjects;
+import com.bisu.entities.TeachersLoadings;
+import com.bisu.extras.Helper;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author ANGGIE
@@ -14,8 +30,133 @@ public class FacultyLoading extends javax.swing.JFrame {
     /**
      * Creates new form FacultyLoading
      */
+    MainMenu mainMenu;
+    Course course;
+    Teacher teacher;
+    Subject subject;
+    SubjectCourse sc;
+    DefaultTableModel model;
+    Loading teacherLoading;
+    SchoolYear schoolYear;
+
     public FacultyLoading() {
+        course = new Course();
+        teacher = new Teacher();
+        subject = new Subject();
+        sc = new SubjectCourse();
+        teacherLoading = new Loading();
+        schoolYear = new SchoolYear();
         initComponents();
+        model = (DefaultTableModel) loadingTable.getModel();
+
+    }
+
+    public FacultyLoading(MainMenu mainMenu) {
+        this();
+        this.mainMenu = mainMenu;
+        int op = this.getDefaultCloseOperation(); // HIDE_ON_CLOSE
+        this.setDefaultCloseOperation(this.DO_NOTHING_ON_CLOSE);
+
+    }
+
+    private List comboSubjectItem(Integer year_level, Integer semester, Integer course) {
+
+        List<ComboItem> combo = new ArrayList<ComboItem>();
+        combo.add(new ComboItem(0, "Select Subject"));
+        Courses courseModel = (Courses) this.course.find(course);
+        List<Integer> ids = sc.getByCourse(courseModel);
+        List subject = null;
+        if (ids.size() > 0) {
+            subject = this.subject.loading_course(year_level, semester, ids);
+        }
+
+        try {
+
+            for (Object obj : subject) {
+                Subjects model = (Subjects) obj;
+                combo.add(new ComboItem(model.getId(), model.getCode() + " - " + model.getDescription()));
+            }
+        } catch (Exception e) {
+
+        }
+
+        return combo;
+    }
+
+    private List comboSemItems() {
+
+        List<ComboItem> combo = new ArrayList<ComboItem>();
+        combo.add(new ComboItem(0, "Select Semester"));
+        combo.add(new ComboItem(1, "First Semester"));
+        combo.add(new ComboItem(2, "Second Semester"));
+
+        return combo;
+    }
+
+    private List comboYearItems() {
+
+        List<ComboItem> combo = new ArrayList<ComboItem>();
+        combo.add(new ComboItem(0, "Select Year"));
+        combo.add(new ComboItem(1, "First Year"));
+        combo.add(new ComboItem(2, "Second Year"));
+        combo.add(new ComboItem(3, "Third Year"));
+        combo.add(new ComboItem(4, "Fourth Year"));
+
+        return combo;
+    }
+
+    private List comboCourseItem() {
+
+        List<ComboItem> combo = new ArrayList<ComboItem>();
+        combo.add(new ComboItem(0, "Select Course"));
+
+        try {
+            for (Object obj : course.all()) {
+                Courses model = (Courses) obj;
+                combo.add(new ComboItem(model.getId(), "" + model.getCode()));
+            }
+        } catch (Exception e) {
+
+        }
+
+        return combo;
+    }
+
+    private void subject_populate() {
+        ComboItem year_level = (ComboItem) year_levelCb.getSelectedItem();
+        ComboItem semester = (ComboItem) semesterCb.getSelectedItem();
+        ComboItem course = (ComboItem) courseCb.getSelectedItem();
+
+        if (year_level.getValue() > 0 && semester.getValue() > 0 && course.getValue() > 0) {
+            subjectCb.setModel(new javax.swing.DefaultComboBoxModel(comboSubjectItem(year_level.getValue(), semester.getValue(), course.getValue()).toArray()));
+
+        }
+    }
+
+    private List comboTeacherItem() {
+
+        List<ComboItem> combo = new ArrayList<ComboItem>();
+        combo.add(new ComboItem(0, "Select Instructor"));
+
+        try {
+            for (Object obj : teacher.all()) {
+                Faculties model = (Faculties) obj;
+                combo.add(new ComboItem(model.getId(), model.getFirstname() + " " + model.getLastname()));
+            }
+        } catch (Exception e) {
+
+        }
+
+        return combo;
+    }
+
+    public void offScreen() {
+        this.mainMenu.setVisible(false);
+    }
+
+    public void onScreen() {
+        this.mainMenu.setVisible(true);
+        this.setVisible(false);
     }
 
     /**
@@ -44,7 +185,7 @@ public class FacultyLoading extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         instructorCb = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        loadingTable = new javax.swing.JTable();
 
         jLabel2.setText("jLabel2");
 
@@ -105,19 +246,41 @@ public class FacultyLoading extends javax.swing.JFrame {
         jLabel7.setText("Instructor:");
 
         instructorCb.setModel(new javax.swing.DefaultComboBoxModel(comboTeacherItem().toArray()));
+        instructorCb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                instructorCbActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        loadingTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Subject", "Load", "Lec Hours", "Lab Hours", "id"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(loadingTable);
+        if (loadingTable.getColumnModel().getColumnCount() > 0) {
+            loadingTable.getColumnModel().getColumn(4).setMinWidth(0);
+            loadingTable.getColumnModel().getColumn(4).setPreferredWidth(0);
+            loadingTable.getColumnModel().getColumn(4).setMaxWidth(0);
+        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -131,24 +294,26 @@ public class FacultyLoading extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(semesterCb, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(subjectCb, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(year_levelCb, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(courseCb, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(instructorCb, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(subjectCb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(instructorCb, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(courseCb, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(year_levelCb, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(semesterCb, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 16, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(40, 40, 40))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(semesterCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -168,8 +333,10 @@ public class FacultyLoading extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
                             .addComponent(instructorCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(141, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -216,36 +383,48 @@ public class FacultyLoading extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        try
+        {
         ComboItem faculty_item = (ComboItem) instructorCb.getSelectedItem();
         ComboItem subject_item = (ComboItem) subjectCb.getSelectedItem();
+        
+            System.err.println(""+subjectCb.getSelectedItem());
+        SchoolYears sy = (SchoolYears) schoolYear.getActive();
+        if(faculty_item.getValue() == 0){
+         throw new Exception("Must select an instructor");
+        }
+        if(subject_item.getValue() == 0 || subjectCb.getSelectedItem() == null){
+          throw new Exception("Must select a subject");
+        }
+        for(int index = 0; index < loadingTable.getRowCount(); index++){
+            int sub_id = Integer.parseInt(loadingTable.getValueAt(index, 4).toString());
+            if(subject_item.getValue() == sub_id){
+               throw new Exception("Subject already exisit");
+            }
+        }
+        Faculties faculties = (Faculties) teacher.find(faculty_item.getValue());
+        Subjects sub = (Subjects) subject.find(subject_item.getValue());
 
-        Faculties instructor = (Faculties) teacher.find(faculty_item.getValue());
-        Subjects subject = (Subjects) this.subject.find(subject_item.getValue());
-        TeachersLoadings sched = new TeachersLoadings();
-        sched.setFaculties(instructor);
-        sched.setSchoolYears(schoolYear.getActive());
-        sched.setSubjects(subject);
-        TeachersLoadings res = (TeachersLoadings) load.save(sched);
+        TeachersLoadings loadings = new TeachersLoadings();
+        loadings.setSchoolYears(sy);
+        loadings.setFaculties(faculties);
+        loadings.setSubjects(sub);
+        teacherLoading.save(loadings);
 
-        for (int i = 0; i < scheduleTable.getRowCount(); i++) {
-            TeachersLoadingDetails detail = new TeachersLoadingDetails();
-            Integer room_id = (Integer) scheduleTable.getValueAt(i, 9);
-            Rooms room = (Rooms) this.room.find(room_id);
-            Date date1 = (Date) scheduleTable.getValueAt(i, 10);
-            Date date2 = (Date) scheduleTable.getValueAt(i, 11);
-            detail.setHourStart(date1);
-            detail.setHourEnd(date2);
-            detail.setRooms(room);
-            detail.setM((Boolean) scheduleTable.getValueAt(i, 3));
-            detail.setT((Boolean) scheduleTable.getValueAt(i, 4));
-            detail.setW((Boolean) scheduleTable.getValueAt(i, 5));
-            detail.setTh((Boolean) scheduleTable.getValueAt(i, 6));
-            detail.setF((Boolean) scheduleTable.getValueAt(i, 7));
-            detail.setTeachersLoadings(res);
-            loadDetail.save(detail);
+        Object row[] = new Object[5];
+        row[0] = loadings.getSubjects().getCode();
+        row[1] = loadings.getSubjects().getUnits();
+        row[2] = loadings.getSubjects().getLecHours();
+        row[3] = loadings.getSubjects().getLabHours();
+        row[4] = loadings.getSubjects().getId();
+        model.addRow(row);
+        Helper.successMessage();
+        }catch(Exception e){
+          Helper.errorMessage(e.getMessage(), "Whoopss!");
 
         }
-        Helper.successMessage();
+
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -256,17 +435,38 @@ public class FacultyLoading extends javax.swing.JFrame {
     private void year_levelCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_year_levelCbActionPerformed
         // TODO add your handling code here:
         subject_populate();
+
     }//GEN-LAST:event_year_levelCbActionPerformed
 
     private void courseCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseCbActionPerformed
         // TODO add your handling code here:
         subject_populate();
+
     }//GEN-LAST:event_courseCbActionPerformed
 
     private void semesterCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_semesterCbActionPerformed
         // TODO add your handling code here:
         subject_populate();
     }//GEN-LAST:event_semesterCbActionPerformed
+
+    private void instructorCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instructorCbActionPerformed
+        // TODO add your handling code here:
+        ComboItem item = (ComboItem) instructorCb.getSelectedItem();
+        if (item.getValue() > 0) {
+            Faculties faculty = (Faculties) teacher.find(item.getValue());
+            Object row[] = new Object[5];
+            model.setRowCount(0);
+            for (TeachersLoadings loadings : faculty.getTeachersLoadingses()) {
+
+                row[0] = loadings.getSubjects().getCode();
+                row[1] = loadings.getSubjects().getUnits();
+                row[2] = loadings.getSubjects().getLecHours();
+                row[3] = loadings.getSubjects().getLabHours();
+                row[4] = loadings.getSubjects().getId();
+                model.addRow(row);
+            }
+        }
+    }//GEN-LAST:event_instructorCbActionPerformed
 
     /**
      * @param args the command line arguments
@@ -318,7 +518,7 @@ public class FacultyLoading extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable loadingTable;
     private javax.swing.JComboBox<String> semesterCb;
     private javax.swing.JComboBox<String> subjectCb;
     private javax.swing.JComboBox<String> year_levelCb;

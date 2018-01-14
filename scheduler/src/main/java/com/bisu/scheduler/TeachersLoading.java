@@ -86,7 +86,12 @@ public class TeachersLoading extends javax.swing.JFrame {
         JSpinner.DateEditor de2 = new JSpinner.DateEditor(start_timespinner, "hh:mm a");
         de2.getTextField().setEditable(true);
         start_timespinner.setEditor(de2);
+        Calendar c = Calendar.getInstance();
 
+        c.set(Calendar.MINUTE, 30);
+        c.set(Calendar.SECOND, 0);
+        start_timespinner.setValue(c.getTime());
+        end_timespinner.setValue(c.getTime());
         model = (DefaultTableModel) scheduleTable.getModel();
     }
 
@@ -524,7 +529,7 @@ public class TeachersLoading extends javax.swing.JFrame {
         Courses courseModel = (Courses) this.course.find(course);
         List<Integer> ids = sc.getByCourse(courseModel);
         List subject = null;
-        if(ids.size() > 0){
+        if (ids.size() > 0) {
             subject = this.subject.loading_course(year_level, semester, ids);
         }
 
@@ -549,9 +554,43 @@ public class TeachersLoading extends javax.swing.JFrame {
         combo.add(new ComboItem(2, "Second Year"));
         combo.add(new ComboItem(3, "Third Year"));
         combo.add(new ComboItem(4, "Fourth Year"));
-        combo.add(new ComboItem(5, "Fifth Year"));
 
         return combo;
+    }
+
+    private boolean IsConflict(Date s1, Date e1, Date s2, Date e2) {
+        return (s1.compareTo(e2) < 0) && (e1.compareTo(s2) > 0);
+    }
+    
+    
+    private boolean hasDay(){
+        boolean selected = false;
+                if (monday.isSelected()) {
+                   selected = true;
+                }
+                if (tuesday.isSelected()) {
+                  
+                   selected = true;
+
+                }
+                if (wednesday.isSelected()) {
+                   
+                   selected = true;
+
+                }
+                if (thursday.isSelected()) {
+                   
+                   selected = true;
+
+                }
+                if (friday.isSelected()) {
+                    selected = true;
+                 
+                }
+               
+
+    
+        return selected;
     }
 
     private void add_scheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_scheduleActionPerformed
@@ -559,6 +598,46 @@ public class TeachersLoading extends javax.swing.JFrame {
         ComboItem item = (ComboItem) roomCb.getSelectedItem();
         Date d1 = (Date) this.start_timespinner.getValue();
         Date d2 = (Date) this.end_timespinner.getValue();
+        boolean conflict = false;
+        try {
+            if(!this.hasDay()){
+                throw new Exception("No day/days selected");
+            }
+            if(d1.compareTo(d2) > 0){
+                throw new Exception("Time end must be greater than start");
+            }
+        for (int index = 0; index < scheduleTable.getRowCount(); index++) {
+            if (true) {
+            //if (Integer.parseInt(scheduleTable.getValueAt(index, 9).toString()) == item.getValue()) {
+                Date d3 = (Date) scheduleTable.getValueAt(index, 10);
+                Date d4 = (Date) scheduleTable.getValueAt(index, 11);
+                if (monday.isSelected()) {
+                    conflict = this.IsConflict(d3, d4,d1, d2);
+                }
+                if (tuesday.isSelected()) {
+                    conflict = this.IsConflict(d3, d4,d1, d2);
+
+                }
+                if (wednesday.isSelected()) {
+                    conflict = this.IsConflict(d3, d4,d1, d2);
+
+                }
+                if (thursday.isSelected()) {
+                    conflict = this.IsConflict(d3, d4,d1, d2);
+
+                }
+                if (friday.isSelected()) {
+                    conflict = this.IsConflict(d3, d4,d1, d2);
+
+                }
+                if(conflict){
+                    throw new Exception("Unabled to add time conflict");
+                }
+
+            }
+
+        }
+        
 
         row[0] = item.getLabel();
         row[1] = Helper.timeFormat(d1);
@@ -575,6 +654,10 @@ public class TeachersLoading extends javax.swing.JFrame {
 
         model.addRow(row);
         scheduleClear();
+        }catch (Exception e) {
+            System.err.println(""+e.getMessage());
+            Helper.errorMessage(e.getMessage(), "Whoopss!");
+        }
     }//GEN-LAST:event_add_scheduleActionPerformed
 
     private void scheduleClear() {
@@ -637,7 +720,7 @@ public class TeachersLoading extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-       
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
