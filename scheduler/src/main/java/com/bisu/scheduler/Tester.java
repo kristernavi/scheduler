@@ -19,13 +19,6 @@ public class Tester {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Calendar c = Calendar.getInstance();
-        
-        c.set(Calendar.MINUTE, 30);
-        c.set(Calendar.SECOND, 0);
-
-        Date date = c.getTime();
-        System.out.println("The time is"+date.toString());
     }
     
 }

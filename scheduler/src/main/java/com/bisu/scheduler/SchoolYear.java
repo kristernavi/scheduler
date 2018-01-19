@@ -5,6 +5,13 @@
  */
 package com.bisu.scheduler;
 
+import com.bisu.entities.Courses;
+import com.bisu.entities.SchoolYears;
+import com.bisu.extras.Helper;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author ANGGIE
@@ -16,7 +23,9 @@ public class SchoolYear extends javax.swing.JFrame {
      */
     
     MainMenu mainMenu;
-    
+    com.bisu.dao.SchoolYear schoolYear;
+    DefaultTableModel model;
+
     public SchoolYear(MainMenu mainMenu) {
     this();
     this.mainMenu = mainMenu;
@@ -33,7 +42,53 @@ public class SchoolYear extends javax.swing.JFrame {
     }
     public SchoolYear() {
         initComponents();
+        ArrayList<String> years_tmp = new ArrayList<String>();
+        Integer current = Calendar.getInstance().get(Calendar.YEAR);
+        schoolYear = new com.bisu.dao.SchoolYear();
+        for(int years = (current - 5); years<= (current+5); years++) {
+            years_tmp.add(years+"");
+        }
+        yearEnd.setModel(new javax.swing.DefaultComboBoxModel(years_tmp.toArray()));
+        yearStart.setModel(new javax.swing.DefaultComboBoxModel(years_tmp.toArray()));
+        yearStart.setSelectedItem(current.toString());
+        Integer end = current + 1;
+        yearEnd.setSelectedItem(end.toString());
+        this.model = (DefaultTableModel) schoolYearTable.getModel();
+        this.populateTable();
+
+
+
     }
+    
+    private void populateTable(){
+        List tableData;
+        tableData = this.schoolYear.all();
+
+        Object row[] = new Object[4];
+        model.setRowCount(0);
+        for (int i = 0; i < tableData.size(); i++) {
+            SchoolYears sy = (SchoolYears) tableData.get(i);
+            row[0] = sy.getYearStart()+" - "+ sy.getYearEnd();
+            row[1] = sy.getSemester();
+            row[2] = sy.isActived();
+            row[3] = sy.getId();
+
+            model.addRow(row);
+
+        }
+
+    }
+    
+    private List comboSemItems() {
+
+        List<ComboItem> combo = new ArrayList<ComboItem>();
+        combo.add(new ComboItem(0, "Select Semester"));
+        combo.add(new ComboItem(1, "First Semester"));
+        combo.add(new ComboItem(2, "Second Semester"));
+
+        return combo;
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -46,61 +101,84 @@ public class SchoolYear extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        schoolYearTable = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox9 = new javax.swing.JComboBox<>();
-        jComboBox10 = new javax.swing.JComboBox<>();
+        yearEnd = new javax.swing.JComboBox<>();
+        yearStart = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox11 = new javax.swing.JComboBox<>();
+        semesterCb = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
-        jComboBox12 = new javax.swing.JComboBox<>();
+        statusCb = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("School Year");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        schoolYearTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Year", "Semester", "Status", "id"
             }
-        ));
-        jScrollPane2.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(3).setMinWidth(0);
-            jTable2.getColumnModel().getColumn(3).setPreferredWidth(0);
-            jTable2.getColumnModel().getColumn(3).setMaxWidth(0);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(schoolYearTable);
+        if (schoolYearTable.getColumnModel().getColumnCount() > 0) {
+            schoolYearTable.getColumnModel().getColumn(3).setMinWidth(0);
+            schoolYearTable.getColumnModel().getColumn(3).setPreferredWidth(0);
+            schoolYearTable.getColumnModel().getColumn(3).setMaxWidth(0);
         }
 
-        jLabel4.setText("Year :");
+        jLabel4.setText("Year Start:");
 
-        jComboBox9.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox9.addActionListener(new java.awt.event.ActionListener() {
+        yearEnd.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        yearEnd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox9ActionPerformed(evt);
+                yearEndActionPerformed(evt);
             }
         });
 
-        jComboBox10.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        yearStart.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel7.setText("Semester:");
 
-        jComboBox11.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "First Semester", "Second Semester" }));
+        semesterCb.setModel(new javax.swing.DefaultComboBoxModel(comboSemItems().toArray()));
 
         jLabel8.setText("Status:");
 
-        jComboBox12.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Active", "Inactive" }));
+        statusCb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Active", "Inactive" }));
 
-        jButton2.setText("Back");
+        jButton2.setText("Save");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Year End:");
+
+        jButton3.setText("Back");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
             }
         });
 
@@ -108,54 +186,66 @@ public class SchoolYear extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel4))
-                        .addGap(15, 15, 15)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jComboBox11, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox9, 0, 156, Short.MAX_VALUE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel5))
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel7))
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(semesterCb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(yearStart, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(yearEnd, 0, 156, Short.MAX_VALUE))
+                        .addGap(60, 60, 60))
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
                         .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jComboBox12, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
-                .addComponent(jComboBox10, 0, 1, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(statusCb, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(30, 30, 30))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(107, 107, 107)
+                .addGap(49, 49, 49)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jComboBox11, jComboBox12, jComboBox9});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {semesterCb, statusCb, yearEnd});
 
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addContainerGap(58, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jComboBox9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(yearStart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(yearEnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(33, 33, 33)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(semesterCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(statusCb, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox12, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
-                .addComponent(jButton2)
-                .addContainerGap(157, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
+                .addGap(110, 110, 110))
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jComboBox11, jComboBox12, jComboBox9});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {semesterCb, statusCb, yearEnd});
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -172,10 +262,12 @@ public class SchoolYear extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -194,14 +286,51 @@ public class SchoolYear extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox9ActionPerformed
+    private void yearEndActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearEndActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox9ActionPerformed
+    }//GEN-LAST:event_yearEndActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        this.onScreen();
+        
+        try{
+        
+        Integer start = Integer.parseInt(yearStart.getSelectedItem().toString());
+        Integer end = Integer.parseInt(yearEnd.getSelectedItem().toString());
+        if(start >= end){
+            throw new Exception("End SchoolYear must be greater than Start ");
+        }
+        Integer diff = end - start; 
+        if(diff  > 1){
+            throw new Exception("School Year must be parallel ");
+
+        }
+        ComboItem semSelected = (ComboItem) semesterCb.getSelectedItem();
+        Short sem = Short.parseShort(""+semSelected.getValue());
+        if(sem == 0){
+           throw new Exception("Must selec semester");
+        }
+        SchoolYears sy = this.schoolYear.getYear(start, end, sem);
+        sy.setYearStart(start);
+        sy.setYearEnd(end);
+        Boolean actived = statusCb.getSelectedItem().toString().equals("Active") ? true:false;
+        
+        if(actived){
+            this.schoolYear.setAllInactive();
+        }
+        
+        sy.setActived(actived);
+        sy.setSemester(sem);
+        this.schoolYear.save(sy);
+        Helper.successMessage();
+        }
+        catch(Exception ex){
+            Helper.errorMessage(ex.getMessage(), "Whoopss! Something went wrong");
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -240,16 +369,18 @@ public class SchoolYear extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox10;
-    private javax.swing.JComboBox<String> jComboBox11;
-    private javax.swing.JComboBox<String> jComboBox12;
-    private javax.swing.JComboBox<String> jComboBox9;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable schoolYearTable;
+    private javax.swing.JComboBox<String> semesterCb;
+    private javax.swing.JComboBox<String> statusCb;
+    private javax.swing.JComboBox<String> yearEnd;
+    private javax.swing.JComboBox<String> yearStart;
     // End of variables declaration//GEN-END:variables
 }

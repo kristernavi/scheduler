@@ -42,6 +42,7 @@ public class CourseMaster extends javax.swing.JFrame {
     }
     public void offScreen(){
      this.mainMenu.setVisible(false);
+     departmentItem.setModel(new javax.swing.DefaultComboBoxModel(comboItems().toArray()));
     }
     public void onScreen(){
       this.mainMenu.setVisible(true);

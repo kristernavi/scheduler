@@ -8,8 +8,10 @@ package com.bisu.dao;
 import com.bisu.entities.Courses;
 import com.bisu.entities.Departments;
 import com.bisu.entities.Rooms;
+import com.bisu.entities.SchoolYears;
 import com.bisu.entities.Subjects;
 import com.bisu.extras.Helper;
+import com.bisu.scheduler.TeachersLoading;
 import java.util.List;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
@@ -45,19 +47,28 @@ public class Tester {
 //        Departments dept = (Departments) department.find(1);
 //        System.out.println(""+sd.getByDepartment(dept).size());
 
-          SubjectCourse sc = new SubjectCourse();
-          Course course = new Course();
-          Courses c = (Courses) course.find(1);
-          for(Integer i: sc.getByCourse(c)){
-          System.out.println("Result: "+i+"\n");
-          
-          }
-        Subject subject = new Subject();
-          
-        System.out.println(""+subject.getBySubjectCourse(sc.getByCourse(c)).size());
-         List subjects = subject.loading_course(1, 1, sc.getByCourse(c));
-        System.out.println("" + subjects.size());
-          
+//          SubjectCourse sc = new SubjectCourse();
+//          Course course = new Course();
+//          Courses c = (Courses) course.find(1);
+//          for(Integer i: sc.getByCourse(c)){
+//          System.out.println("Result: "+i+"\n");
+//          
+//          }
+//        Subject subject = new Subject();
+//          
+//        System.out.println(""+subject.getBySubjectCourse(sc.getByCourse(c)).size());
+//         List subjects = subject.loading_course(1, 1, sc.getByCourse(c));
+//        System.out.println("" + subjects.size());
+//
+//        Course course = new Course();
+//        Courses courses = (Courses)course.find(1);
+//        SubjectCourse subjectCourse = new SubjectCourse();
+//        List <Integer> ids = subjectCourse.getByCourse(courses);
+//        System.out.println(""+ids);
+//        Subject subject = new Subject();
+//        System.out.println(""+subject.getSubjectByCourse(ids));
+          //LoadingDetail detail = new LoadingDetail();
+          Teacher teacher = new Teacher();
         
     }
     

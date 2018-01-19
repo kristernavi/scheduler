@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
@@ -282,6 +283,11 @@ public class Faculties  implements java.io.Serializable {
     
     public void setTeachersLoadingses(Set<TeachersLoadings> teachersLoadingses) {
         this.teachersLoadingses = teachersLoadingses;
+    }
+    @Transient
+    public String getFullname(){
+    
+        return this.getFirstname()+" "+this.getMiddlename()+ " "+this.getLastname();
     }
 
 

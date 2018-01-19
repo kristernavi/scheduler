@@ -53,6 +53,8 @@ public class SubjectMaster extends javax.swing.JFrame {
     }
     public void offScreen(){
      this.mainMenu.setVisible(false);
+     coursetItems.setModel(new javax.swing.DefaultComboBoxModel(comboItems().toArray()));
+
     }
     public void onScreen(){
       this.mainMenu.setVisible(true);

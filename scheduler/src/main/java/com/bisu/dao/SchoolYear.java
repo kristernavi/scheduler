@@ -38,14 +38,35 @@ public class SchoolYear extends AbstractModel {
         return (SchoolYears) result.get(0);
     }
 
-    public Integer setAllInactive() {
-        List result;
+    public void setAllInactive() {
         begin();
         Query query = session().createSQLQuery(
-                "Select * from school_years");
-        result = query.list();
+                "UPDATE school_years SET actived = 0 WHERE id > 0");
+        query.executeUpdate();
         end();
-        return result.size();
+    }
+    
+    public SchoolYears getYear(Integer yearStart, Integer yearEnd, Short semester){
+        
+        SchoolYears sy;
+        List result;
+        begin();
+
+        Criteria cr = session().createCriteria(SchoolYears.class);
+        cr.add(Restrictions.eq("yearStart", yearStart));
+        cr.add(Restrictions.eq("yearEnd", yearEnd));
+        cr.add(Restrictions.eq("semester", semester));
+        result = cr.list();
+
+        end();
+        if(result.size() > 0){
+            sy = (SchoolYears) result.get(0);
+        }else{
+            sy = new SchoolYears();
+
+        }
+        return sy;
+        
     }
 
 }

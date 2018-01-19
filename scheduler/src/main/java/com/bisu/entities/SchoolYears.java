@@ -24,7 +24,8 @@ public class SchoolYears  implements java.io.Serializable {
 
 
      private Integer id;
-     private int year;
+     private int yearStart;
+     private int yearEnd;
      private short semester;
      private boolean actived;
      private Set<TeachersLoadings> teachersLoadingses = new HashSet<TeachersLoadings>(0);
@@ -33,13 +34,11 @@ public class SchoolYears  implements java.io.Serializable {
     }
 
 	
-    public SchoolYears(int year, short semester, boolean actived) {
-        this.year = year;
+    public SchoolYears(short semester, boolean actived) {
         this.semester = semester;
         this.actived = actived;
     }
-    public SchoolYears(int year, short semester, boolean actived, Set<TeachersLoadings> teachersLoadingses) {
-       this.year = year;
+    public SchoolYears(short semester, boolean actived, Set<TeachersLoadings> teachersLoadingses) {
        this.semester = semester;
        this.actived = actived;
        this.teachersLoadingses = teachersLoadingses;
@@ -58,13 +57,22 @@ public class SchoolYears  implements java.io.Serializable {
     }
 
     
-    @Column(name="year", nullable=false)
-    public int getYear() {
-        return this.year;
+    @Column(name="year_start", nullable=false)
+    public int getYearStart() {
+        return this.yearStart;
     }
     
-    public void setYear(int year) {
-        this.year = year;
+    public void setYearStart(int yearStart) {
+        this.yearStart = yearStart;
+    }
+    
+    @Column(name="year_end", nullable=false)
+    public int getYearEnd() {
+        return this.yearEnd;
+    }
+    
+    public void setYearEnd(int yearEnd) {
+        this.yearEnd = yearEnd;
     }
 
     

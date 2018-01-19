@@ -40,6 +40,20 @@ public class Subject extends AbstractModel{
         return results;
     }
     
+    public List<Subjects> getSubjectByCourse(List<Integer> sc){
+         List results;
+        begin();
+        
+        Criteria cr = session().createCriteria(Subjects.class);
+        cr.add(Restrictions.in("id", sc));
+        results = cr.list();
+        
+
+        end();
+        return results;
+        
+    }
+    
     public List getBySubjectCourse(List<Integer> sc) {
         
         List results;

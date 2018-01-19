@@ -58,6 +58,8 @@ public class TeachersLoading extends javax.swing.JFrame {
 
     public void offScreen() {
         this.mainMenu.setVisible(false);
+        instructorCb.setModel(new javax.swing.DefaultComboBoxModel(comboTeacherItem().toArray()));
+
     }
 
     public void onScreen() {
@@ -669,6 +671,7 @@ public class TeachersLoading extends javax.swing.JFrame {
     }
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        try{
         ComboItem faculty_item = (ComboItem) instructorCb.getSelectedItem();
         ComboItem subject_item = (ComboItem) subjectCb.getSelectedItem();
 
@@ -699,6 +702,10 @@ public class TeachersLoading extends javax.swing.JFrame {
 
         }
         Helper.successMessage();
+        }catch(Exception ex){
+            Helper.errorMessage("No Active SchoolYear", "Whoopss! Something went wrong");
+            Helper.closeSession();
+        }
 
     }//GEN-LAST:event_jButton3ActionPerformed
 

@@ -126,12 +126,21 @@ public class TeachersLoad extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Time", "Days", "Room", "Subjects", "Course"
+                "Time", "Days", "Room", "Subjects"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(scheduleTable);
         if (scheduleTable.getColumnModel().getColumnCount() > 0) {
             scheduleTable.getColumnModel().getColumn(0).setResizable(false);
+            scheduleTable.getColumnModel().getColumn(3).setResizable(false);
         }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -251,25 +260,26 @@ public class TeachersLoad extends javax.swing.JFrame {
                 TeachersLoadingDetails detail = it.next();
                 long diff =  detail.getHourEnd().getTime() - detail.getHourStart().getTime();
                 row[0] = Helper.formatDuration(diff);
+                String day = "";
                 if(detail.isM()){
-                 row[1] = "M";
+                 day = day+"M";
                 }
-                else if(detail.isT()){
-                row[1] = "T";
+                if(detail.isT()){
+                 day = day+"T";
                 }
-                else if(detail.isW()){
-                row[1] = "W";
+                if(detail.isW()){
+                day = day+"W";
                 }
-                else if(detail.isTh()){
-                row[1] = "Th";
+                if(detail.isTh()){
+                day = day+"Th";
                 }
-                else {
-                row[1] = "F";
+                if(detail.isF()) {
+               day = day+"F";
                 }
-                
+                row[1] = day;
                 row[2] = detail.getRooms().getNumber();
                 row[3] = loads.getSubjects().getDescription();
-                row[4] = loads.getSubjects().getCourses().getCode();
+               // row[4] = loads.getSubjects().getCourses().getCode();
                 model.addRow(row);
             }
            
@@ -382,8 +392,6 @@ public class TeachersLoad extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> departmentCb;
     private javax.swing.JComboBox<String> instuctorCb;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
