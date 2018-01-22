@@ -453,7 +453,7 @@ public class FacultyLoading extends javax.swing.JFrame {
         Subjects sub = (Subjects) subject.find(subject_item.getValue());
         Faculties faculties = (Faculties) teacher.find(faculty_item.getValue());
         Integer currentLoad = Integer.parseInt(tLoadLbl.getText());
-        Integer subjectUnit = (sub.getLecHours() / 3) + (sub.getLabHours() / 6);
+        Integer subjectUnit = sub.getLecHours() + (sub.getLabHours() / 3);
         Integer maxload = faculties.getRegularLoad() + faculties.getOverload();
         Integer loadAdded = currentLoad + subjectUnit;
         if(maxload < loadAdded){
@@ -523,7 +523,7 @@ public class FacultyLoading extends javax.swing.JFrame {
             Integer maxload = faculty.getRegularLoad() + faculty.getOverload();
             for (TeachersLoadings loadings : faculty.getTeachersLoadingses()) {
                 Subjects sub = loadings.getSubjects();
-                Integer unit = (sub.getLecHours() / 3) + (sub.getLabHours() / 6);
+                Integer unit = sub.getLecHours()  + (sub.getLabHours() / 3);
                 
                 lecHrs += loadings.getSubjects().getLecHours();
                 labHrs += loadings.getSubjects().getLabHours();
@@ -534,8 +534,8 @@ public class FacultyLoading extends javax.swing.JFrame {
                 row[4] = sub.getId();
                 model.addRow(row);
             }
-            units += (lecHrs / 3);
-            units += (labHrs / 6);
+            units += lecHrs;
+            units += (labHrs / 3);
             loadLbl.setText(""+faculty.getRegularLoad());
             deloadLbl.setText(""+faculty.getDeloading());
             overloadLbl.setText(""+faculty.getOverload());
