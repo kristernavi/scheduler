@@ -322,6 +322,7 @@ public class SchoolYear extends javax.swing.JFrame {
         sy.setSemester(sem);
         this.schoolYear.save(sy);
         Helper.successMessage();
+        this.populateTable();
         }
         catch(Exception ex){
             Helper.errorMessage(ex.getMessage(), "Whoopss! Something went wrong");

@@ -186,6 +186,14 @@ public class FacultyLoading extends javax.swing.JFrame {
         instructorCb = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         loadingTable = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        overloadLbl = new javax.swing.JLabel();
+        loadLbl = new javax.swing.JLabel();
+        deloadLbl = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        tLoadLbl = new javax.swing.JLabel();
 
         jLabel2.setText("jLabel2");
 
@@ -282,30 +290,66 @@ public class FacultyLoading extends javax.swing.JFrame {
             loadingTable.getColumnModel().getColumn(4).setMaxWidth(0);
         }
 
+        jLabel1.setText("Load");
+
+        jLabel8.setText("Deloading");
+
+        jLabel9.setText("Overload");
+
+        overloadLbl.setText("0");
+
+        loadLbl.setText("0");
+
+        deloadLbl.setText("0");
+
+        jLabel13.setText("Teacher Loading");
+
+        tLoadLbl.setText("0");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(subjectCb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(instructorCb, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(courseCb, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(year_levelCb, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(semesterCb, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 16, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(subjectCb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(instructorCb, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(courseCb, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(year_levelCb, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(semesterCb, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 16, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(181, 181, 181)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(loadLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(deloadLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(overloadLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tLoadLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(40, 40, 40))
         );
         jPanel1Layout.setVerticalGroup(
@@ -336,7 +380,17 @@ public class FacultyLoading extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(141, Short.MAX_VALUE))
+                .addGap(36, 36, 36)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9)
+                    .addComponent(overloadLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(loadLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deloadLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13)
+                    .addComponent(tLoadLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -370,7 +424,7 @@ public class FacultyLoading extends javax.swing.JFrame {
                     .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
@@ -396,14 +450,21 @@ public class FacultyLoading extends javax.swing.JFrame {
         if(subject_item.getValue() == 0 || subjectCb.getSelectedItem() == null){
           throw new Exception("Must select a subject");
         }
+        Subjects sub = (Subjects) subject.find(subject_item.getValue());
+        Faculties faculties = (Faculties) teacher.find(faculty_item.getValue());
+        Integer currentLoad = Integer.parseInt(tLoadLbl.getText());
+        Integer subjectUnit = (sub.getLecHours() / 3) + (sub.getLabHours() / 6);
+        Integer maxload = faculties.getRegularLoad() + faculties.getOverload();
+        Integer loadAdded = currentLoad + subjectUnit;
+        if(maxload < loadAdded){
+            throw new Exception("Unable to add subject due to the units exceed to the max limit");
+        }
         for(int index = 0; index < loadingTable.getRowCount(); index++){
             int sub_id = Integer.parseInt(loadingTable.getValueAt(index, 4).toString());
             if(subject_item.getValue() == sub_id){
                throw new Exception("Subject already exisit");
             }
         }
-        Faculties faculties = (Faculties) teacher.find(faculty_item.getValue());
-        Subjects sub = (Subjects) subject.find(subject_item.getValue());
 
         TeachersLoadings loadings = new TeachersLoadings();
         loadings.setSchoolYears(sy);
@@ -452,19 +513,34 @@ public class FacultyLoading extends javax.swing.JFrame {
     private void instructorCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instructorCbActionPerformed
         // TODO add your handling code here:
         ComboItem item = (ComboItem) instructorCb.getSelectedItem();
+        model.setRowCount(0);
         if (item.getValue() > 0) {
             Faculties faculty = (Faculties) teacher.find(item.getValue());
             Object row[] = new Object[5];
-            model.setRowCount(0);
+            Integer lecHrs = 0;
+            Integer labHrs = 0;
+            Integer units = 0;
+            Integer maxload = faculty.getRegularLoad() + faculty.getOverload();
             for (TeachersLoadings loadings : faculty.getTeachersLoadingses()) {
-
-                row[0] = loadings.getSubjects().getCode();
-                row[1] = loadings.getSubjects().getUnits();
-                row[2] = loadings.getSubjects().getLecHours();
-                row[3] = loadings.getSubjects().getLabHours();
-                row[4] = loadings.getSubjects().getId();
+                Subjects sub = loadings.getSubjects();
+                Integer unit = (sub.getLecHours() / 3) + (sub.getLabHours() / 6);
+                
+                lecHrs += loadings.getSubjects().getLecHours();
+                labHrs += loadings.getSubjects().getLabHours();
+                row[0] = sub.getCode();
+                row[1] = unit;
+                row[2] = sub.getLecHours();
+                row[3] = sub.getLabHours();
+                row[4] = sub.getId();
                 model.addRow(row);
             }
+            units += (lecHrs / 3);
+            units += (labHrs / 6);
+            loadLbl.setText(""+faculty.getRegularLoad());
+            deloadLbl.setText(""+faculty.getDeloading());
+            overloadLbl.setText(""+faculty.getOverload());
+            tLoadLbl.setText(""+units);
+            
         }
     }//GEN-LAST:event_instructorCbActionPerformed
 
@@ -505,22 +581,30 @@ public class FacultyLoading extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> courseCb;
+    private javax.swing.JLabel deloadLbl;
     private javax.swing.JComboBox<String> instructorCb;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel loadLbl;
     private javax.swing.JTable loadingTable;
+    private javax.swing.JLabel overloadLbl;
     private javax.swing.JComboBox<String> semesterCb;
     private javax.swing.JComboBox<String> subjectCb;
+    private javax.swing.JLabel tLoadLbl;
     private javax.swing.JComboBox<String> year_levelCb;
     // End of variables declaration//GEN-END:variables
 }
