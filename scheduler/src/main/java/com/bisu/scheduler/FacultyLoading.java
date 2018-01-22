@@ -265,14 +265,14 @@ public class FacultyLoading extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Subject", "Load", "Lec Hours", "Lab Hours", "id"
+                "Subject", "Load", "Lec Hours", "Lab Hours", "Actions", "id"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -283,11 +283,16 @@ public class FacultyLoading extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        loadingTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                loadingTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(loadingTable);
         if (loadingTable.getColumnModel().getColumnCount() > 0) {
-            loadingTable.getColumnModel().getColumn(4).setMinWidth(0);
-            loadingTable.getColumnModel().getColumn(4).setPreferredWidth(0);
-            loadingTable.getColumnModel().getColumn(4).setMaxWidth(0);
+            loadingTable.getColumnModel().getColumn(5).setMinWidth(0);
+            loadingTable.getColumnModel().getColumn(5).setPreferredWidth(0);
+            loadingTable.getColumnModel().getColumn(5).setMaxWidth(0);
         }
 
         jLabel1.setText("Load");
@@ -516,7 +521,7 @@ public class FacultyLoading extends javax.swing.JFrame {
         model.setRowCount(0);
         if (item.getValue() > 0) {
             Faculties faculty = (Faculties) teacher.find(item.getValue());
-            Object row[] = new Object[5];
+            Object row[] = new Object[6];
             Integer lecHrs = 0;
             Integer labHrs = 0;
             Integer units = 0;
@@ -525,13 +530,14 @@ public class FacultyLoading extends javax.swing.JFrame {
                 Subjects sub = loadings.getSubjects();
                 Integer unit = sub.getLecHours()  + (sub.getLabHours() / 3);
                 
-                lecHrs += loadings.getSubjects().getLecHours();
-                labHrs += loadings.getSubjects().getLabHours();
+                lecHrs += sub.getLecHours();
+                labHrs += sub.getLabHours();
                 row[0] = sub.getCode();
                 row[1] = unit;
                 row[2] = sub.getLecHours();
                 row[3] = sub.getLabHours();
-                row[4] = sub.getId();
+                row[4] = "Delete";
+                row[5] = loadings.getId();
                 model.addRow(row);
             }
             units += lecHrs;
@@ -543,6 +549,23 @@ public class FacultyLoading extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_instructorCbActionPerformed
+
+    private void loadingTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loadingTableMouseClicked
+        // TODO add your handling code here:
+        int row = loadingTable.rowAtPoint(evt.getPoint());
+        int col = loadingTable.columnAtPoint(evt.getPoint());
+        Integer currentLoad = Integer.parseInt(tLoadLbl.getText());
+        if (row >= 0 && col >= 4) {
+            if(Helper.confirmationMessage()){
+            Integer id = Integer.parseInt(loadingTable.getValueAt(row, 5).toString());
+            TeachersLoadings tl = (TeachersLoadings)this.teacherLoading.find(id);
+            currentLoad = currentLoad - (tl.getSubjects().getLecHours() + (tl.getSubjects().getLabHours() / 3 ));
+            this.teacherLoading.delete(tl);
+            model.removeRow(row);
+            tLoadLbl.setText(""+currentLoad);
+            }
+        }
+    }//GEN-LAST:event_loadingTableMouseClicked
 
     /**
      * @param args the command line arguments
