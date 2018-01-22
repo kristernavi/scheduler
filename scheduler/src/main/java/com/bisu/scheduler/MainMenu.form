@@ -96,6 +96,14 @@
             <Property name="text" type="java.lang.String" value="Transactions"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="f_load">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Faculty Loading"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="f_loadActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="t_load">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Teachers Loading"/>

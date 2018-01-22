@@ -24,6 +24,7 @@ public class MainMenu extends javax.swing.JFrame {
     TeachersLoad load;
     TeachersLoading loading;
     RoomUtilization roomUtil;
+    FacultyLoading facultyLoading;
     public MainMenu() {
         initComponents();
         roomUtil = new RoomUtilization(this);
@@ -58,7 +59,7 @@ public class MainMenu extends javax.swing.JFrame {
         
         this.loading = new TeachersLoading(this);
         this.loading.setVisible(false);
-        
+        this.facultyLoading.setVisible(false);
         
         
     }
@@ -86,6 +87,7 @@ public class MainMenu extends javax.swing.JFrame {
         faculty = new javax.swing.JMenuItem();
         room = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        f_load = new javax.swing.JMenuItem();
         t_load = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         class_program = new javax.swing.JMenuItem();
@@ -188,6 +190,14 @@ public class MainMenu extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Transactions");
+
+        f_load.setText("Faculty Loading");
+        f_load.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                f_loadActionPerformed(evt);
+            }
+        });
+        jMenu3.add(f_load);
 
         t_load.setText("Teachers Loading");
         t_load.addActionListener(new java.awt.event.ActionListener() {
@@ -313,6 +323,12 @@ public class MainMenu extends javax.swing.JFrame {
         this.roomUtil.offScreen();
     }//GEN-LAST:event_room_utilActionPerformed
 
+    private void f_loadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_f_loadActionPerformed
+        // TODO add your handling code here:
+        this.facultyLoading.setVisible(true);
+        this.facultyLoading.offScreen();
+    }//GEN-LAST:event_f_loadActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -353,6 +369,7 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem class_program;
     private javax.swing.JMenuItem course;
     private javax.swing.JMenuItem department;
+    private javax.swing.JMenuItem f_load;
     private javax.swing.JMenuItem faculty;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
