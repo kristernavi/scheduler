@@ -6,7 +6,12 @@
 package com.bisu.dao;
 
 import com.bisu.contracts.AbstractModel;
+import com.bisu.entities.Rooms;
+import com.bisu.entities.Subjects;
 import com.bisu.entities.TeachersLoadingDetails;
+import java.util.List;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -16,6 +21,20 @@ public class LoadingDetail extends AbstractModel {
 
     public LoadingDetail() {
         super(TeachersLoadingDetails.class);
+    }
+    
+    public List<TeachersLoadingDetails> getByRoom(Rooms room){
+        List<TeachersLoadingDetails> results;
+         begin();
+        
+        Criteria cr = session().createCriteria(TeachersLoadingDetails.class);
+        cr.add(Restrictions.eq("rooms", room));
+        results = cr.list();
+        
+
+        end();
+        return results;
+        
     }
 
 }

@@ -5,6 +5,14 @@
  */
 package com.bisu.scheduler;
 
+import com.bisu.dao.LoadingDetail;
+import com.bisu.dao.Room;
+import com.bisu.entities.Rooms;
+import com.bisu.entities.TeachersLoadingDetails;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author ANGGIE
@@ -15,7 +23,10 @@ public class RoomUtilization extends javax.swing.JFrame {
      * Creates new form RoomUtilization
      */
     MainMenu mainMenu;
-    
+    Room room;
+    LoadingDetail loadingDetail;
+    DefaultTableModel model;
+
     public RoomUtilization(MainMenu mainMenu) {
     this();
     this.mainMenu = mainMenu;
@@ -31,7 +42,27 @@ public class RoomUtilization extends javax.swing.JFrame {
       this.setVisible(false);
     }
     public RoomUtilization() {
+        this.room = new Room();
+        this.loadingDetail = new LoadingDetail();
         initComponents();
+         model = (DefaultTableModel) utilizeRoomTable.getModel();
+
+    }
+    private List comboRoomItem() {
+
+        List<ComboItem> combo = new ArrayList<ComboItem>();
+        combo.add(new ComboItem(0, "Select Room"));
+
+        try {
+            for (Object obj : room.all()) {
+                Rooms model = (Rooms) obj;
+                combo.add(new ComboItem(model.getId(), "" + model.getNumber()));
+            }
+        } catch (Exception e) {
+
+        }
+
+        return combo;
     }
 
     /**
@@ -48,9 +79,9 @@ public class RoomUtilization extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         scrollbar1 = new java.awt.Scrollbar();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        utilizeRoomTable = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
+        roomCb = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Room Utilization");
@@ -66,16 +97,16 @@ public class RoomUtilization extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
 
-        jTable1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        utilizeRoomTable.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        utilizeRoomTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Time", "Days", "Instructor", "Subjects", "Course"
+                "Time", "Days", "Instructor", "Subjects"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(utilizeRoomTable);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -103,6 +134,13 @@ public class RoomUtilization extends javax.swing.JFrame {
             }
         });
 
+        roomCb.setModel(new javax.swing.DefaultComboBoxModel(comboRoomItem().toArray()));
+        roomCb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                roomCbActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -110,9 +148,9 @@ public class RoomUtilization extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 406, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(roomCb, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 298, Short.MAX_VALUE)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,8 +169,8 @@ public class RoomUtilization extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(jButton2)
+                    .addComponent(roomCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(471, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -154,6 +192,45 @@ public class RoomUtilization extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.onScreen();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void roomCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roomCbActionPerformed
+        // TODO add your handling code here:
+        ComboItem selected = (ComboItem) roomCb.getSelectedItem();
+        model.setRowCount(0);
+        if(selected.getValue() > 0){
+            Rooms room = (Rooms) this.room.find(selected.getValue());
+            Object row[] = new Object[4];
+              List <TeachersLoadingDetails> tableData;
+             tableData = this.loadingDetail.getByRoom(room);
+             System.out.println("The size of table data "+tableData.size());
+            for(TeachersLoadingDetails detail: tableData){
+                row[0] = detail.getHourStart()+ " - "+ detail.getHourEnd();
+                String day = "";
+                if(detail.isM()){
+                 day = day+"M";
+                }
+                if(detail.isT()){
+                 day = day+"T";
+                }
+                if(detail.isW()){
+                day = day+"W";
+                }
+                if(detail.isTh()){
+                day = day+"Th";
+                }
+                if(detail.isF()) {
+               day = day+"F";
+                }
+                row[1] = day;
+                row[2] = detail.getTeachersLoadings().getFaculties().getFullname();
+                row[3] = detail.getTeachersLoadings().getSubjects().getCode();
+                
+                model.addRow(row);
+            
+            }
+        
+        }
+    }//GEN-LAST:event_roomCbActionPerformed
 
     /**
      * @param args the command line arguments
@@ -196,8 +273,8 @@ public class RoomUtilization extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JComboBox<String> roomCb;
     private java.awt.Scrollbar scrollbar1;
+    private javax.swing.JTable utilizeRoomTable;
     // End of variables declaration//GEN-END:variables
 }
