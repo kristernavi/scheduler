@@ -690,7 +690,7 @@ public class SubjectMaster extends javax.swing.JFrame {
         // TODO add your handling code here:
         Subjects model;
 
-        System.err.println("Hidden ID " + Helper.isNumeric(hiddenID.getText()));
+     
 
         if (Helper.isNumeric(hiddenID.getText())) {
             model = (Subjects) subject.find(Integer.parseInt(hiddenID.getText()));
@@ -725,6 +725,7 @@ public class SubjectMaster extends javax.swing.JFrame {
         if (this.typeGroup.getSelection() != null) {
             type = this.typeGroup.getSelection().getActionCommand();
         }
+        try{
        
         model.setCode(code.getText());
         model.setYearLevel(yr);
@@ -770,6 +771,10 @@ public class SubjectMaster extends javax.swing.JFrame {
                 Helper.errorMessage("Course is required atleast 1", "error");
             }
 
+        }
+        }
+        catch(Exception ex){
+            Helper.errorMessage("Duplicate Course Code", "Woopss! Somethin went wrong");
         }
     }//GEN-LAST:event_saveActionPerformed
 
