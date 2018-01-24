@@ -59,6 +59,7 @@ public class MainMenu extends javax.swing.JFrame {
         
         this.loading = new TeachersLoading(this);
         this.loading.setVisible(false);
+        this.facultyLoading = new FacultyLoading();
         this.facultyLoading.setVisible(false);
         
         
