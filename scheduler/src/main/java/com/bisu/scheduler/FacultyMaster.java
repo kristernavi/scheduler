@@ -35,6 +35,7 @@ public class FacultyMaster extends javax.swing.JFrame {
     /**
      * Creates new form FacultyMaster
      */
+   
     MainMenu mainMenu;
     Teacher teacher;
     Department department;
