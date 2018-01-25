@@ -488,6 +488,7 @@ public class FacultyLoading extends javax.swing.JFrame {
         model.addRow(row);
         Helper.successMessage();
         }catch(Exception e){
+            
           Helper.closeSession();
           Helper.errorMessage(e.getMessage(), "Whoopss!");
 
