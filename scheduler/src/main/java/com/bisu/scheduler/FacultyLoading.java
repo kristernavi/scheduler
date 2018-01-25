@@ -50,13 +50,15 @@ public class FacultyLoading extends javax.swing.JFrame {
         model = (DefaultTableModel) loadingTable.getModel();
 
     }
-    public void offScreen(){
-     this.mainMenu.setVisible(false);
+
+    public void offScreen() {
+        this.mainMenu.setVisible(false);
 
     }
-    public void onScreen(){
-      this.mainMenu.setVisible(true);
-      this.setVisible(false);
+
+    public void onScreen() {
+        this.mainMenu.setVisible(true);
+        this.setVisible(false);
     }
 
     public FacultyLoading(MainMenu mainMenu) {
@@ -157,8 +159,6 @@ public class FacultyLoading extends javax.swing.JFrame {
 
         return combo;
     }
-
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -266,14 +266,14 @@ public class FacultyLoading extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Subject", "Load", "Lec Hours", "Lab Hours", "Actions", "id"
+                "Subject", "Load", "Lec Hours", "Lab Hours", "Actions", "id", "subject_id"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -294,6 +294,9 @@ public class FacultyLoading extends javax.swing.JFrame {
             loadingTable.getColumnModel().getColumn(5).setMinWidth(0);
             loadingTable.getColumnModel().getColumn(5).setPreferredWidth(0);
             loadingTable.getColumnModel().getColumn(5).setMaxWidth(0);
+            loadingTable.getColumnModel().getColumn(6).setMinWidth(0);
+            loadingTable.getColumnModel().getColumn(6).setPreferredWidth(0);
+            loadingTable.getColumnModel().getColumn(6).setMaxWidth(0);
         }
 
         jLabel1.setText("Load");
@@ -443,54 +446,56 @@ public class FacultyLoading extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        try
-        {
-        ComboItem faculty_item = (ComboItem) instructorCb.getSelectedItem();
-        ComboItem subject_item = (ComboItem) subjectCb.getSelectedItem();
-        
-            System.err.println(""+subjectCb.getSelectedItem());
-        SchoolYears sy = (SchoolYears) schoolYear.getActive();
-        if(faculty_item.getValue() == 0){
-         throw new Exception("Must select an instructor");
-        }
-        if(subject_item.getValue() == 0 || subjectCb.getSelectedItem() == null){
-          throw new Exception("Must select a subject");
-        }
-        Subjects sub = (Subjects) subject.find(subject_item.getValue());
-        Faculties faculties = (Faculties) teacher.find(faculty_item.getValue());
-        Integer currentLoad = Integer.parseInt(tLoadLbl.getText());
-        Integer subjectUnit = sub.getLecHours() + (sub.getLabHours() / 3);
-        Integer maxload = faculties.getRegularLoad() + faculties.getOverload();
-        Integer loadAdded = currentLoad + subjectUnit;
-        if(maxload < loadAdded){
-            throw new Exception("Unable to add subject due to the units exceed to the max limit");
-        }
-        for(int index = 0; index < loadingTable.getRowCount(); index++){
-            int sub_id = Integer.parseInt(loadingTable.getValueAt(index, 4).toString());
-            if(subject_item.getValue() == sub_id){
-               throw new Exception("Subject already exisit");
-            }
-        }
+        try {
+            ComboItem faculty_item = (ComboItem) instructorCb.getSelectedItem();
+            ComboItem subject_item = (ComboItem) subjectCb.getSelectedItem();
 
-        TeachersLoadings loadings = new TeachersLoadings();
-        loadings.setSchoolYears(sy);
-        loadings.setFaculties(faculties);
-        loadings.setSubjects(sub);
-        teacherLoading.save(loadings);
-        tLoadLbl.setText(""+loadAdded);
-        Object row[] = new Object[6];
-        row[0] = loadings.getSubjects().getCode();
-        row[1] = loadings.getSubjects().getUnits();
-        row[2] = loadings.getSubjects().getLecHours();
-        row[3] = loadings.getSubjects().getLabHours();
-        row[4] = "Delete";
-        row[5] = loadings.getSubjects().getId();
-        model.addRow(row);
-        Helper.successMessage();
-        }catch(Exception e){
-            
-          Helper.closeSession();
-          Helper.errorMessage(e.getMessage(), "Whoopss!");
+            System.err.println("" + subjectCb.getSelectedItem());
+            SchoolYears sy = (SchoolYears) schoolYear.getActive();
+            if (faculty_item.getValue() == 0) {
+                throw new Exception("Must select an instructor");
+            }
+            if (subject_item.getValue() == 0 || subjectCb.getSelectedItem() == null) {
+                throw new Exception("Must select a subject");
+            }
+            Subjects sub = (Subjects) subject.find(subject_item.getValue());
+            Faculties faculties = (Faculties) teacher.find(faculty_item.getValue());
+            Integer currentLoad = Integer.parseInt(tLoadLbl.getText());
+            Integer subjectUnit = sub.getLecHours() + (sub.getLabHours() / 3);
+            Integer maxload = faculties.getRegularLoad() + faculties.getOverload();
+            Integer loadAdded = currentLoad + subjectUnit;
+            if (maxload < loadAdded) {
+                throw new Exception("Unable to add subject due to the units exceed to the max limit");
+            }
+            for (int index = 0; index < loadingTable.getRowCount(); index++) {
+                int sub_id = Integer.parseInt(loadingTable.getValueAt(index, 6).toString());
+                if (subject_item.getValue() == sub_id) {
+                //    throw new Exception("Subject already exisit");
+                }
+            }
+
+            TeachersLoadings loadings = new TeachersLoadings();
+            loadings.setSchoolYears(sy);
+            loadings.setFaculties(faculties);
+            loadings.setSubjects(sub);
+            teacherLoading.save(loadings);
+            tLoadLbl.setText("" + loadAdded);
+            Object row[] = new Object[7];
+            Integer unit = sub.getLecHours() + (sub.getLabHours() / 3);
+            row[0] = sub.getCode();
+            row[1] = unit;
+            row[2] = sub.getLecHours();
+            row[3] = sub.getLabHours();
+            row[4] = "Delete";
+            row[5] = loadings.getId();
+            row[6] = sub.getId();
+            model.addRow(row);
+
+            Helper.successMessage();
+        } catch (Exception e) {
+
+            Helper.closeSession();
+            Helper.errorMessage(e.getMessage(), "Whoopss!");
 
         }
 
@@ -525,15 +530,15 @@ public class FacultyLoading extends javax.swing.JFrame {
         model.setRowCount(0);
         if (item.getValue() > 0) {
             Faculties faculty = (Faculties) teacher.find(item.getValue());
-            Object row[] = new Object[6];
+            Object row[] = new Object[7];
             Integer lecHrs = 0;
             Integer labHrs = 0;
             Integer units = 0;
             Integer maxload = faculty.getRegularLoad() + faculty.getOverload();
             for (TeachersLoadings loadings : faculty.getTeachersLoadingses()) {
                 Subjects sub = loadings.getSubjects();
-                Integer unit = sub.getLecHours()  + (sub.getLabHours() / 3);
-                
+                Integer unit = sub.getLecHours() + (sub.getLabHours() / 3);
+
                 lecHrs += sub.getLecHours();
                 labHrs += sub.getLabHours();
                 row[0] = sub.getCode();
@@ -542,15 +547,16 @@ public class FacultyLoading extends javax.swing.JFrame {
                 row[3] = sub.getLabHours();
                 row[4] = "Delete";
                 row[5] = loadings.getId();
+                row[6] = sub.getId();
                 model.addRow(row);
             }
             units += lecHrs;
             units += (labHrs / 3);
-            loadLbl.setText(""+faculty.getRegularLoad());
-            deloadLbl.setText(""+faculty.getDeloading());
-            overloadLbl.setText(""+faculty.getOverload());
-            tLoadLbl.setText(""+units);
-            
+            loadLbl.setText("" + faculty.getRegularLoad());
+            deloadLbl.setText("" + faculty.getDeloading());
+            overloadLbl.setText("" + faculty.getOverload());
+            tLoadLbl.setText("" + units);
+
         }
     }//GEN-LAST:event_instructorCbActionPerformed
 
@@ -560,13 +566,13 @@ public class FacultyLoading extends javax.swing.JFrame {
         int col = loadingTable.columnAtPoint(evt.getPoint());
         Integer currentLoad = Integer.parseInt(tLoadLbl.getText());
         if (row >= 0 && col >= 4) {
-            if(Helper.confirmationMessage()){
-            Integer id = Integer.parseInt(loadingTable.getValueAt(row, 5).toString());
-            TeachersLoadings tl = (TeachersLoadings)this.teacherLoading.find(id);
-            currentLoad = currentLoad - (tl.getSubjects().getLecHours() + (tl.getSubjects().getLabHours() / 3 ));
-            this.teacherLoading.delete(tl);
-            model.removeRow(row);
-            tLoadLbl.setText(""+currentLoad);
+            if (Helper.confirmationMessage()) {
+                Integer id = Integer.parseInt(loadingTable.getValueAt(row, 5).toString());
+                TeachersLoadings tl = (TeachersLoadings) this.teacherLoading.find(id);
+                currentLoad = currentLoad - (tl.getSubjects().getLecHours() + (tl.getSubjects().getLabHours() / 3));
+                this.teacherLoading.delete(tl);
+                model.removeRow(row);
+                tLoadLbl.setText("" + currentLoad);
             }
         }
     }//GEN-LAST:event_loadingTableMouseClicked
