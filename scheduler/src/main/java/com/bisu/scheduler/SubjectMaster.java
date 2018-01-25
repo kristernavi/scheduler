@@ -217,8 +217,6 @@ public class SubjectMaster extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         hiddenID = new javax.swing.JLabel();
         requisite = new javax.swing.JTextField();
-        jLabel12 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
         addCourse = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         courseTable = new javax.swing.JTable();
@@ -386,15 +384,6 @@ public class SubjectMaster extends javax.swing.JFrame {
             }
         });
 
-        jLabel12.setText("Department:");
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
-            }
-        });
-
         addCourse.setText("+");
         addCourse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -456,9 +445,7 @@ public class SubjectMaster extends javax.swing.JFrame {
                                 .addComponent(gen_ed)
                                 .addGap(5, 5, 5)
                                 .addComponent(elective))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.LEADING, 0, 225, Short.MAX_VALUE)
-                                .addComponent(requisite, javax.swing.GroupLayout.Alignment.LEADING)))
+                            .addComponent(requisite, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -500,8 +487,7 @@ public class SubjectMaster extends javax.swing.JFrame {
                                         .addComponent(code))
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(lec_hr, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(units, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(jLabel12))
+                                        .addComponent(units, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
@@ -552,11 +538,7 @@ public class SubjectMaster extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(requisite, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
+                .addGap(79, 79, 79)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(203, Short.MAX_VALUE))
         );
@@ -619,7 +601,7 @@ public class SubjectMaster extends javax.swing.JFrame {
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(nav_pane, javax.swing.GroupLayout.DEFAULT_SIZE, 709, Short.MAX_VALUE)
+                .addComponent(nav_pane, javax.swing.GroupLayout.PREFERRED_SIZE, 709, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -823,11 +805,6 @@ public class SubjectMaster extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_semCbActionPerformed
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        // TODO add your handling code here:
-        save.setEnabled(true);
-    }//GEN-LAST:event_jComboBox2ActionPerformed
-
     private void requisiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requisiteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_requisiteActionPerformed
@@ -955,11 +932,9 @@ public class SubjectMaster extends javax.swing.JFrame {
     private javax.swing.JRadioButton elective;
     private javax.swing.JRadioButton gen_ed;
     private javax.swing.JLabel hiddenID;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

@@ -476,16 +476,18 @@ public class FacultyLoading extends javax.swing.JFrame {
         loadings.setFaculties(faculties);
         loadings.setSubjects(sub);
         teacherLoading.save(loadings);
-
-        Object row[] = new Object[5];
+        tLoadLbl.setText(""+loadAdded);
+        Object row[] = new Object[6];
         row[0] = loadings.getSubjects().getCode();
         row[1] = loadings.getSubjects().getUnits();
         row[2] = loadings.getSubjects().getLecHours();
-        row[3] = loadings.getSubjects().getLabHours();
-        row[4] = loadings.getSubjects().getId();
+        row[4] = loadings.getSubjects().getLabHours();
+        row[5] = "Delete";
+        row[6] = loadings.getSubjects().getId();
         model.addRow(row);
         Helper.successMessage();
         }catch(Exception e){
+          Helper.closeSession();
           Helper.errorMessage(e.getMessage(), "Whoopss!");
 
         }
