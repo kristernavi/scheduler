@@ -50,6 +50,14 @@ public class FacultyLoading extends javax.swing.JFrame {
         model = (DefaultTableModel) loadingTable.getModel();
 
     }
+    public void offScreen(){
+     this.mainMenu.setVisible(false);
+
+    }
+    public void onScreen(){
+      this.mainMenu.setVisible(true);
+      this.setVisible(false);
+    }
 
     public FacultyLoading(MainMenu mainMenu) {
         this();
@@ -150,14 +158,7 @@ public class FacultyLoading extends javax.swing.JFrame {
         return combo;
     }
 
-    public void offScreen() {
-        this.mainMenu.setVisible(false);
-    }
-
-    public void onScreen() {
-        this.mainMenu.setVisible(true);
-        this.setVisible(false);
-    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -481,9 +482,9 @@ public class FacultyLoading extends javax.swing.JFrame {
         row[0] = loadings.getSubjects().getCode();
         row[1] = loadings.getSubjects().getUnits();
         row[2] = loadings.getSubjects().getLecHours();
-        row[4] = loadings.getSubjects().getLabHours();
-        row[5] = "Delete";
-        row[6] = loadings.getSubjects().getId();
+        row[3] = loadings.getSubjects().getLabHours();
+        row[4] = "Delete";
+        row[5] = loadings.getSubjects().getId();
         model.addRow(row);
         Helper.successMessage();
         }catch(Exception e){
