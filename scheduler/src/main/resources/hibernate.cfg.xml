@@ -60,6 +60,7 @@ Contributor(s):
     <mapping class="com.bisu.entities.Faculties"/>
     <mapping class="com.bisu.entities.SubjectDepartments"/>
     <mapping class="com.bisu.entities.SubjectCourses"/>
+    <mapping class="com.bisu.entities.LoadCourses"/>
 
 
   </session-factory>

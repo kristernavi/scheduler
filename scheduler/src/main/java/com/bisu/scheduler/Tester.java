@@ -19,6 +19,15 @@ public class Tester {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, 1);
+        c.set(Calendar.MONTH, 0);
+        c.set(Calendar.MINUTE, 30);
+        c.set(Calendar.SECOND, 0);
+        Date d1 = (Date) c.getTime();
+        Date d2 = new Date();
+        System.err.println(""+d1.getTime());
+       
     }
     
 }

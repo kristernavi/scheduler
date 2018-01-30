@@ -52,5 +52,7 @@ Contributor(s):
   <table-filter match-name="departments"/>
   <table-filter match-name="subject_departments"/>
   <table-filter match-name="subject_courses"/>
+  <table-filter match-name="load_courses"/>
+
 
 </hibernate-reverse-engineering>

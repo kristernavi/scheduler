@@ -7,12 +7,16 @@ package com.bisu.scheduler;
 
 import com.bisu.dao.Department;
 import com.bisu.dao.Loading;
+import com.bisu.dao.LoadingDetail;
 import com.bisu.dao.Teacher;
 import com.bisu.entities.TeachersLoadings;
 import com.bisu.entities.Departments;
 import com.bisu.entities.Faculties;
+import com.bisu.entities.LoadCourses;
 import com.bisu.entities.TeachersLoadingDetails;
 import com.bisu.extras.Helper;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.Temporal;
@@ -22,7 +26,12 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import org.apache.commons.lang.StringUtils;
 
 /**
  *
@@ -37,30 +46,50 @@ public class TeachersLoad extends javax.swing.JFrame {
     private Teacher teacher;
     DefaultTableModel model;
     private Loading load;
-    
+    private JPopupMenu popupMenu;
     MainMenu mainMenu;
-    
+    LoadingDetail loadDetail;
+
     public TeachersLoad(MainMenu mainMenu) {
-    this();
-    this.mainMenu = mainMenu;
+        this();
+        this.mainMenu = mainMenu;
     }
-    public void offScreen(){
-     this.mainMenu.setVisible(false);
+
+    public void offScreen() {
+        this.mainMenu.setVisible(false);
     }
-    public void onScreen(){
-      this.mainMenu.setVisible(true);
-      this.setVisible(false);
-          int op = this.getDefaultCloseOperation(); // HIDE_ON_CLOSE
-    this.setDefaultCloseOperation(this.DO_NOTHING_ON_CLOSE);
-    
+
+    public void onScreen() {
+        this.mainMenu.setVisible(true);
+        this.setVisible(false);
+        int op = this.getDefaultCloseOperation(); // HIDE_ON_CLOSE
+        this.setDefaultCloseOperation(this.DO_NOTHING_ON_CLOSE);
+
     }
-    
+
     public TeachersLoad() {
+        popupMenu = new JPopupMenu();
         department = new Department();
         teacher = new Teacher();
         load = new Loading();
+        loadDetail = new LoadingDetail();
         initComponents();
+        JMenuItem menuItemDelete = new JMenuItem("Delete");
         this.model = (DefaultTableModel) this.scheduleTable.getModel();
+        menuItemDelete.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                if (Helper.confirmationMessage()) {
+                    String id = scheduleTable.getValueAt(scheduleTable.getSelectedRow(), 4).toString();
+                    TeachersLoadingDetails d = (TeachersLoadingDetails) loadDetail.find(Integer.parseInt(id));
+                    loadDetail.delete(d);
+                    model.removeRow(scheduleTable.getSelectedRow());
+                    Helper.deleteMessage();
+                }
+
+            }
+        });
+        popupMenu.add(menuItemDelete);
+
     }
 
     /**
@@ -126,21 +155,36 @@ public class TeachersLoad extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Time", "Days", "Room", "Subjects"
+                "Time", "Days", "Room", "Subjects", "id", "Course"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        scheduleTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                scheduleTableMouseReleased(evt);
             }
         });
         jScrollPane1.setViewportView(scheduleTable);
         if (scheduleTable.getColumnModel().getColumnCount() > 0) {
             scheduleTable.getColumnModel().getColumn(0).setResizable(false);
             scheduleTable.getColumnModel().getColumn(3).setResizable(false);
+            scheduleTable.getColumnModel().getColumn(4).setMinWidth(0);
+            scheduleTable.getColumnModel().getColumn(4).setPreferredWidth(0);
+            scheduleTable.getColumnModel().getColumn(4).setMaxWidth(0);
         }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -229,7 +273,6 @@ public class TeachersLoad extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addComponent(jButton4)
                             .addComponent(loadLbl))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
@@ -257,66 +300,70 @@ public class TeachersLoad extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void populateTable(Faculties instructor){
+    private void populateTable(Faculties instructor) {
         List tableData;
         tableData = load.getByInstructor(instructor);
 
-        Object row[] = new Object[5];
+        Object row[] = new Object[6];
         model.setRowCount(0);
         for (int i = 0; i < tableData.size(); i++) {
             TeachersLoadings loads = (TeachersLoadings) tableData.get(i);
             Set<TeachersLoadingDetails> details = loads.getTeachersLoadingDetailses();
-           
-            for(Iterator<TeachersLoadingDetails> it = details.iterator(); it.hasNext();){
+
+            for (Iterator<TeachersLoadingDetails> it = details.iterator(); it.hasNext();) {
                 TeachersLoadingDetails detail = it.next();
-                long diff =  detail.getHourEnd().getTime() - detail.getHourStart().getTime();
+                long diff = detail.getHourEnd().getTime() - detail.getHourStart().getTime();
                 row[0] = Helper.formatDuration(diff);
                 String day = "";
-                if(detail.isM()){
-                 day = day+"M";
+                if (detail.isM()) {
+                    day = day + "M";
                 }
-                if(detail.isT()){
-                 day = day+"T";
+                if (detail.isT()) {
+                    day = day + "T";
                 }
-                if(detail.isW()){
-                day = day+"W";
+                if (detail.isW()) {
+                    day = day + "W";
                 }
-                if(detail.isTh()){
-                day = day+"Th";
+                if (detail.isTh()) {
+                    day = day + "Th";
                 }
-                if(detail.isF()) {
-               day = day+"F";
+                if (detail.isF()) {
+                    day = day + "F";
                 }
                 row[1] = day;
                 row[2] = detail.getRooms().getNumber();
                 row[3] = loads.getSubjects().getDescription();
-               // row[4] = loads.getSubjects().getCourses().getCode();
+                row[4] = detail.getId();
+                String c = "";
+                for (LoadCourses lc : detail.getLoadCourseses()) {
+                    c = c + "/" + lc.getCourses().getCode();
+                }
+                c = StringUtils.removeEnd(c, "/");
+                c = StringUtils.removeStart(c, "/");
+                row[5] = c;
                 model.addRow(row);
             }
-           
 
         }
 
     }
-    
-    private List comboDepartmentItem(){
-   
-       List<ComboItem> combo = new ArrayList<ComboItem>();
-       combo.add(new ComboItem(0,"Select Department"));
-       
-       try{
-           for(Object obj: department.all()){
-           Departments model = (Departments) obj;
-           combo.add(new ComboItem(model.getId(),model.getCode()+" - "+model.getDescription()));
-       }
-       }
-       catch(Exception e){
-       
-       }
-       
-       
-       return combo;
-   }
+
+    private List comboDepartmentItem() {
+
+        List<ComboItem> combo = new ArrayList<ComboItem>();
+        combo.add(new ComboItem(0, "Select Department"));
+
+        try {
+            for (Object obj : department.all()) {
+                Departments model = (Departments) obj;
+                combo.add(new ComboItem(model.getId(), model.getCode() + " - " + model.getDescription()));
+            }
+        } catch (Exception e) {
+
+        }
+
+        return combo;
+    }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -325,8 +372,8 @@ public class TeachersLoad extends javax.swing.JFrame {
     private void departmentCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_departmentCbActionPerformed
         // TODO add your handling code here:
         ComboItem selected = (ComboItem) departmentCb.getSelectedItem();
-        if(selected.getValue() > 0){
-            Departments dept = (Departments)department.find(selected.getValue());
+        if (selected.getValue() > 0) {
+            Departments dept = (Departments) department.find(selected.getValue());
             instuctorCb.setModel(new javax.swing.DefaultComboBoxModel(comboInstructorItem(dept).toArray()));
         }
     }//GEN-LAST:event_departmentCbActionPerformed
@@ -334,13 +381,13 @@ public class TeachersLoad extends javax.swing.JFrame {
     private void instuctorCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instuctorCbActionPerformed
         // TODO add your handling code here:
         ComboItem selected = (ComboItem) instuctorCb.getSelectedItem();
-        if(selected.getValue() > 0){
+        if (selected.getValue() > 0) {
             Faculties instructor = (Faculties) teacher.find(selected.getValue());
-            loadLbl.setText(""+instructor.getRegularLoad());
-            overLbl.setText(""+instructor.getOverload());
+            loadLbl.setText("" + instructor.getRegularLoad());
+            overLbl.setText("" + instructor.getOverload());
             this.populateTable(instructor);
         }
-      
+
     }//GEN-LAST:event_instuctorCbActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -348,24 +395,41 @@ public class TeachersLoad extends javax.swing.JFrame {
         this.onScreen();
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private List comboInstructorItem(Departments dept){
-        
-       List<ComboItem> combo = new ArrayList<ComboItem>();
-       combo.add(new ComboItem(0,"Select Instructor"));
-       
-       try{
-           for(Object obj: teacher.getByDepartment(dept)){
-           Faculties model = (Faculties) obj;
-           combo.add(new ComboItem(model.getId(),model.getFirstname()+"  "+model.getLastname()));
-       }
-       }
-       catch(Exception e){
-       
-       }
-       
-       
-       return combo;
-   }
+    private void scheduleTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_scheduleTableMouseReleased
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+        System.err.println("Im outside");
+        if (SwingUtilities.isRightMouseButton(evt)) {
+            System.err.println("Im inside");
+
+            JTable source = (JTable) evt.getSource();
+            int row = source.rowAtPoint(evt.getPoint());
+            int column = source.columnAtPoint(evt.getPoint());
+
+            if (!source.isRowSelected(row)) {
+                source.changeSelection(row, column, false, false);
+            }
+            popupMenu.show(evt.getComponent(), evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_scheduleTableMouseReleased
+
+    private List comboInstructorItem(Departments dept) {
+
+        List<ComboItem> combo = new ArrayList<ComboItem>();
+        combo.add(new ComboItem(0, "Select Instructor"));
+
+        try {
+            for (Object obj : teacher.getByDepartment(dept)) {
+                Faculties model = (Faculties) obj;
+                combo.add(new ComboItem(model.getId(), model.getFirstname() + "  " + model.getLastname()));
+            }
+        } catch (Exception e) {
+
+        }
+
+        return combo;
+    }
+
     /**
      * @param args the command line arguments
      */

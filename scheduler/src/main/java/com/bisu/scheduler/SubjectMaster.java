@@ -84,6 +84,7 @@ public class SubjectMaster extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent evt) {
 
                 String id = subjectsTable.getValueAt(subjectsTable.getSelectedRow(), 8).toString();
+                System.err.println("The subject ID "+id);
                 populate_inputs(Integer.parseInt(id));
                 nav_pane.setEnabledAt(0, true);
                 nav_pane.setSelectedIndex(0);
@@ -99,8 +100,9 @@ public class SubjectMaster extends javax.swing.JFrame {
         Subjects sub= (Subjects) subject.find(id);
         yearCB.setSelectedIndex(sub.getYearLevel());
         semCb.setSelectedIndex(sub.getSemester());
-        ComboItem item = new ComboItem(sub.getCourses().getId(),sub.getCourses().getCode());
-        coursetItems.getModel().setSelectedItem(item);
+//        ComboItem item = new ComboItem(sub.getCourses().getId(),sub.getCourses().getCode());
+//        coursetItems.getModel().setSelectedItem(item);
+        this.populateTable2(sub);
         code.setText(sub.getCode());
         description.setText(sub.getDescription());
         units.setText(""+sub.getUnits());
@@ -676,6 +678,7 @@ public class SubjectMaster extends javax.swing.JFrame {
 
         if (Helper.isNumeric(hiddenID.getText())) {
             model = (Subjects) subject.find(Integer.parseInt(hiddenID.getText()));
+            this.subjectCourse.deleteBySubject(model.getId());
         } else {
             model = new Subjects();
         }
@@ -823,12 +826,26 @@ public class SubjectMaster extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_deleteActionPerformed
-
+    private void populateTable2 (Subjects subject){
+        
+            model2.setRowCount(0);
+              Object row[] = new Object[3];
+            for(SubjectCourses sc: subject.getSubjectCourseses()){
+                row[0] = sc.getCourses().getCode();
+                row[1] = "Delete";
+                row[2] = sc.getCourses().getId();
+            model2.addRow(row);
+            }
+        
+          
+            
+        
+    
+    }
     private void addCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCourseActionPerformed
         // TODO add your handling code here:
         ComboItem item = (ComboItem) coursetItems.getSelectedItem();
         if(item.getValue() > 0 ){
-         
             boolean addable = true;
             for(int index = 0 ; index < this.courseTable.getRowCount() ; index++){
                 if(item.getValue() == this.courseTable.getValueAt(index, 2)){

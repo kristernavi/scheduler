@@ -7,7 +7,6 @@ package com.bisu.dao;
 
 import com.bisu.contracts.AbstractModel;
 import com.bisu.entities.Rooms;
-import com.bisu.entities.Subjects;
 import com.bisu.entities.TeachersLoadingDetails;
 import java.util.List;
 import org.hibernate.Criteria;

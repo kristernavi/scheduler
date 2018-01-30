@@ -6,6 +6,7 @@
 package com.bisu.scheduler;
 
 import com.bisu.dao.Course;
+import com.bisu.dao.LoadCourse;
 import com.bisu.dao.Loading;
 import com.bisu.dao.LoadingDetail;
 import com.bisu.dao.Room;
@@ -15,7 +16,9 @@ import com.bisu.dao.SchoolYear;
 import com.bisu.dao.SubjectCourse;
 import com.bisu.entities.Courses;
 import com.bisu.entities.Faculties;
+import com.bisu.entities.LoadCourses;
 import com.bisu.entities.Rooms;
+import com.bisu.entities.SubjectCourses;
 import com.bisu.entities.Subjects;
 import com.bisu.entities.TeachersLoadingDetails;
 import com.bisu.entities.TeachersLoadings;
@@ -27,6 +30,7 @@ import java.util.List;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import javax.swing.table.DefaultTableModel;
+import org.apache.commons.lang.StringUtils;
 
 /**
  *
@@ -47,6 +51,8 @@ public class TeachersLoading extends javax.swing.JFrame {
     SchoolYear schoolYear;
     MainMenu mainMenu;
     SubjectCourse sc;
+    DefaultTableModel model2;
+    LoadCourse loadCourse;
 
     public TeachersLoading(MainMenu mainMenu) {
         this();
@@ -68,6 +74,7 @@ public class TeachersLoading extends javax.swing.JFrame {
     }
 
     public TeachersLoading() {
+        loadCourse = new LoadCourse();
         loadDetail = new LoadingDetail();
         schoolYear = new SchoolYear();
         course = new Course();
@@ -80,6 +87,7 @@ public class TeachersLoading extends javax.swing.JFrame {
         SpinnerDateModel sm2 = new SpinnerDateModel(date, null, null, Calendar.MINUTE);
         SpinnerDateModel sm1 = new SpinnerDateModel(date, null, null, Calendar.MINUTE);
         initComponents();
+        model2 = (DefaultTableModel) courseTable.getModel();
         end_timespinner.setModel(sm1);
         start_timespinner.setModel(sm2);
         JSpinner.DateEditor de = new JSpinner.DateEditor(end_timespinner, "hh:mm a");
@@ -89,9 +97,12 @@ public class TeachersLoading extends javax.swing.JFrame {
         de2.getTextField().setEditable(true);
         start_timespinner.setEditor(de2);
         Calendar c = Calendar.getInstance();
-
+        c.set(Calendar.YEAR, 0);
+        c.set(Calendar.MONTH, 0);
+        c.set(Calendar.DATE, 0);
         c.set(Calendar.MINUTE, 30);
         c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
         start_timespinner.setValue(c.getTime());
         end_timespinner.setValue(c.getTime());
         model = (DefaultTableModel) scheduleTable.getModel();
@@ -131,6 +142,11 @@ public class TeachersLoading extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         end_timespinner = new javax.swing.JSpinner();
         start_timespinner = new javax.swing.JSpinner();
+        coursetItems = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        courseTable = new javax.swing.JTable();
+        addCourse = new javax.swing.JButton();
         instructorCb = new javax.swing.JComboBox<>();
         subjectCb = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -193,43 +209,104 @@ public class TeachersLoading extends javax.swing.JFrame {
 
         jLabel9.setText("End:");
 
+        roomCb.setModel(new javax.swing.DefaultComboBoxModel(comboRoomItem().toArray()));
+
+        jLabel4.setText("Course:");
+
+        courseTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Code", "Action", "id"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                true, true, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        courseTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                courseTableMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(courseTable);
+        if (courseTable.getColumnModel().getColumnCount() > 0) {
+            courseTable.getColumnModel().getColumn(1).setResizable(false);
+            courseTable.getColumnModel().getColumn(2).setMinWidth(0);
+            courseTable.getColumnModel().getColumn(2).setPreferredWidth(0);
+            courseTable.getColumnModel().getColumn(2).setMaxWidth(0);
+        }
+
+        addCourse.setText("+");
+        addCourse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addCourseActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(6, 6, 6)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(add_schedule))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(roomCb, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(41, 41, 41)
+                                .addGap(5, 5, 5)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tuesday, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(thursday, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(friday, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(wednesday, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(roomCb, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addGap(41, 41, 41)
+                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(tuesday, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(thursday, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(friday, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(wednesday, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addComponent(jLabel8)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(monday, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(start_timespinner, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(end_timespinner, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(18, 18, 18)
-                                .addComponent(monday, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(coursetItems, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(start_timespinner, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addGap(18, 18, 18)
-                                .addComponent(end_timespinner, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(addCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -245,7 +322,7 @@ public class TeachersLoading extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(roomCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
                             .addComponent(monday))
@@ -257,8 +334,19 @@ public class TeachersLoading extends javax.swing.JFrame {
                         .addComponent(thursday)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(friday)
-                        .addGap(9, 9, 9)
-                        .addComponent(add_schedule))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(coursetItems, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(addCourse))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(add_schedule))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 11, Short.MAX_VALUE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -280,6 +368,12 @@ public class TeachersLoading extends javax.swing.JFrame {
             }
         });
 
+        subjectCb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subjectCbActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -289,7 +383,7 @@ public class TeachersLoading extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(39, 39, 39))
+                        .addGap(51, 51, 51))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
@@ -312,9 +406,9 @@ public class TeachersLoading extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(subjectCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+                .addContainerGap())
         );
 
         scheduleTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -322,14 +416,14 @@ public class TeachersLoading extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Room", "Hr Start", "Hr End", "Mon", "Tue", "Wed", "Thu", "Fri", "Action", "room_id", "d1", "d2"
+                "Room", "Hr Start", "Hr End", "Mon", "Tue", "Wed", "Thu", "Fri", "Action", "room_id", "d1", "d2", "course_id"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, true
+                false, false, false, false, false, false, false, false, false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -373,18 +467,18 @@ public class TeachersLoading extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton5)
                         .addGap(38, 38, 38)
-                        .addComponent(jButton6)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jButton6)
+                        .addContainerGap(701, Short.MAX_VALUE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1))))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -412,7 +506,7 @@ public class TeachersLoading extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 62, Short.MAX_VALUE))
+                .addGap(0, 2, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -520,40 +614,37 @@ public class TeachersLoading extends javax.swing.JFrame {
     private boolean IsConflict(Date s1, Date e1, Date s2, Date e2) {
         return (s1.compareTo(e2) < 0) && (e1.compareTo(s2) > 0);
     }
-    
-    
-    private boolean hasDay(){
+
+    private boolean hasDay() {
         boolean selected = false;
-                if (monday.isSelected()) {
-                   selected = true;
-                }
-                if (tuesday.isSelected()) {
-                  
-                   selected = true;
+        if (monday.isSelected()) {
+            selected = true;
+        }
+        if (tuesday.isSelected()) {
 
-                }
-                if (wednesday.isSelected()) {
-                   
-                   selected = true;
+            selected = true;
 
-                }
-                if (thursday.isSelected()) {
-                   
-                   selected = true;
+        }
+        if (wednesday.isSelected()) {
 
-                }
-                if (friday.isSelected()) {
-                    selected = true;
-                 
-                }
-               
+            selected = true;
 
-    
+        }
+        if (thursday.isSelected()) {
+
+            selected = true;
+
+        }
+        if (friday.isSelected()) {
+            selected = true;
+
+        }
+
         return selected;
     }
 
     private void add_scheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_scheduleActionPerformed
-        Object row[] = new Object[12];
+        Object row[] = new Object[13];
         ComboItem item = (ComboItem) roomCb.getSelectedItem();
         ComboItem instructorSelected = (ComboItem) instructorCb.getSelectedItem();
 
@@ -564,84 +655,95 @@ public class TeachersLoading extends javax.swing.JFrame {
         boolean already = false;
         boolean conflict = false;
         try {
-            if(instructorSelected.getValue() < 1){
-             throw new Exception("Selected an instructor");
+            if(courseTable.getRowCount() < 1){
+               throw new Exception("Must select a course");
             }
-            if(subjectSelected.getValue() < 1){
-             throw new Exception("Selected a subject");
+            if (instructorSelected.getValue() < 1) {
+                throw new Exception("Selected an instructor");
             }
-            if(!this.hasDay()){
+            if (subjectSelected.getValue() < 1) {
+                throw new Exception("Selected a subject");
+            }
+            if (!this.hasDay()) {
                 throw new Exception("No day/days selected");
             }
-            if(d1.compareTo(d2) > 0){
+            System.err.println(""+d1.getTime());
+           System.err.println(""+d2.getTime());
+            if (d1.compareTo(d2) >= 0) {
                 throw new Exception("Time end must be greater than start");
             }
-        for (int index = 0; index < scheduleTable.getRowCount(); index++) {
-            if (true) {
-            //if (Integer.parseInt(scheduleTable.getValueAt(index, 9).toString()) == item.getValue()) {
-                Date d3 = (Date) scheduleTable.getValueAt(index, 10);
-                Date d4 = (Date) scheduleTable.getValueAt(index, 11);
-                if (monday.isSelected()) {
-                    conflict = this.IsConflict(d3, d4,d1, d2);
-                    if((Boolean)scheduleTable.getValueAt(index, 3)){
-                        throw new Exception("Day already exists");
+            for (int index = 0; index < scheduleTable.getRowCount(); index++) {
+                if (true) {
+                    //if (Integer.parseInt(scheduleTable.getValueAt(index, 9).toString()) == item.getValue()) {
+                    Date d3 = (Date) scheduleTable.getValueAt(index, 10);
+                    Date d4 = (Date) scheduleTable.getValueAt(index, 11);
+                    if (monday.isSelected()) {
+                        conflict = this.IsConflict(d3, d4, d1, d2);
+                        if ((Boolean) scheduleTable.getValueAt(index, 3)) {
+                            throw new Exception("Day already exists");
+                        }
                     }
-                }
-                if (tuesday.isSelected()) {
-                    conflict = this.IsConflict(d3, d4,d1, d2);
-                    if((Boolean)scheduleTable.getValueAt(index, 4)){
-                        throw new Exception("Day already exists");
-                    }
-                    
+                    if (tuesday.isSelected()) {
+                        conflict = this.IsConflict(d3, d4, d1, d2);
+                        if ((Boolean) scheduleTable.getValueAt(index, 4)) {
+                            throw new Exception("Day already exists");
+                        }
 
-                }
-                if (wednesday.isSelected()) {
-                    conflict = this.IsConflict(d3, d4,d1, d2);
-                    if((Boolean)scheduleTable.getValueAt(index, 5)){
-                        throw new Exception("Day already exists");
+                    }
+                    if (wednesday.isSelected()) {
+                        conflict = this.IsConflict(d3, d4, d1, d2);
+                        if ((Boolean) scheduleTable.getValueAt(index, 5)) {
+                            throw new Exception("Day already exists");
+                        }
+
+                    }
+                    if (thursday.isSelected()) {
+                        conflict = this.IsConflict(d3, d4, d1, d2);
+                        if ((Boolean) scheduleTable.getValueAt(index, 6)) {
+                            throw new Exception("Day already exists");
+                        }
+
+                    }
+                    if (friday.isSelected()) {
+                        conflict = this.IsConflict(d3, d4, d1, d2);
+                        if ((Boolean) scheduleTable.getValueAt(index, 7)) {
+                            throw new Exception("Day already exists");
+                        }
+
+                    }
+                    if (conflict) {
+                        throw new Exception("Unabled to add time conflict");
                     }
 
-                }
-                if (thursday.isSelected()) {
-                    conflict = this.IsConflict(d3, d4,d1, d2);
-                    if((Boolean)scheduleTable.getValueAt(index, 6)){
-                        throw new Exception("Day already exists");
-                    }
-
-                }
-                if (friday.isSelected()) {
-                    conflict = this.IsConflict(d3, d4,d1, d2);
-                    if((Boolean)scheduleTable.getValueAt(index, 7)){
-                        throw new Exception("Day already exists");
-                    }
-
-                }
-                if(conflict){
-                    throw new Exception("Unabled to add time conflict");
                 }
 
             }
 
-        }
-        
+            row[0] = item.getLabel();
+            row[1] = Helper.timeFormat(d1);
+            row[2] = Helper.timeFormat(d2);
+            row[3] = monday.isSelected(); //m
+            row[4] = tuesday.isSelected(); //t
+            row[5] = wednesday.isSelected(); //w
+            row[6] = thursday.isSelected(); //th
+            row[7] = friday.isSelected(); //f
+            row[8] = "Delete";
+            row[9] = item.getValue();
+            row[10] = d1;
+            row[11] = d2;
+            String imploded = "";
+            for(int i = 0; i < courseTable.getRowCount(); i++){
+                
+                imploded = imploded+" "+courseTable.getValueAt(i,2);
+            
+            }
+            row[12] = imploded.trim();
 
-        row[0] = item.getLabel();
-        row[1] = Helper.timeFormat(d1);
-        row[2] = Helper.timeFormat(d2);
-        row[3] = monday.isSelected(); //m
-        row[4] = tuesday.isSelected(); //t
-        row[5] = wednesday.isSelected(); //w
-        row[6] = thursday.isSelected(); //th
-        row[7] = friday.isSelected(); //f
-        row[8] = "Delete";
-        row[9] = item.getValue();
-        row[10] = d1;
-        row[11] = d2;
-
-        model.addRow(row);
-        scheduleClear();
-        }catch (Exception e) {
-            System.err.println(""+e.getMessage());
+            model.addRow(row);
+            model2.setRowCount(0);
+            scheduleClear();
+        } catch (Exception e) {
+            System.err.println("" + e.getMessage());
             Helper.errorMessage(e.getMessage(), "Whoopss!");
         }
     }//GEN-LAST:event_add_scheduleActionPerformed
@@ -655,29 +757,42 @@ public class TeachersLoading extends javax.swing.JFrame {
     }
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        try{
-        ComboItem subject_item = (ComboItem) subjectCb.getSelectedItem();
-        TeachersLoadings res = (TeachersLoadings) this.load.find(subject_item.getValue());
-        for (int i = 0; i < scheduleTable.getRowCount(); i++) {
-            TeachersLoadingDetails detail = new TeachersLoadingDetails();
-            Integer room_id = (Integer) scheduleTable.getValueAt(i, 9);
-            Rooms room = (Rooms) this.room.find(room_id);
-            Date date1 = (Date) scheduleTable.getValueAt(i, 10);
-            Date date2 = (Date) scheduleTable.getValueAt(i, 11);
-            detail.setHourStart(date1);
-            detail.setHourEnd(date2);
-            detail.setRooms(room);
-            detail.setM((Boolean) scheduleTable.getValueAt(i, 3));
-            detail.setT((Boolean) scheduleTable.getValueAt(i, 4));
-            detail.setW((Boolean) scheduleTable.getValueAt(i, 5));
-            detail.setTh((Boolean) scheduleTable.getValueAt(i, 6));
-            detail.setF((Boolean) scheduleTable.getValueAt(i, 7));
-            detail.setTeachersLoadings(res);
-            loadDetail.save(detail);
+        try {
+            ComboItem subject_item = (ComboItem) subjectCb.getSelectedItem();
+            TeachersLoadings res = (TeachersLoadings) this.load.find(subject_item.getValue());
+            for (int i = 0; i < scheduleTable.getRowCount(); i++) {
+                TeachersLoadingDetails detail = new TeachersLoadingDetails();
+                Integer room_id = (Integer) scheduleTable.getValueAt(i, 9);
+                Rooms room = (Rooms) this.room.find(room_id);
+                Date date1 = (Date) scheduleTable.getValueAt(i, 10);
+                Date date2 = (Date) scheduleTable.getValueAt(i, 11);
+                detail.setHourStart(date1);
+                detail.setHourEnd(date2);
+                detail.setRooms(room);
+                detail.setM((Boolean) scheduleTable.getValueAt(i, 3));
+                detail.setT((Boolean) scheduleTable.getValueAt(i, 4));
+                detail.setW((Boolean) scheduleTable.getValueAt(i, 5));
+                detail.setTh((Boolean) scheduleTable.getValueAt(i, 6));
+                detail.setF((Boolean) scheduleTable.getValueAt(i, 7));
+                detail.setTeachersLoadings(res);
+                TeachersLoadingDetails res2 = (TeachersLoadingDetails) loadDetail.save(detail);
+                
+                String course_ids = scheduleTable.getValueAt(i, 12).toString();
+                String[] exploded=course_ids.split(" ");
+                
+                for(String id: exploded){
+                    Courses c = (Courses) this.course.find(Integer.parseInt(id));
+                    LoadCourses loadCourses= new LoadCourses();
+                    loadCourses.setCourses(c);
+                    loadCourses.setTeachersLoadingDetails(res2);
+                    this.loadCourse.save(loadCourses);
+                
+                }
 
-        }
-        Helper.successMessage();
-        }catch(Exception ex){
+            }
+            model2.setRowCount(0);
+            Helper.successMessage();
+        } catch (Exception ex) {
             Helper.errorMessage("No Active SchoolYear", "Whoopss! Something went wrong");
             Helper.closeSession();
         }
@@ -697,7 +812,7 @@ public class TeachersLoading extends javax.swing.JFrame {
     private void instructorCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instructorCbActionPerformed
         // TODO add your handling code here:
         this.subject_populate();
-        
+
     }//GEN-LAST:event_instructorCbActionPerformed
 
     private void scheduleTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_scheduleTableMouseClicked
@@ -708,6 +823,61 @@ public class TeachersLoading extends javax.swing.JFrame {
             model.removeRow(row);
         }
     }//GEN-LAST:event_scheduleTableMouseClicked
+
+    private void courseTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_courseTableMouseClicked
+        // TODO add your handling code here:
+        int row = courseTable.rowAtPoint(evt.getPoint());
+        int col = courseTable.columnAtPoint(evt.getPoint());
+        if (row >= 0 && col >= 1) {
+            model2.removeRow(row);
+        }
+    }//GEN-LAST:event_courseTableMouseClicked
+
+    private void addCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCourseActionPerformed
+        // TODO add your handling code here:
+        ComboItem item = (ComboItem) coursetItems.getSelectedItem();
+        if (item.getValue() > 0) {
+            boolean addable = true;
+            for (int index = 0; index < this.courseTable.getRowCount(); index++) {
+                if (item.getValue() == this.courseTable.getValueAt(index, 2)) {
+                    Helper.errorMessage("Course already exsist", "Error");
+                    addable = false;
+                }
+            }
+            if (addable) {
+                Object row[] = new Object[3];
+                row[0] = item.getLabel();
+                row[1] = "Delete";
+                row[2] = item.getValue();
+                model2.addRow(row);
+            }
+
+        } else {
+            Helper.errorMessage("Select a course", "Error");
+        }
+    }//GEN-LAST:event_addCourseActionPerformed
+
+    private void subjectCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subjectCbActionPerformed
+        // TODO add your handling code here:
+        model2.setRowCount(0);
+        ComboItem selected = (ComboItem) subjectCb.getSelectedItem();
+        List<ComboItem> combo = new ArrayList<ComboItem>();
+        combo.add(new ComboItem(0, "Select Course"));
+        if (selected.getValue() > 0) {
+
+            TeachersLoadings loading = (TeachersLoadings) this.load.find(selected.getValue());
+
+            for (SubjectCourses sc : loading.getSubjects().getSubjectCourseses()) {
+
+                Courses model = sc.getCourses();
+                combo.add(new ComboItem(model.getId(), "" + model.getCode()));
+            }
+
+        }
+        coursetItems.setModel(new javax.swing.DefaultComboBoxModel(combo.toArray()));
+
+
+    }//GEN-LAST:event_subjectCbActionPerformed
 
     private void subject_populate() {
         ComboItem item = (ComboItem) this.instructorCb.getSelectedItem();
@@ -754,7 +924,10 @@ public class TeachersLoading extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addCourse;
     private javax.swing.JButton add_schedule;
+    private javax.swing.JTable courseTable;
+    private javax.swing.JComboBox<String> coursetItems;
     private javax.swing.ButtonGroup daysGroup;
     private javax.swing.JSpinner end_timespinner;
     private javax.swing.JCheckBox friday;
@@ -766,6 +939,7 @@ public class TeachersLoading extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -773,6 +947,7 @@ public class TeachersLoading extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JCheckBox monday;
     private javax.swing.JComboBox<String> roomCb;
     private javax.swing.JTable scheduleTable;

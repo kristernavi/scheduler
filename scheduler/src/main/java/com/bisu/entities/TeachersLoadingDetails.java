@@ -3,6 +3,8 @@ package com.bisu.entities;
 
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +13,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -35,6 +38,8 @@ public class TeachersLoadingDetails  implements java.io.Serializable {
      private boolean w;
      private boolean th;
      private boolean f;
+     private Set<LoadCourses> loadCourseses = new HashSet<LoadCourses>(0);
+
 
     public TeachersLoadingDetails() {
     }
@@ -163,6 +168,16 @@ public class TeachersLoadingDetails  implements java.io.Serializable {
     public void setRooms(Rooms room) {
         this.room = room;
     }
+
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="teachersLoadingDetails")
+    public Set<LoadCourses> getLoadCourseses() {
+        return loadCourseses;
+    }
+
+    public void setLoadCourseses(Set<LoadCourses> loadCourseses) {
+        this.loadCourseses = loadCourseses;
+    }
+    
 
 
 
