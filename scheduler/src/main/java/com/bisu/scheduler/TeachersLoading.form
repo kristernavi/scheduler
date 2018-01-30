@@ -514,7 +514,7 @@
                     <Column editable="false" title="room_id" type="java.lang.Object"/>
                     <Column editable="false" title="d1" type="java.lang.Object"/>
                     <Column editable="false" title="d2" type="java.lang.Object"/>
-                    <Column editable="true" title="course_id" type="java.lang.String"/>
+                    <Column editable="false" title="course_id" type="java.lang.String"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -579,7 +579,7 @@
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                    <Column maxWidth="0" minWidth="0" prefWidth="0" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>

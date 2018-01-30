@@ -7,11 +7,13 @@ package com.bisu.scheduler;
 
 import com.bisu.dao.LoadingDetail;
 import com.bisu.dao.Room;
+import com.bisu.entities.LoadCourses;
 import com.bisu.entities.Rooms;
 import com.bisu.entities.TeachersLoadingDetails;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import org.apache.commons.lang.StringUtils;
 
 /**
  *
@@ -28,26 +30,30 @@ public class RoomUtilization extends javax.swing.JFrame {
     DefaultTableModel model;
 
     public RoomUtilization(MainMenu mainMenu) {
-    this();
-    this.mainMenu = mainMenu;
+        this();
+        this.mainMenu = mainMenu;
         int op = this.getDefaultCloseOperation(); // HIDE_ON_CLOSE
-    this.setDefaultCloseOperation(this.DO_NOTHING_ON_CLOSE);
-    
+        this.setDefaultCloseOperation(this.DO_NOTHING_ON_CLOSE);
+
     }
-    public void offScreen(){
-     this.mainMenu.setVisible(false);
+
+    public void offScreen() {
+        this.mainMenu.setVisible(false);
     }
-    public void onScreen(){
-      this.mainMenu.setVisible(true);
-      this.setVisible(false);
+
+    public void onScreen() {
+        this.mainMenu.setVisible(true);
+        this.setVisible(false);
     }
+
     public RoomUtilization() {
         this.room = new Room();
         this.loadingDetail = new LoadingDetail();
         initComponents();
-         model = (DefaultTableModel) utilizeRoomTable.getModel();
+        model = (DefaultTableModel) utilizeRoomTable.getModel();
 
     }
+
     private List comboRoomItem() {
 
         List<ComboItem> combo = new ArrayList<ComboItem>();
@@ -103,7 +109,7 @@ public class RoomUtilization extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Time", "Days", "Instructor", "Subjects"
+                "Time", "Days", "Instructor", "Subjects", "Course"
             }
         ));
         jScrollPane1.setViewportView(utilizeRoomTable);
@@ -197,38 +203,46 @@ public class RoomUtilization extends javax.swing.JFrame {
         // TODO add your handling code here:
         ComboItem selected = (ComboItem) roomCb.getSelectedItem();
         model.setRowCount(0);
-        if(selected.getValue() > 0){
+        if (selected.getValue() > 0) {
             Rooms room = (Rooms) this.room.find(selected.getValue());
-            Object row[] = new Object[4];
-              List <TeachersLoadingDetails> tableData;
-             tableData = this.loadingDetail.getByRoom(room);
-             System.out.println("The size of table data "+tableData.size());
-            for(TeachersLoadingDetails detail: tableData){
-                row[0] = detail.getHourStart()+ " - "+ detail.getHourEnd();
-                String day = "";
-                if(detail.isM()){
-                 day = day+"M";
+            Object row[] = new Object[5];
+            List<TeachersLoadingDetails> tableData;
+            tableData = this.loadingDetail.getByRoom(room);
+            for (TeachersLoadingDetails detail : tableData) {
+                if (detail.getTeachersLoadings().getSchoolYears().isActived()) {
+                    row[0] = detail.getHourStart() + " - " + detail.getHourEnd();
+                    String day = "";
+                    if (detail.isM()) {
+                        day = day + "M";
+                    }
+                    if (detail.isT()) {
+                        day = day + "T";
+                    }
+                    if (detail.isW()) {
+                        day = day + "W";
+                    }
+                    if (detail.isTh()) {
+                        day = day + "Th";
+                    }
+                    if (detail.isF()) {
+                        day = day + "F";
+                    }
+                    row[1] = day;
+                    row[2] = detail.getTeachersLoadings().getFaculties().getFullname();
+                    row[3] = detail.getTeachersLoadings().getSubjects().getCode();
+                    String crs = "";
+                    for (LoadCourses lc : detail.getLoadCourseses()) {
+                        crs = crs + "/" + lc.getCourses().getCode();
+                    }
+                    crs = StringUtils.removeEnd(crs, "/");
+                    crs = StringUtils.removeStart(crs, "/");
+                    row[4] = crs;
+
+                    model.addRow(row);
                 }
-                if(detail.isT()){
-                 day = day+"T";
-                }
-                if(detail.isW()){
-                day = day+"W";
-                }
-                if(detail.isTh()){
-                day = day+"Th";
-                }
-                if(detail.isF()) {
-               day = day+"F";
-                }
-                row[1] = day;
-                row[2] = detail.getTeachersLoadings().getFaculties().getFullname();
-                row[3] = detail.getTeachersLoadings().getSubjects().getCode();
-                
-                model.addRow(row);
-            
+
             }
-        
+
         }
     }//GEN-LAST:event_roomCbActionPerformed
 

@@ -478,7 +478,7 @@ public class FacultyLoading extends javax.swing.JFrame {
             for (int index = 0; index < loadingTable.getRowCount(); index++) {
                 int sub_id = Integer.parseInt(loadingTable.getValueAt(index, 6).toString());
                 if (subject_item.getValue() == sub_id) {
-                //    throw new Exception("Subject already exisit");
+                    throw new Exception("Subject already exisit");
                 }
             }
 
@@ -544,6 +544,7 @@ public class FacultyLoading extends javax.swing.JFrame {
             Integer units = 0;
             Integer maxload = faculty.getRegularLoad() + faculty.getOverload();
             for (TeachersLoadings loadings : faculty.getTeachersLoadingses()) {
+                if(loadings.getSchoolYears().isActived()){
                 Subjects sub = loadings.getSubjects();
                 Integer unit = sub.getLecHours() + (sub.getLabHours() / 3);
 
@@ -557,6 +558,7 @@ public class FacultyLoading extends javax.swing.JFrame {
                 row[5] = loadings.getId();
                 row[6] = sub.getId();
                 model.addRow(row);
+                }
             }
             units += lecHrs;
             units += (labHrs / 3);

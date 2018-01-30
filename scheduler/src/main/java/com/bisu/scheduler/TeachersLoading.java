@@ -423,7 +423,7 @@ public class TeachersLoading extends javax.swing.JFrame {
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, true
+                false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -450,6 +450,9 @@ public class TeachersLoading extends javax.swing.JFrame {
             scheduleTable.getColumnModel().getColumn(11).setMinWidth(0);
             scheduleTable.getColumnModel().getColumn(11).setPreferredWidth(0);
             scheduleTable.getColumnModel().getColumn(11).setMaxWidth(0);
+            scheduleTable.getColumnModel().getColumn(12).setMinWidth(0);
+            scheduleTable.getColumnModel().getColumn(12).setPreferredWidth(0);
+            scheduleTable.getColumnModel().getColumn(12).setMaxWidth(0);
         }
 
         jButton6.setText("Back");
@@ -583,8 +586,10 @@ public class TeachersLoading extends javax.swing.JFrame {
 
         List<ComboItem> combo = new ArrayList<ComboItem>();
         combo.add(new ComboItem(0, "Select Subject"));
+        if(id > 0){
         Faculties instructor = (Faculties) teacher.find(id);
-        List loadOfTeacher = load.getByInstructor(instructor);
+        
+        List loadOfTeacher = load.getByInstructor(instructor,this.schoolYear.getActive());
         try {
 
             for (Object obj : loadOfTeacher) {
@@ -594,6 +599,7 @@ public class TeachersLoading extends javax.swing.JFrame {
             }
         } catch (Exception e) {
 
+        }
         }
 
         return combo;
@@ -655,6 +661,8 @@ public class TeachersLoading extends javax.swing.JFrame {
         boolean already = false;
         boolean conflict = false;
         try {
+            
+            
             if(courseTable.getRowCount() < 1){
                throw new Exception("Must select a course");
             }
@@ -667,8 +675,7 @@ public class TeachersLoading extends javax.swing.JFrame {
             if (!this.hasDay()) {
                 throw new Exception("No day/days selected");
             }
-            System.err.println(""+d1.getTime());
-           System.err.println(""+d2.getTime());
+           
             if (d1.compareTo(d2) >= 0) {
                 throw new Exception("Time end must be greater than start");
             }
@@ -717,6 +724,9 @@ public class TeachersLoading extends javax.swing.JFrame {
 
                 }
 
+            }
+            if(this.load.hasConflict(this.schoolYear.getActive().getId(), item.getValue(), d1, d2, monday.isSelected(), tuesday.isSelected(), wednesday.isSelected(), thursday.isSelected(), friday.isSelected())){
+                throw new Exception("This schedule already occupied");
             }
 
             row[0] = item.getLabel();
@@ -799,8 +809,18 @@ public class TeachersLoading extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void clear(){
+    
+        model2.setRowCount(0);
+        model.setRowCount(0);
+        scheduleClear();
+        instructorCb.setSelectedIndex(0);
+        roomCb.setSelectedIndex(0);
+        
+    }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        this.clear();
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -881,9 +901,10 @@ public class TeachersLoading extends javax.swing.JFrame {
 
     private void subject_populate() {
         ComboItem item = (ComboItem) this.instructorCb.getSelectedItem();
+        subjectCb.setModel(new javax.swing.DefaultComboBoxModel(comboSubjectItem(item.getValue()).toArray()));
 
         if (item.getValue() > 0) {
-            subjectCb.setModel(new javax.swing.DefaultComboBoxModel(comboSubjectItem(item.getValue()).toArray()));
+            
 
         }
     }

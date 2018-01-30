@@ -17,12 +17,7 @@ import com.bisu.entities.TeachersLoadingDetails;
 import com.bisu.extras.Helper;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.Duration;
-import java.time.Instant;
-import java.time.temporal.Temporal;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -49,7 +44,7 @@ public class TeachersLoad extends javax.swing.JFrame {
     private JPopupMenu popupMenu;
     MainMenu mainMenu;
     LoadingDetail loadDetail;
-
+    com.bisu.dao.SchoolYear schoolYear;
     public TeachersLoad(MainMenu mainMenu) {
         this();
         this.mainMenu = mainMenu;
@@ -72,6 +67,7 @@ public class TeachersLoad extends javax.swing.JFrame {
         department = new Department();
         teacher = new Teacher();
         load = new Loading();
+        this.schoolYear = new com.bisu.dao.SchoolYear();
         loadDetail = new LoadingDetail();
         initComponents();
         JMenuItem menuItemDelete = new JMenuItem("Delete");
@@ -302,7 +298,7 @@ public class TeachersLoad extends javax.swing.JFrame {
 
     private void populateTable(Faculties instructor) {
         List tableData;
-        tableData = load.getByInstructor(instructor);
+        tableData = load.getByInstructor(instructor, this.schoolYear.getActive());
 
         Object row[] = new Object[6];
         model.setRowCount(0);
