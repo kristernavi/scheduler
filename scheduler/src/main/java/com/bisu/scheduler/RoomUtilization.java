@@ -10,8 +10,13 @@ import com.bisu.dao.Room;
 import com.bisu.entities.LoadCourses;
 import com.bisu.entities.Rooms;
 import com.bisu.entities.TeachersLoadingDetails;
+import com.bisu.report.RoomUtilizationReportCreator;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import org.apache.commons.lang.StringUtils;
 
@@ -192,6 +197,36 @@ public class RoomUtilization extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        ComboItem selected = (ComboItem) roomCb.getSelectedItem();
+        if (selected.getValue() > 0) {
+            jButton1.setText("Please wait ... ");
+            jButton1.setEnabled(false);
+            Rooms room = (Rooms) this.room.find(selected.getValue());
+            Object row[] = new Object[5];
+            List<TeachersLoadingDetails> tableData;
+            tableData = this.loadingDetail.getByRoom(room);
+
+            for (Iterator<TeachersLoadingDetails> iter = tableData.listIterator(); iter.hasNext();) {
+                TeachersLoadingDetails a = iter.next();
+                if (!a.getTeachersLoadings().getSchoolYears().isActived()) {
+                    iter.remove();
+                }
+            }
+            RoomUtilizationReportCreator report = new RoomUtilizationReportCreator();
+            try {
+                if (report.create(tableData, room)) {
+                    jButton1.setText("Print");
+                    jButton1.setEnabled(true);
+                }
+
+            } catch (ParseException ex) {
+                Logger.getLogger(RoomUtilization.class.getName()).log(Level.SEVERE, null, ex);
+                jButton1.setText("Print");
+                jButton1.setEnabled(true);
+            }
+
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

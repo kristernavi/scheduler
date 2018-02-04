@@ -83,9 +83,13 @@ public class TeachersLoading extends javax.swing.JFrame {
         room = new Room();
         load = new Loading();
         teacher = new Teacher();
-        Date date = new Date();
-        SpinnerDateModel sm2 = new SpinnerDateModel(date, null, null, Calendar.MINUTE);
-        SpinnerDateModel sm1 = new SpinnerDateModel(date, null, null, Calendar.MINUTE);
+        Date date = new Date(-5400000);
+        Date date2 = new Date(-1800000);
+        Date dateEnd1 = new Date(41400000);
+        Date dateEnd2 = new Date(45000000);
+
+        SpinnerDateModel sm2 = new SpinnerDateModel(date, date, dateEnd1, Calendar.MINUTE);
+        SpinnerDateModel sm1 = new SpinnerDateModel(date2, date2, dateEnd2, Calendar.MINUTE);
         initComponents();
         model2 = (DefaultTableModel) courseTable.getModel();
         end_timespinner.setModel(sm1);
@@ -96,15 +100,6 @@ public class TeachersLoading extends javax.swing.JFrame {
         JSpinner.DateEditor de2 = new JSpinner.DateEditor(start_timespinner, "hh:mm a");
         de2.getTextField().setEditable(true);
         start_timespinner.setEditor(de2);
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.YEAR, 0);
-        c.set(Calendar.MONTH, 0);
-        c.set(Calendar.DATE, 0);
-        c.set(Calendar.MINUTE, 30);
-        c.set(Calendar.SECOND, 0);
-        c.set(Calendar.MILLISECOND, 0);
-        start_timespinner.setValue(c.getTime());
-        end_timespinner.setValue(c.getTime());
         model = (DefaultTableModel) scheduleTable.getModel();
         List<ComboItem> combo = new ArrayList<ComboItem>();
         combo.add(new ComboItem(0, "Select Subject"));
@@ -658,6 +653,9 @@ public class TeachersLoading extends javax.swing.JFrame {
 
         Date d1 = (Date) this.start_timespinner.getValue();
         Date d2 = (Date) this.end_timespinner.getValue();
+        System.out.println(""+d1.getTime());
+                System.out.println(""+d2.getTime());
+
         boolean already = false;
         boolean conflict = false;
         try {

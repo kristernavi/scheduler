@@ -15,12 +15,16 @@ import com.bisu.entities.Faculties;
 import com.bisu.entities.LoadCourses;
 import com.bisu.entities.TeachersLoadingDetails;
 import com.bisu.extras.Helper;
+import com.bisu.report.TeachersLoadReport;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
@@ -45,6 +49,7 @@ public class TeachersLoad extends javax.swing.JFrame {
     MainMenu mainMenu;
     LoadingDetail loadDetail;
     com.bisu.dao.SchoolYear schoolYear;
+
     public TeachersLoad(MainMenu mainMenu) {
         this();
         this.mainMenu = mainMenu;
@@ -363,6 +368,35 @@ public class TeachersLoad extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        ComboItem selected = (ComboItem) instuctorCb.getSelectedItem();
+        if (selected.getValue() > 0) {
+            jButton1.setText("Please wait ");
+            jButton1.setEnabled(false);
+            Faculties instructor = (Faculties) teacher.find(selected.getValue());
+            loadLbl.setText("" + instructor.getRegularLoad());
+            overLbl.setText("" + instructor.getOverload());
+            List<TeachersLoadingDetails> newList = new ArrayList<TeachersLoadingDetails>();
+            List tableData;
+            tableData = load.getByInstructor(instructor, this.schoolYear.getActive());
+            for (int i = 0; i < tableData.size(); i++) {
+                TeachersLoadings loads = (TeachersLoadings) tableData.get(i);
+                newList.addAll(loads.getTeachersLoadingDetailses());
+            }
+            TeachersLoadReport report = new TeachersLoadReport();
+            try {
+                if (report.create(newList, instructor)) {
+                    jButton1.setText("Print");
+                    jButton1.setEnabled(true);
+                }
+            } catch (ParseException ex) {
+                Logger.getLogger(TeachersLoad.class.getName()).log(Level.SEVERE, null, ex);
+                jButton1.setText("Print");
+                jButton1.setEnabled(true);
+            }
+
+        }
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void departmentCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_departmentCbActionPerformed

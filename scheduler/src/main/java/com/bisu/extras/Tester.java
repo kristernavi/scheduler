@@ -6,7 +6,9 @@
 package com.bisu.extras;
 
 import com.bisu.dao.SchoolYear;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -19,11 +21,7 @@ public class Tester {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        int year = Calendar.getInstance().get(Calendar.YEAR);
-        System.err.println(""+year);
-        
-        SchoolYear yr = new SchoolYear();
-        System.out.println(""+yr.getActive().getSemester());
+       
     }
     
 }
