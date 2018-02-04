@@ -658,6 +658,7 @@ public class FacultyMaster extends javax.swing.JFrame {
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
         // TODO add your handling code here:
+        this.clear();
         nav_pane.setSelectedIndex(0);
         hiddenID.setText("hiddenID");
         save.setEnabled(true);

@@ -759,6 +759,7 @@ public class SubjectMaster extends javax.swing.JFrame {
         }
         }
         catch(Exception ex){
+                            Helper.closeSession();
             Helper.errorMessage("Duplicate Course Code", "Woopss! Somethin went wrong");
         }
     }//GEN-LAST:event_saveActionPerformed

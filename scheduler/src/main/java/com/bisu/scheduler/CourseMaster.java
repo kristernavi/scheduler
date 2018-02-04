@@ -360,6 +360,9 @@ public class CourseMaster extends javax.swing.JFrame {
     }
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
         // TODO add your handling code here:
+        try {
+            
+        
         ComboItem selected = (ComboItem) departmentItem.getSelectedItem();
         Departments dept = (Departments) department.find(selected.getValue());
         Courses model;
@@ -376,6 +379,10 @@ public class CourseMaster extends javax.swing.JFrame {
         course.save(model);
         
         Helper.successMessage();
+        } catch (Exception e) {
+            Helper.errorMessage("Course Code Already exists", "Whooopss!");
+            Helper.closeSession();
+        }
         
     }//GEN-LAST:event_saveActionPerformed
 

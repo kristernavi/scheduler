@@ -57,6 +57,7 @@ public class TeachersLoad extends javax.swing.JFrame {
 
     public void offScreen() {
         this.mainMenu.setVisible(false);
+        
     }
 
     public void onScreen() {
