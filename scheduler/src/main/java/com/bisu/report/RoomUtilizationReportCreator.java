@@ -116,7 +116,7 @@ public class RoomUtilizationReportCreator {
 
 
             /* Using compiled version(.jasper) of Jasper report to generate PDF */
-            JasperPrint jasperPrint = JasperFillManager.fillReport("/Users/ivankrister/Documents/java/scheduler/scheduler/src/main/java/com/bisu/report/RoomUtilization.jasper", parameters, new JREmptyDataSource());
+            JasperPrint jasperPrint = JasperFillManager.fillReport("C:\\Users\\ANGGIE\\Documents\\NetBeansProjects\\scheduler\\scheduler\\src\\main\\java\\com\\bisu\\report\\RoomUtilization.jasper", parameters, new JREmptyDataSource());
 
             /* outputStream to create PDF */
             OutputStream outputStream = new FileOutputStream(new File(outputFile));

@@ -69,13 +69,13 @@ public class Tester {
 //        Subject subject = new Subject();
 //        System.out.println(""+subject.getSubjectByCourse(ids));
         LoadCourse loadCourse = new LoadCourse();
-        LoadingDetail detail = new LoadingDetail();
-        TeachersLoadingDetails a = (TeachersLoadingDetails) detail.find(2);
-        Courses c = (Courses) (Courses) course.find(1);
-        LoadCourses loadCourses = new LoadCourses();
-        loadCourses.setCourses(c);
-        loadCourses.setTeachersLoadingDetails(a);
-        loadCourse.save(loadCourses);
+//        LoadingDetail detail = new LoadingDetail();
+//        TeachersLoadingDetails a = (TeachersLoadingDetails) detail.find(5);
+//        Courses c = (Courses) (Courses) course.find(1);
+//        LoadCourses loadCourses = new LoadCourses();
+//        loadCourses.setCourses(c);
+//        loadCourses.setTeachersLoadingDetails(a);
+//        loadCourse.save(loadCourses);
     }
 
 }

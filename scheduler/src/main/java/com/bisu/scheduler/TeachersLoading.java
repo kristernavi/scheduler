@@ -23,10 +23,14 @@ import com.bisu.entities.Subjects;
 import com.bisu.entities.TeachersLoadingDetails;
 import com.bisu.entities.TeachersLoadings;
 import com.bisu.extras.Helper;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import javax.swing.table.DefaultTableModel;
@@ -74,36 +78,46 @@ public class TeachersLoading extends javax.swing.JFrame {
     }
 
     public TeachersLoading() {
-        loadCourse = new LoadCourse();
-        loadDetail = new LoadingDetail();
-        schoolYear = new SchoolYear();
-        course = new Course();
-        subject = new Subject();
-        sc = new SubjectCourse();
-        room = new Room();
-        load = new Loading();
-        teacher = new Teacher();
-        Date date = new Date(-5400000);
-        Date date2 = new Date(-1800000);
-        Date dateEnd1 = new Date(41400000);
-        Date dateEnd2 = new Date(45000000);
-
-        SpinnerDateModel sm2 = new SpinnerDateModel(date, date, dateEnd1, Calendar.MINUTE);
-        SpinnerDateModel sm1 = new SpinnerDateModel(date2, date2, dateEnd2, Calendar.MINUTE);
-        initComponents();
-        model2 = (DefaultTableModel) courseTable.getModel();
-        end_timespinner.setModel(sm1);
-        start_timespinner.setModel(sm2);
-        JSpinner.DateEditor de = new JSpinner.DateEditor(end_timespinner, "hh:mm a");
-        de.getTextField().setEditable(true);
-        end_timespinner.setEditor(de);
-        JSpinner.DateEditor de2 = new JSpinner.DateEditor(start_timespinner, "hh:mm a");
-        de2.getTextField().setEditable(true);
-        start_timespinner.setEditor(de2);
-        model = (DefaultTableModel) scheduleTable.getModel();
-        List<ComboItem> combo = new ArrayList<ComboItem>();
-        combo.add(new ComboItem(0, "Select Subject"));
-        subjectCb.setModel(new javax.swing.DefaultComboBoxModel(combo.toArray()));
+        try {
+            loadCourse = new LoadCourse();
+            loadDetail = new LoadingDetail();
+            schoolYear = new SchoolYear();
+            course = new Course();
+            subject = new Subject();
+            sc = new SubjectCourse();
+            room = new Room();
+            load = new Loading();
+            teacher = new Teacher();
+            
+            String startTime = "07:30";
+            String endTime = "17:30";
+            String startTime2 = "08:30";
+            String endTime2 = "18:30";
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            Date date = sdf.parse(startTime);
+            Date date2 = sdf.parse(startTime2);
+            Date dateEnd1 = sdf.parse(endTime);
+            Date dateEnd2 = sdf.parse(endTime2);
+            
+            SpinnerDateModel sm2 = new SpinnerDateModel(date, date, dateEnd1, Calendar.MINUTE);
+            SpinnerDateModel sm1 = new SpinnerDateModel(date2, date2, dateEnd2, Calendar.MINUTE);
+            initComponents();
+            model2 = (DefaultTableModel) courseTable.getModel();
+            end_timespinner.setModel(sm1);
+            start_timespinner.setModel(sm2);
+            JSpinner.DateEditor de = new JSpinner.DateEditor(end_timespinner, "hh:mm a");
+            de.getTextField().setEditable(true);
+            end_timespinner.setEditor(de);
+            JSpinner.DateEditor de2 = new JSpinner.DateEditor(start_timespinner, "hh:mm a");
+            de2.getTextField().setEditable(true);
+            start_timespinner.setEditor(de2);
+            model = (DefaultTableModel) scheduleTable.getModel();
+            List<ComboItem> combo = new ArrayList<ComboItem>();
+            combo.add(new ComboItem(0, "Select Subject"));
+            subjectCb.setModel(new javax.swing.DefaultComboBoxModel(combo.toArray()));
+        } catch (ParseException ex) {
+            Logger.getLogger(TeachersLoading.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

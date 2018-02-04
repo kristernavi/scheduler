@@ -112,11 +112,11 @@ public class TeachersLoadReport {
             Map<String, Object> parameters = new HashMap<String, Object>();
             parameters.put("RoomDataSource", itemsJRBean);
             parameters.put("Instructor", "" + instructor.getFullname());
-            parameters.put("RegularLoad", "" + instructor.getRegularLoad());
-            parameters.put("Overload", "" + instructor.getOverload());
+            parameters.put("RegularLoad", instructor.getRegularLoad());
+            parameters.put("Overload", instructor.getOverload());
 
             /* Using compiled version(.jasper) of Jasper report to generate PDF */
-            JasperPrint jasperPrint = JasperFillManager.fillReport("/Users/ivankrister/Documents/java/scheduler/scheduler/src/main/java/com/bisu/report/TeacherLoadingReport.jasper", parameters, new JREmptyDataSource());
+            JasperPrint jasperPrint = JasperFillManager.fillReport("C:\\Users\\ANGGIE\\Documents\\NetBeansProjects\\scheduler\\scheduler\\src\\main\\java\\com\\bisu\\report\\TeacherLoadingReport.jasper", parameters, new JREmptyDataSource());
 
             /* outputStream to create PDF */
             OutputStream outputStream = new FileOutputStream(new File(outputFile));

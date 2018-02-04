@@ -62,10 +62,6 @@
 				<reportElement x="261" y="91" width="100" height="20" uuid="f45906d5-f127-4b91-aff9-102cb532f5f3"/>
 				<text><![CDATA[ROOM UTILIZATION]]></text>
 			</staticText>
-			<image>
-				<reportElement x="102" y="11" width="147" height="80" uuid="a55ea6bb-b396-491d-bfa6-c5dbb8e1cd4e"/>
-				<imageExpression><![CDATA["/Users/ivankrister/Documents/java/scheduler/scheduler/src/main/resources/logo.jpg"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="0" y="133" width="39" height="20" uuid="8af3401e-4705-45ca-ae4f-3aa105141d86"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
@@ -76,6 +72,10 @@
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{Room}]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="106" y="10" width="96" height="81" uuid="2fdf3d94-17ce-4909-af4e-941fed26512a"/>
+				<imageExpression><![CDATA["C:\\Users\\ANGGIE\\Documents\\NetBeansProjects\\scheduler\\scheduler\\src\\main\\resources\\logo.jpg"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<detail>
