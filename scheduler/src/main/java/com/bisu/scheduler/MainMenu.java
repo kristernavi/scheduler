@@ -5,6 +5,8 @@
  */
 package com.bisu.scheduler;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author ANGGIE
@@ -25,6 +27,7 @@ public class MainMenu extends javax.swing.JFrame {
     TeachersLoading loading;
     RoomUtilization roomUtil;
     FacultyLoading facultyLoading;
+   
     public MainMenu() {
         initComponents();
         roomUtil = new RoomUtilization(this);
@@ -61,7 +64,7 @@ public class MainMenu extends javax.swing.JFrame {
         this.loading.setVisible(false);
         this.facultyLoading = new FacultyLoading(this);
         this.facultyLoading.setVisible(false);
-        
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         
     }
 
@@ -75,7 +78,7 @@ public class MainMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuItem1 = new javax.swing.JMenuItem();
-        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -104,27 +107,17 @@ public class MainMenu extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(400, 400));
         getContentPane().setLayout(null);
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 580, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 270, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 580, 270);
+        jLabel1.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/MAin.png"))); // NOI18N
+        jLabel1.setEnabled(false);
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(0, 0, 1580, 760);
 
         jMenuBar1.setBackground(new java.awt.Color(0, 102, 204));
 
         jMenu1.setText("File");
+        jMenu1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
 
-        jMenuItem2.setText("Logout");
+        jMenuItem2.setText("Profile");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
@@ -132,7 +125,7 @@ public class MainMenu extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem2);
 
-        jMenuItem3.setText("Exit");
+        jMenuItem3.setText("Logout");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
@@ -143,8 +136,10 @@ public class MainMenu extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Management");
+        jMenu2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
 
         jMenu10.setText("Master Files");
+        jMenu10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         department.setText("Department Master");
         department.addActionListener(new java.awt.event.ActionListener() {
@@ -191,6 +186,7 @@ public class MainMenu extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Transactions");
+        jMenu3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
 
         f_load.setText("Faculty Loading");
         f_load.addActionListener(new java.awt.event.ActionListener() {
@@ -211,6 +207,7 @@ public class MainMenu extends javax.swing.JFrame {
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Reports");
+        jMenu4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
 
         class_program.setText("Class Program");
         class_program.addActionListener(new java.awt.event.ActionListener() {
@@ -239,6 +236,7 @@ public class MainMenu extends javax.swing.JFrame {
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("School Year");
+        jMenu5.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
 
         sy.setText("Activation of Inactive");
         sy.addActionListener(new java.awt.event.ActionListener() {
@@ -372,6 +370,7 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem department;
     private javax.swing.JMenuItem f_load;
     private javax.swing.JMenuItem faculty;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu2;
@@ -382,7 +381,6 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuItem room;
     private javax.swing.JMenuItem room_util;
     private javax.swing.JMenuItem subject;

@@ -17,6 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import org.apache.commons.lang.StringUtils;
 
@@ -39,6 +40,7 @@ public class RoomUtilization extends javax.swing.JFrame {
         this.mainMenu = mainMenu;
         int op = this.getDefaultCloseOperation(); // HIDE_ON_CLOSE
         this.setDefaultCloseOperation(this.DO_NOTHING_ON_CLOSE);
+           setExtendedState(JFrame.MAXIMIZED_BOTH);
 
     }
 
@@ -193,6 +195,7 @@ public class RoomUtilization extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

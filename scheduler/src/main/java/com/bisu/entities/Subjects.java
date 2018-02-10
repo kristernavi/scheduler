@@ -171,7 +171,7 @@ public class Subjects implements java.io.Serializable {
     }
 
     @Digits(integer = 2, fraction = 0)
-    @Min(value = 1)
+    @Min(value = 0)
     @Max(value = 99)
     @Column(name = "lec_hours")
     public Integer getLecHours() {
@@ -184,7 +184,7 @@ public class Subjects implements java.io.Serializable {
 
     @Digits(integer = 2, fraction = 0)
     @Min(value = 0)
-    @Max(value = 99)
+    @Max(value = 1000)
     @Column(name = "lab_hours")
     public Integer getLabHours() {
         return this.labHours;
@@ -196,7 +196,7 @@ public class Subjects implements java.io.Serializable {
 
     @NotNull
     @NotBlank
-    @Size(min = 2, max = 30)
+    @Size(min = 0, max = 30)
     @Column(name = "type", nullable = false, length = 8)
     public String getType() {
         return this.type;
@@ -206,7 +206,7 @@ public class Subjects implements java.io.Serializable {
         this.type = type;
     }
 
-    @Size(min = 2, max = 10)
+    @Size(min = 1, max = 99)
     @Column(name = "pre_requisite", nullable = true, length = 8)
     public String getPreRequisite() {
         return preRequisite;
