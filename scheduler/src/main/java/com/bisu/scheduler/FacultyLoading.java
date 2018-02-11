@@ -195,6 +195,8 @@ public class FacultyLoading extends javax.swing.JFrame {
         deloadLbl = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         tLoadLbl = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        loadsLbl = new javax.swing.JLabel();
 
         jLabel2.setText("jLabel2");
 
@@ -315,6 +317,10 @@ public class FacultyLoading extends javax.swing.JFrame {
 
         tLoadLbl.setText("0");
 
+        jLabel10.setText("Teacher Load");
+
+        loadsLbl.setText("0");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -326,17 +332,21 @@ public class FacultyLoading extends javax.swing.JFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(loadLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(deloadLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(deloadLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(overloadLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(loadsLbl)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(30, 30, 30)
                         .addComponent(tLoadLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -391,7 +401,9 @@ public class FacultyLoading extends javax.swing.JFrame {
                     .addComponent(loadLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(deloadLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13)
-                    .addComponent(tLoadLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tLoadLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10)
+                    .addComponent(loadsLbl))
                 .addContainerGap())
         );
 
@@ -464,12 +476,13 @@ public class FacultyLoading extends javax.swing.JFrame {
             }
             Subjects sub = (Subjects) subject.find(subject_item.getValue());
             Faculties faculties = (Faculties) teacher.find(faculty_item.getValue());
-            Integer currentLoad = Integer.parseInt(tLoadLbl.getText());
-            Integer subjectUnit = sub.getLecHours() + (sub.getLabHours() / 3);
-            Integer maxload = faculties.getRegularLoad() + faculties.getOverload();
+            Integer currentLoad = Integer.parseInt(loadsLbl.getText());
+            Integer subjectUnit = sub.getLecHours() + sub.getLabHours();
+            Integer maxload = (faculties.getRegularLoad() - faculties.getDeloading()) + faculties.getOverload();
             Integer loadAdded = currentLoad + subjectUnit;
+            
             if (maxload < loadAdded) {
-                throw new Exception("Unable to add subject due to the units exceed to the max limit");
+                throw new Exception("Unable to add subject due to the hours exceed to the max limit");
             }
             for (int index = 0; index < loadingTable.getRowCount(); index++) {
                 int sub_id = Integer.parseInt(loadingTable.getValueAt(index, 6).toString());
@@ -478,10 +491,14 @@ public class FacultyLoading extends javax.swing.JFrame {
                 }
             }
 
+            Integer overload = (faculties.getRegularLoad() - faculties.getDeloading()) - loadAdded;
+            Integer over = overload < 0 ? (overload * -1):0;
+
             TeachersLoadings loadings = new TeachersLoadings();
             loadings.setSchoolYears(sy);
             loadings.setFaculties(faculties);
             loadings.setSubjects(sub);
+            overloadLbl.setText(""+over);
             teacherLoading.save(loadings);
             tLoadLbl.setText("" + loadAdded);
             Object row[] = new Object[7];
@@ -627,6 +644,7 @@ public class FacultyLoading extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -640,6 +658,7 @@ public class FacultyLoading extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel loadLbl;
     private javax.swing.JTable loadingTable;
+    private javax.swing.JLabel loadsLbl;
     private javax.swing.JLabel overloadLbl;
     private javax.swing.JComboBox<String> semesterCb;
     private javax.swing.JComboBox<String> subjectCb;

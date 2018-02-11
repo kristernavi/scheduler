@@ -35,7 +35,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
  */
 public class TeachersLoadReport {
 
-    public boolean create(List<TeachersLoadingDetails> detail, Faculties instructor) throws ParseException {
+    public boolean create(List<TeachersLoadingDetails> detail, Faculties instructor, Integer overload) throws ParseException {
 
         // TODO code application logic here
         try {
@@ -59,7 +59,6 @@ public class TeachersLoadReport {
             List<TeachersLoadingDetails> eigth = new ArrayList<TeachersLoadingDetails>();
             List<TeachersLoadingDetails> ninth = new ArrayList<TeachersLoadingDetails>();
             List<TeachersLoadingDetails> tenth = new ArrayList<TeachersLoadingDetails>();
-
             for (TeachersLoadingDetails item : detail) {
                 if (inTimeFirst(item.getHourStart(), item.getHourEnd())) {
                     first.add(item);
@@ -113,7 +112,7 @@ public class TeachersLoadReport {
             parameters.put("RoomDataSource", itemsJRBean);
             parameters.put("Instructor", "" + instructor.getFullname());
             parameters.put("RegularLoad", instructor.getRegularLoad());
-            parameters.put("Overload", instructor.getOverload());
+            parameters.put("Overload", overload);
 
             /* Using compiled version(.jasper) of Jasper report to generate PDF */
             JasperPrint jasperPrint = JasperFillManager.fillReport("C:\\Users\\ANGGIE\\Documents\\NetBeansProjects\\scheduler\\scheduler\\src\\main\\java\\com\\bisu\\report\\TeacherLoadingReport.jasper", parameters, new JREmptyDataSource());

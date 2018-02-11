@@ -376,14 +376,19 @@ public class TeachersLoad extends javax.swing.JFrame {
             overLbl.setText("" + instructor.getOverload());
             List<TeachersLoadingDetails> newList = new ArrayList<TeachersLoadingDetails>();
             List tableData;
+            Integer overload = 0;
+            Integer normal_load = instructor.getRegularLoad() - instructor.getDeloading();
+            Integer current_load = 0;
             tableData = load.getByInstructor(instructor, this.schoolYear.getActive());
             for (int i = 0; i < tableData.size(); i++) {
                 TeachersLoadings loads = (TeachersLoadings) tableData.get(i);
+                current_load+= (loads.getSubjects().getLecHours() + loads.getSubjects().getLabHours());
                 newList.addAll(loads.getTeachersLoadingDetailses());
             }
             TeachersLoadReport report = new TeachersLoadReport();
             try {
-                if (report.create(newList, instructor)) {
+                overload = normal_load - current_load < 0 ? (overload * -1):0;
+                if (report.create(newList, instructor, overload)) {
                     jButton1.setText("Print");
                     jButton1.setEnabled(true);
                 }

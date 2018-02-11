@@ -158,6 +158,8 @@ public class TeachersLoading extends javax.swing.JFrame {
         addCourse = new javax.swing.JButton();
         instructorCb = new javax.swing.JComboBox<>();
         subjectCb = new javax.swing.JComboBox<>();
+        sectionCb = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         scheduleTable = new javax.swing.JTable();
         jButton6 = new javax.swing.JButton();
@@ -348,7 +350,7 @@ public class TeachersLoading extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addComponent(coursetItems, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(addCourse))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -360,7 +362,7 @@ public class TeachersLoading extends javax.swing.JFrame {
                             .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(118, 118, 118)))
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(add_schedule)
                 .addContainerGap())
         );
@@ -380,6 +382,10 @@ public class TeachersLoading extends javax.swing.JFrame {
             }
         });
 
+        sectionCb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B", "C", "D" }));
+
+        jLabel5.setText("Section:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -394,11 +400,14 @@ public class TeachersLoading extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel1))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(instructorCb, 0, 327, Short.MAX_VALUE)
-                            .addComponent(subjectCb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(instructorCb, 0, 327, Short.MAX_VALUE)
+                                .addComponent(subjectCb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(sectionCb, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -412,8 +421,12 @@ public class TeachersLoading extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(subjectCb, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sectionCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -795,6 +808,7 @@ public class TeachersLoading extends javax.swing.JFrame {
                 detail.setW((Boolean) scheduleTable.getValueAt(i, 5));
                 detail.setTh((Boolean) scheduleTable.getValueAt(i, 6));
                 detail.setF((Boolean) scheduleTable.getValueAt(i, 7));
+                detail.setSection(this.sectionCb.getSelectedItem().toString());
                 detail.setTeachersLoadings(res);
                 TeachersLoadingDetails res2 = (TeachersLoadingDetails) loadDetail.save(detail);
                 
@@ -972,6 +986,7 @@ public class TeachersLoading extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -983,6 +998,7 @@ public class TeachersLoading extends javax.swing.JFrame {
     private javax.swing.JCheckBox monday;
     private javax.swing.JComboBox<String> roomCb;
     private javax.swing.JTable scheduleTable;
+    private javax.swing.JComboBox<String> sectionCb;
     private javax.swing.JSpinner start_timespinner;
     private javax.swing.JComboBox<String> subjectCb;
     private javax.swing.JCheckBox thursday;
