@@ -16,10 +16,14 @@ import com.bisu.entities.SchoolYears;
 import com.bisu.entities.TeachersLoadingDetails;
 import com.bisu.entities.TeachersLoadings;
 import com.bisu.extras.Helper;
+import com.bisu.report.ClassScheduleReportCreator;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import org.apache.commons.lang.StringUtils;
@@ -41,6 +45,8 @@ public class ClassProgram extends javax.swing.JFrame {
     Loading loading;
     DefaultTableModel model;
     LoadCourse loadCourse;
+    List <TeachersLoadingDetails> reportData = new ArrayList<TeachersLoadingDetails>();
+    
 
     public ClassProgram() {
         this.course = new Course();
@@ -353,8 +359,21 @@ public class ClassProgram extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        this.onScreen();
+        ClassScheduleReportCreator report = new ClassScheduleReportCreator();
+        jButton2.setText("Please wait ... ");
+        jButton2.setEnabled(false);
+        String course = courseCb.getSelectedItem().toString();
+        String section = sectionCb.getSelectedItem().toString();
+        String year = yearCB.getSelectedItem().toString();
+        try {
+            report.create(reportData, course, section,year);
+        } catch (ParseException ex) {
+            Logger.getLogger(ClassProgram.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+        jButton2.setText("Print");
+        jButton2.setEnabled(true);
+        
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void schoolYearCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_schoolYearCbActionPerformed
@@ -423,6 +442,7 @@ public class ClassProgram extends javax.swing.JFrame {
         Courses c = (Courses) course.find(courseId);
         Object row[] = new Object[6];
         List dataLoadCouse = this.loadCourse.getByCourse(c);
+        reportData.clear();
         for (int o = 0; o < dataLoadCouse.size(); o++) {
 
             LoadCourses loadCourses = (LoadCourses) dataLoadCouse.get(o);
@@ -450,12 +470,13 @@ public class ClassProgram extends javax.swing.JFrame {
             }
             row[1] = detail.getTeachersLoadings().getFaculties().getFullname();
             row[2] = detail.getRooms().getNumber();
-            row[3] = Helper.formatDuration(diff);
+            row[3] = Helper.timeFormat(detail.getHourStart()) + " - "+Helper.timeFormat(detail.getHourEnd());
             row[4] = day;
             String crs = "";
             for (LoadCourses lc : detail.getLoadCourseses()) {
                 crs = crs + "/" + lc.getCourses().getCode() +detail.getSection();
             }
+            reportData.add(detail);
             crs = StringUtils.removeEnd(crs, "/");
             crs = StringUtils.removeStart(crs, "/");
             row[5] = crs;

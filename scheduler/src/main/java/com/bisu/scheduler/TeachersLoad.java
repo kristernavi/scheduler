@@ -312,8 +312,8 @@ public class TeachersLoad extends javax.swing.JFrame {
 
             for (Iterator<TeachersLoadingDetails> it = details.iterator(); it.hasNext();) {
                 TeachersLoadingDetails detail = it.next();
-                long diff = detail.getHourEnd().getTime() - detail.getHourStart().getTime();
-                row[0] = Helper.formatDuration(diff);
+                //long diff = detail.getHourEnd().getTime() - detail.getHourStart().getTime();
+                row[0] = Helper.timeFormat(detail.getHourStart()) + " - "+Helper.timeFormat(detail.getHourEnd());
                 String day = "";
                 if (detail.isM()) {
                     day = day + "M";

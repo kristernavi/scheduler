@@ -16,22 +16,22 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name="users"
     ,catalog="bisu_db"
-    , uniqueConstraints = @UniqueConstraint(columnNames="email") 
+    , uniqueConstraints = @UniqueConstraint(columnNames="username") 
 )
 public class Users  implements java.io.Serializable {
 
 
      private Integer id;
      private String name;
-     private String email;
+     private String username;
      private String password;
 
     public Users() {
     }
 
-    public Users(String name, String email, String password) {
+    public Users(String name, String username, String password) {
        this.name = name;
-       this.email = email;
+       this.username = username;
        this.password = password;
     }
    
@@ -58,13 +58,13 @@ public class Users  implements java.io.Serializable {
     }
 
     
-    @Column(name="email", unique=true, nullable=false)
-    public String getEmail() {
-        return this.email;
+    @Column(name="username", unique=true, nullable=false)
+    public String getUsername() {
+        return this.username;
     }
     
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     

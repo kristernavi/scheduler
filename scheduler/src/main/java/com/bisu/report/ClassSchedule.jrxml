@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0d5858ac-5619-4657-af68-9b33df1549c3">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="RoomDataset" uuid="736bfa6f-45f2-4cff-bcf5-ae0b93bad85e">
+		<field name="time" class="java.lang.String"/>
+		<field name="monday" class="java.lang.String"/>
+		<field name="tuesday" class="java.lang.String"/>
+		<field name="wednesday" class="java.lang.String"/>
+		<field name="thursday" class="java.lang.String"/>
+		<field name="friday" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="RoomDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<parameter name="Course" class="java.lang.String"/>
+	<parameter name="Year" class="java.lang.String"/>
+	<parameter name="Section" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="156" splitType="Stretch">
+			<staticText>
+				<reportElement x="249" y="11" width="141" height="20" uuid="a7cef464-7f2e-4e16-ab39-1c43459f5502"/>
+				<text><![CDATA[Republic of the Philippines]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="31" width="223" height="20" uuid="18483fdc-d8b1-4dd7-8ed9-7876660f98b3"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BOHOL ISLAND STATE UNIVERSITY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="261" y="51" width="100" height="20" uuid="5139f0e2-611e-411f-92a8-de3d5b1cd328"/>
+				<text><![CDATA[Balilihan Campus]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="261" y="71" width="100" height="20" uuid="505d0e07-7c23-4b41-84ef-894799952fc3"/>
+				<text><![CDATA[Magsija, Balilihan, Bohol]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="261" y="91" width="100" height="20" uuid="f45906d5-f127-4b91-aff9-102cb532f5f3"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CLASS SCHEDULE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="133" width="39" height="20" uuid="8af3401e-4705-45ca-ae4f-3aa105141d86"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<text><![CDATA[Course]]></text>
+			</staticText>
+			<image>
+				<reportElement x="106" y="10" width="96" height="81" uuid="119ce2b8-14e3-4a86-8da1-6d42579db854"/>
+				<imageExpression><![CDATA["/Users/ivankrister/Documents/java/scheduler/scheduler/src/main/resources/logo.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="39" y="133" width="99" height="20" uuid="8309cd08-6473-4ffe-96c7-4152eaa9b396"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$P{Course}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="425" y="119" width="29" height="20" uuid="fc853e6f-4c0c-403d-a4af-910450596014"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Year:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="415" y="139" width="39" height="14" uuid="bf7cea6f-283c-4d99-9ea4-f429e5d77491"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<text><![CDATA[Section:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="455" y="119" width="83" height="20" uuid="450bc699-00b2-4fe7-acc8-439be236fc6c"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Year}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="136" width="83" height="20" uuid="64eec249-4325-41b1-9f29-274946b7efc6"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{Section}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="51" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" style="table" x="0" y="1" width="555" height="50" uuid="a6f10dd8-df43-4456-ac46-218924dbd5aa"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="RoomDataset" uuid="38561031-d33d-4e3a-914e-d94c35879505">
+						<dataSourceExpression><![CDATA[$P{RoomDataSource}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="63439aa1-bab7-439f-bb2f-aa33b116bc99">
+						<jr:tableHeader style="table_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="a197867f-b1a3-4272-9cb7-1e73b06d7816"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[TIME]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="03cde119-fa01-41e3-95a6-49e844a3c922"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{time}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="e49597bc-3b28-4df2-8ce0-bcdb65250c92">
+						<jr:tableHeader style="table_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="901a47a2-9f40-48d2-ab37-014b01376d26"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[MONDAY]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="c1cb35a4-bdd4-4162-aa9c-e26cdedfc84d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{monday}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="782990eb-0780-49ce-b155-5cb9d68da76f">
+						<jr:tableHeader style="table_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="c0da61c1-a741-4c87-ae83-c83bc1b64cf8"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[TUESDAY]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="ae15a309-6087-4f7f-a955-d4128343b8ab"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{tuesday}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="49e90a7c-c3e5-4ac0-8875-6369ffdc8102">
+						<jr:tableHeader style="table_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="a21aa73f-e934-4904-afbd-f21e3ac9277b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[WEDNESDAY]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="7abb109d-024f-4b8a-bbaa-a1fc5040fdf1"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{wednesday}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="befac147-fab3-4509-aa82-88103621aa6c">
+						<jr:tableHeader style="table_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="f0325761-ba94-45fd-9d3a-66de084b8f5d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[THURSDAY]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="55fdc6de-fca1-4cbc-9e7a-eab0eb0f9b46"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{thursday}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="104" uuid="e8742c81-3c70-440c-83d4-ec0876e992b3">
+						<jr:tableHeader style="table_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="cfa080ca-0a15-40a1-9d69-86e97f75a6dd"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[FRIDAY]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="49df7d8d-e384-45e9-bf77-82daa1343751"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{friday}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="91" splitType="Stretch">
+			<staticText>
+				<reportElement x="23" y="4" width="100" height="20" uuid="7be3f9df-4ee5-4c03-a59d-b829c079c5e9"/>
+				<textElement verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Prepared by:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="123" y="44" width="100" height="20" uuid="06eb228e-2cd7-46f5-96eb-44161bf3094a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dean, CTAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="87" y="24" width="162" height="20" uuid="8defcfef-5368-44f2-a8be-862e58d4b741"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BENJAMIN N. OMAMALIN, Ph.D.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="404" y="71" width="100" height="20" uuid="95d52c49-63f7-4804-9900-45bbc62e51bf"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Campus Director]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="378" y="49" width="160" height="20" uuid="be84437b-6109-4218-96b4-0d82728400f5"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[VIRGILIA D. TEJADA, MAg.Dev.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="325" y="29" width="100" height="20" uuid="3af60a53-2d9f-40c2-a4d0-227be69c2fb8"/>
+				<textElement verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Approved:]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

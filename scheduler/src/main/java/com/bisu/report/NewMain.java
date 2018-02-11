@@ -5,6 +5,10 @@
  */
 package com.bisu.report;
 
+import com.bisu.dao.Loading;
+import com.bisu.dao.SchoolYear;
+import com.bisu.dao.Teacher;
+import com.bisu.entities.Faculties;
 import java.io.File;
 
 /**
@@ -17,11 +21,13 @@ public class NewMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-         String userHomeDirectory = System.getProperty("user.home");
-            /* Output file location */
-         String outputFile = userHomeDirectory + File.separatorChar + "JasperTableExample.pdf";
-         System.out.println(""+outputFile);
+        Loading loading = new Loading();
+        
+        Teacher teacher = new Teacher();
+        Faculties instructor = (Faculties) teacher.find(1);
+        SchoolYear schoolYears = new SchoolYear();
+        FacultyLoadReportCreator report = new FacultyLoadReportCreator();
+        report.create(loading.getByInstructor(instructor, schoolYears.getActive()), instructor, 2);
     }
     
 }

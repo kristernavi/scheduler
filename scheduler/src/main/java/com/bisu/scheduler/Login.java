@@ -5,6 +5,11 @@
  */
 package com.bisu.scheduler;
 
+import com.bisu.dao.User;
+import com.bisu.entities.Users;
+import com.bisu.extras.Helper;
+import java.awt.Color;
+
 /**
  *
  * @author ANGGIE
@@ -14,8 +19,13 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form LOGIN
      */
+    public User user;
+    MainMenu menu;
     public Login() {
+        user = new User();
         initComponents();
+        menu = new MainMenu(this);
+        menu.setVisible(false);
     }
 
     /**
@@ -30,6 +40,11 @@ public class Login extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        usernameTb = new javax.swing.JTextField();
+        passwordTb = new javax.swing.JPasswordField();
+        jButton1 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         jTextField1.setText("jTextField1");
 
@@ -46,25 +61,110 @@ public class Login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BSS-Log in");
+        setMinimumSize(new java.awt.Dimension(640, 370));
+        getContentPane().setLayout(null);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logpng.png"))); // NOI18N
-        jLabel1.setText("jLabel1");
+        jLabel1.setText("Username:");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(271, 158, 66, 16);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 634, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 368, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        jLabel2.setText("Password:");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(274, 190, 63, 16);
+
+        usernameTb.setForeground(Color.GRAY);
+        usernameTb.setText("Enter Username");
+        usernameTb.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                usernameTbFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                usernameTbFocusLost(evt);
+            }
+        });
+        getContentPane().add(usernameTb);
+        usernameTb.setBounds(343, 153, 205, 26);
+
+        passwordTb.setForeground(Color.GRAY);
+        passwordTb.setText("Password");
+        passwordTb.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                passwordTbFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                passwordTbFocusLost(evt);
+            }
+        });
+        getContentPane().add(passwordTb);
+        passwordTb.setBounds(343, 185, 205, 26);
+
+        jButton1.setText("Login");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1);
+        jButton1.setBounds(343, 223, 79, 29);
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logpng.png"))); // NOI18N
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(0, 0, 640, 370);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void usernameTbFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usernameTbFocusGained
+        // TODO add your handling code here:
+        if (usernameTb.getText().equals("Enter Username")) {
+            usernameTb.setText("");
+            usernameTb.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_usernameTbFocusGained
+
+    private void usernameTbFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usernameTbFocusLost
+        // TODO add your handling code here:
+        if (usernameTb.getText().isEmpty()) {
+            usernameTb.setForeground(Color.GRAY);
+            usernameTb.setText("Enter Username");
+        }
+    }//GEN-LAST:event_usernameTbFocusLost
+
+    private void passwordTbFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordTbFocusGained
+        // TODO add your handling code here:
+        if (passwordTb.getText().equals("Password")) {
+            passwordTb.setText("");
+            passwordTb.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_passwordTbFocusGained
+
+    private void passwordTbFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordTbFocusLost
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_passwordTbFocusLost
+
+    public void clear(){
+        usernameTb.setText("Enter Username");
+        passwordTb.setText("Password");
+    }
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Users userLogging = user.getByUsername(usernameTb.getText());
+
+        if (userLogging == null) {
+            passwordTb.setText("");
+            return;
+        }
+        if (!userLogging.getPassword().equals(passwordTb.getText())) {
+            Helper.errorMessage("Invalid Credentials", "Whoopss");
+            passwordTb.setText("");
+
+            return;
+        }
+        this.menu.setUserLogin(userLogging);
+        this.menu.setVisible(true);
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -103,8 +203,13 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JPasswordField passwordTb;
+    private javax.swing.JTextField usernameTb;
     // End of variables declaration//GEN-END:variables
 }

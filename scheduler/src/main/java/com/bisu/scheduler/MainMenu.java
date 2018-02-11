@@ -5,6 +5,8 @@
  */
 package com.bisu.scheduler;
 
+import com.bisu.entities.Users;
+import com.bisu.extras.Helper;
 import javax.swing.JFrame;
 
 /**
@@ -27,6 +29,9 @@ public class MainMenu extends javax.swing.JFrame {
     TeachersLoading loading;
     RoomUtilization roomUtil;
     FacultyLoading facultyLoading;
+    Login login;
+    Users loginUser;
+    ChangePassword changePassword;
    
     public MainMenu() {
         initComponents();
@@ -66,6 +71,17 @@ public class MainMenu extends javax.swing.JFrame {
         this.facultyLoading.setVisible(false);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         
+       
+    }
+    public MainMenu(Login login) {
+        this();
+        this.login = login;
+        changePassword = new ChangePassword(this.loginUser,this);
+        
+    }
+    
+    public void setUserLogin(Users users){
+        this.loginUser = users;
     }
 
     /**
@@ -99,6 +115,7 @@ public class MainMenu extends javax.swing.JFrame {
         t_loading = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         sy = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -248,6 +265,14 @@ public class MainMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu5);
 
+        jMenu6.setText("Change Password");
+        jMenu6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu6ActionPerformed(evt);
+            }
+        });
+        jMenuBar1.add(jMenu6);
+
         setJMenuBar(jMenuBar1);
 
         pack();
@@ -255,6 +280,11 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
+        if(Helper.confirmationMessage()){
+            this.setVisible(false);
+            this.login.clear();
+            this.login.setVisible(true);
+        }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -328,6 +358,10 @@ public class MainMenu extends javax.swing.JFrame {
         this.facultyLoading.offScreen();
     }//GEN-LAST:event_f_loadActionPerformed
 
+    private void jMenu6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -377,6 +411,7 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
