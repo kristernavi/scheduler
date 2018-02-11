@@ -148,6 +148,8 @@ public class ClassProgram extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         yearCB = new javax.swing.JComboBox<>();
+        sectionCb = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -246,8 +248,7 @@ public class ClassProgram extends javax.swing.JFrame {
             .addComponent(scrollbar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
-                .addGap(25, 25, 25))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE))
         );
 
         courseCb.setModel(new javax.swing.DefaultComboBoxModel(comboCourseItem().toArray()));
@@ -273,6 +274,15 @@ public class ClassProgram extends javax.swing.JFrame {
             }
         });
 
+        sectionCb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B", "C", "D" }));
+        sectionCb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sectionCbActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setText("Section:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -287,7 +297,8 @@ public class ClassProgram extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel9))
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -297,7 +308,11 @@ public class ClassProgram extends javax.swing.JFrame {
                                     .addComponent(courseCb, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(yearCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(sectionCb, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(48, 48, 48))
         );
         layout.setVerticalGroup(
@@ -318,7 +333,11 @@ public class ClassProgram extends javax.swing.JFrame {
                             .addComponent(yearCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9)))
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sectionCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -388,6 +407,18 @@ public class ClassProgram extends javax.swing.JFrame {
             populateTableContent(selected_sy.getValue(), selected_course.getValue(), year);
         }
     }//GEN-LAST:event_yearCBActionPerformed
+
+    private void sectionCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sectionCbActionPerformed
+        // TODO add your handling code here:
+         ComboItem selected_sy = (ComboItem) this.schoolYearCb.getSelectedItem();
+        ComboItem selected_course = (ComboItem) this.courseCb.getSelectedItem();
+        ComboItem selected_year = (ComboItem) this.yearCB.getSelectedItem();
+                model.setRowCount(0);
+        if (selected_sy.getValue() > 0 && selected_course.getValue() > 0 && selected_year.getValue() > 0) {
+            Short year = Short.parseShort(""+selected_year.getValue());
+            populateTableContent(selected_sy.getValue(), selected_course.getValue(), year);
+        }
+    }//GEN-LAST:event_sectionCbActionPerformed
     private void populateTableContent(Integer schoolYearId, Integer courseId, Short y) {
         Courses c = (Courses) course.find(courseId);
         Object row[] = new Object[6];
@@ -398,7 +429,7 @@ public class ClassProgram extends javax.swing.JFrame {
 
             TeachersLoadingDetails detail = loadCourses.getTeachersLoadingDetails();
 
-            if (detail.getTeachersLoadings().getSubjects().getYearLevel() == y && detail.getTeachersLoadings().getSchoolYears().getId() == schoolYearId) {
+            if (detail.getTeachersLoadings().getSubjects().getYearLevel() == y && detail.getTeachersLoadings().getSchoolYears().getId() == schoolYearId &&detail.getSection().equals(sectionCb.getSelectedItem().toString())) {
             long diff = detail.getHourEnd().getTime() - detail.getHourStart().getTime();
             row[0] = detail.getTeachersLoadings().getSubjects().getCode();
             String day = "";
@@ -423,7 +454,7 @@ public class ClassProgram extends javax.swing.JFrame {
             row[4] = day;
             String crs = "";
             for (LoadCourses lc : detail.getLoadCourseses()) {
-                crs = crs + "/" + lc.getCourses().getCode();
+                crs = crs + "/" + lc.getCourses().getCode() +detail.getSection();
             }
             crs = StringUtils.removeEnd(crs, "/");
             crs = StringUtils.removeStart(crs, "/");
@@ -482,6 +513,7 @@ public class ClassProgram extends javax.swing.JFrame {
     private javax.swing.JFrame jFrame1;
     private javax.swing.JFrame jFrame2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
@@ -491,6 +523,7 @@ public class ClassProgram extends javax.swing.JFrame {
     private java.awt.MenuBar menuBar1;
     private javax.swing.JComboBox<String> schoolYearCb;
     private java.awt.Scrollbar scrollbar1;
+    private javax.swing.JComboBox<String> sectionCb;
     private javax.swing.JComboBox<String> yearCB;
     // End of variables declaration//GEN-END:variables
 }

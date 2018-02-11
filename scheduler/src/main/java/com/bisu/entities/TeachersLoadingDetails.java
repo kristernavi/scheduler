@@ -38,6 +38,7 @@ public class TeachersLoadingDetails  implements java.io.Serializable {
      private boolean w;
      private boolean th;
      private boolean f;
+     private String section;
      private Set<LoadCourses> loadCourseses = new HashSet<LoadCourses>(0);
 
 
@@ -158,6 +159,17 @@ public class TeachersLoadingDetails  implements java.io.Serializable {
     public void setF(boolean f) {
         this.f = f;
     }
+    
+    @Column(name="section", nullable=true)
+    public String getSection() {
+        return section;
+    }
+
+    public void setSection(String section) {
+        this.section = section;
+    }
+    
+    
     
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="room_id", nullable=false)
