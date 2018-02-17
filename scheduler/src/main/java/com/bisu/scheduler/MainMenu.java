@@ -76,7 +76,8 @@ public class MainMenu extends javax.swing.JFrame {
     public MainMenu(Login login) {
         this();
         this.login = login;
-        changePassword = new ChangePassword(this.loginUser,this);
+        changePassword = new ChangePassword(this);
+        this.changePassword.setVisible(false);
         
     }
     
@@ -116,6 +117,7 @@ public class MainMenu extends javax.swing.JFrame {
         jMenu5 = new javax.swing.JMenu();
         sy = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -265,12 +267,21 @@ public class MainMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu5);
 
-        jMenu6.setText("Change Password");
+        jMenu6.setText("Account");
         jMenu6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenu6ActionPerformed(evt);
             }
         });
+
+        jMenuItem4.setText("Change Password");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem4);
+
         jMenuBar1.add(jMenu6);
 
         setJMenuBar(jMenuBar1);
@@ -360,7 +371,15 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void jMenu6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu6ActionPerformed
         // TODO add your handling code here:
+       
     }//GEN-LAST:event_jMenu6ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        this.changePassword.setUserLoggin(loginUser);
+        this.changePassword.setVisible(true);
+        this.changePassword.offScreen();
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -416,6 +435,7 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem room;
     private javax.swing.JMenuItem room_util;
     private javax.swing.JMenuItem subject;

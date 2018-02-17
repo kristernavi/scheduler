@@ -28,12 +28,12 @@ public class ChangePassword extends javax.swing.JFrame {
         initComponents();
     }
 
-    public ChangePassword(Users users, MainMenu mainMenu) {
+    public ChangePassword(MainMenu mainMenu) {
         this();
         this.mainMenu = mainMenu;
         int op = this.getDefaultCloseOperation(); // HIDE_ON_CLOSE
         this.setDefaultCloseOperation(this.DO_NOTHING_ON_CLOSE);
-        this.login = users;
+     
     }
 
     public void offScreen() {
@@ -42,8 +42,11 @@ public class ChangePassword extends javax.swing.JFrame {
 
     public void onScreen() {
         this.mainMenu.setVisible(true);
-        this.mainMenu.setUserLogin(login);
         this.setVisible(false);
+    }
+    
+    public void setUserLoggin(Users users){
+    this.login = users;
     }
 
     /**
@@ -62,6 +65,7 @@ public class ChangePassword extends javax.swing.JFrame {
         currentPassword = new javax.swing.JPasswordField();
         newPassword = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,6 +79,13 @@ public class ChangePassword extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Back");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -100,11 +111,17 @@ public class ChangePassword extends javax.swing.JFrame {
                             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(confirmation))))
                 .addContainerGap(85, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(89, 89, 89)
+                .addContainerGap()
+                .addComponent(jButton2)
+                .addGap(54, 54, 54)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(currentPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -135,8 +152,14 @@ public class ChangePassword extends javax.swing.JFrame {
             return;
         }
         user.save(login);
+        this.mainMenu.setUserLogin(login);
         Helper.successMessage();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        this.onScreen();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -177,6 +200,7 @@ public class ChangePassword extends javax.swing.JFrame {
     private javax.swing.JPasswordField confirmation;
     private javax.swing.JPasswordField currentPassword;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
