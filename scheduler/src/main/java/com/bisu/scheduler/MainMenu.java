@@ -32,9 +32,13 @@ public class MainMenu extends javax.swing.JFrame {
     Login login;
     Users loginUser;
     ChangePassword changePassword;
+    FacultyLoadList facultyLoadList;
    
     public MainMenu() {
         initComponents();
+        facultyLoadList = new FacultyLoadList();
+        facultyLoadList.setVisible(false);
+        
         roomUtil = new RoomUtilization(this);
         roomUtil.setVisible(false);
         
@@ -114,10 +118,9 @@ public class MainMenu extends javax.swing.JFrame {
         class_program = new javax.swing.JMenuItem();
         room_util = new javax.swing.JMenuItem();
         t_loading = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         sy = new javax.swing.JMenuItem();
-        jMenu6 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -136,7 +139,7 @@ public class MainMenu extends javax.swing.JFrame {
         jMenu1.setText("File");
         jMenu1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
 
-        jMenuItem2.setText("Profile");
+        jMenuItem2.setText("Account");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
@@ -244,13 +247,21 @@ public class MainMenu extends javax.swing.JFrame {
         });
         jMenu4.add(room_util);
 
-        t_loading.setText("Teachers Load");
+        t_loading.setText("Faculty Schedule");
         t_loading.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 t_loadingActionPerformed(evt);
             }
         });
         jMenu4.add(t_loading);
+
+        jMenuItem5.setText("Teachers Load");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem5);
 
         jMenuBar1.add(jMenu4);
 
@@ -267,23 +278,6 @@ public class MainMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu5);
 
-        jMenu6.setText("Account");
-        jMenu6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu6ActionPerformed(evt);
-            }
-        });
-
-        jMenuItem4.setText("Change Password");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
-            }
-        });
-        jMenu6.add(jMenuItem4);
-
-        jMenuBar1.add(jMenu6);
-
         setJMenuBar(jMenuBar1);
 
         pack();
@@ -299,6 +293,9 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        this.changePassword.setUserLoggin(loginUser);
+        this.changePassword.setVisible(true);
+        this.changePassword.offScreen();
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
@@ -369,17 +366,11 @@ public class MainMenu extends javax.swing.JFrame {
         this.facultyLoading.offScreen();
     }//GEN-LAST:event_f_loadActionPerformed
 
-    private void jMenu6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu6ActionPerformed
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        this.facultyLoadList.setVisible(true);
+        this.facultyLoadList.offScreen();
         // TODO add your handling code here:
-       
-    }//GEN-LAST:event_jMenu6ActionPerformed
-
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
-        this.changePassword.setUserLoggin(loginUser);
-        this.changePassword.setVisible(true);
-        this.changePassword.offScreen();
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -430,12 +421,11 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem room;
     private javax.swing.JMenuItem room_util;
     private javax.swing.JMenuItem subject;
