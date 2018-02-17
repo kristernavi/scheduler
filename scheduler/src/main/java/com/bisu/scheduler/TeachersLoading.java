@@ -644,7 +644,8 @@ public class TeachersLoading extends javax.swing.JFrame {
     }
 
     private boolean IsConflict(Date s1, Date e1, Date s2, Date e2) {
-        return (s1.compareTo(e2) < 0) && (e1.compareTo(s2) > 0);
+        return false;
+      //  return (s1.compareTo(e2) < 0) && (e1.compareTo(s2) > 0);
     }
 
     private boolean hasDay() {
@@ -757,6 +758,11 @@ public class TeachersLoading extends javax.swing.JFrame {
             if(this.load.hasConflict(this.schoolYear.getActive().getId(), item.getValue(), d1, d2, monday.isSelected(), tuesday.isSelected(), wednesday.isSelected(), thursday.isSelected(), friday.isSelected())){
                 throw new Exception("This schedule already occupied");
             }
+            
+            if(this.load.isAvailable(this.schoolYear.getActive().getId(), instructorSelected.getValue(), d1, d2, monday.isSelected(), tuesday.isSelected(), wednesday.isSelected(), thursday.isSelected(), friday.isSelected())){
+                throw new Exception("Teacher not available on this time");
+            }
+
 
             row[0] = item.getLabel();
             row[1] = Helper.timeFormat(d1);

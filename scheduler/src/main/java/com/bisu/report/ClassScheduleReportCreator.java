@@ -116,7 +116,7 @@ public class ClassScheduleReportCreator {
 
 
             /* Using compiled version(.jasper) of Jasper report to generate PDF */
-            JasperPrint jasperPrint = JasperFillManager.fillReport("/Users/ivankrister/Documents/java/scheduler/scheduler/src/main/java/com/bisu/report/ClassSchedule.jasper", parameters, new JREmptyDataSource());
+            JasperPrint jasperPrint = JasperFillManager.fillReport("C:\\Users\\ANGGIE\\Documents\\NetBeansProjects\\scheduler\\scheduler\\src\\main\\java\\com\\bisu\\report\\ClassSchedule.jasper", parameters, new JREmptyDataSource());
 
             /* outputStream to create PDF */
             OutputStream outputStream = new FileOutputStream(new File(outputFile));
@@ -147,7 +147,7 @@ public class ClassScheduleReportCreator {
 
         for (TeachersLoadingDetails data : first) {
             TeachersLoadings load = data.getTeachersLoadings();
-            String value = "" + load.getSubjects().getCode() + " / Rm: " + data.getRooms().getNumber();
+            String value = "" + load.getSubjects().getCode() + " / Rm: " + data.getRooms().getNumber()+"/"+load.getFaculties().getLastname();
             if (data.isM()) {
                 result.setMonday(value);
             }

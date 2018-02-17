@@ -151,6 +151,7 @@ public class ChangePassword extends javax.swing.JFrame {
             Helper.errorMessage("Password Doesnt Match to the confirmation", "Whoopps!");
             return;
         }
+        login.setPassword(newPassword.getText());
         user.save(login);
         this.mainMenu.setUserLogin(login);
         Helper.successMessage();

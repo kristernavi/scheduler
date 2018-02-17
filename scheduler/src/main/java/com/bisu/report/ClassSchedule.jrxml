@@ -73,10 +73,10 @@
 			</staticText>
 			<image>
 				<reportElement x="106" y="10" width="96" height="81" uuid="119ce2b8-14e3-4a86-8da1-6d42579db854"/>
-				<imageExpression><![CDATA["/Users/ivankrister/Documents/java/scheduler/scheduler/src/main/resources/logo.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["C:\\Users\\ANGGIE\\Documents\\NetBeansProjects\\scheduler\\scheduler\\src\\main\\resources\\logo.jpg"]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="39" y="133" width="99" height="20" uuid="8309cd08-6473-4ffe-96c7-4152eaa9b396"/>
+				<reportElement x="39" y="133" width="248" height="20" uuid="8309cd08-6473-4ffe-96c7-4152eaa9b396"/>
 				<textElement textAlignment="Left" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$P{Course}]]></textFieldExpression>
 			</textField>
@@ -103,9 +103,9 @@
 		</band>
 	</title>
 	<detail>
-		<band height="51" splitType="Stretch">
+		<band height="86" splitType="Stretch">
 			<componentElement>
-				<reportElement key="table" style="table" x="0" y="1" width="555" height="50" uuid="a6f10dd8-df43-4456-ac46-218924dbd5aa"/>
+				<reportElement key="table" style="table" x="0" y="1" width="555" height="85" uuid="a6f10dd8-df43-4456-ac46-218924dbd5aa"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="RoomDataset" uuid="38561031-d33d-4e3a-914e-d94c35879505">
 						<dataSourceExpression><![CDATA[$P{RoomDataSource}]]></dataSourceExpression>
@@ -118,9 +118,9 @@
 								<text><![CDATA[TIME]]></text>
 							</staticText>
 						</jr:tableHeader>
-						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+						<jr:detailCell style="table_TD" height="54" rowSpan="1">
 							<textField>
-								<reportElement x="0" y="0" width="90" height="20" uuid="03cde119-fa01-41e3-95a6-49e844a3c922"/>
+								<reportElement x="0" y="0" width="90" height="54" uuid="03cde119-fa01-41e3-95a6-49e844a3c922"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<textFieldExpression><![CDATA[$F{time}]]></textFieldExpression>
 							</textField>
@@ -134,9 +134,9 @@
 								<text><![CDATA[MONDAY]]></text>
 							</staticText>
 						</jr:tableHeader>
-						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+						<jr:detailCell style="table_TD" height="54" rowSpan="1">
 							<textField>
-								<reportElement x="0" y="0" width="90" height="20" uuid="c1cb35a4-bdd4-4162-aa9c-e26cdedfc84d"/>
+								<reportElement x="0" y="0" width="90" height="54" uuid="c1cb35a4-bdd4-4162-aa9c-e26cdedfc84d"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<textFieldExpression><![CDATA[$F{monday}]]></textFieldExpression>
 							</textField>
@@ -150,9 +150,9 @@
 								<text><![CDATA[TUESDAY]]></text>
 							</staticText>
 						</jr:tableHeader>
-						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+						<jr:detailCell style="table_TD" height="54" rowSpan="1">
 							<textField>
-								<reportElement x="0" y="0" width="90" height="20" uuid="ae15a309-6087-4f7f-a955-d4128343b8ab"/>
+								<reportElement x="0" y="0" width="90" height="54" uuid="ae15a309-6087-4f7f-a955-d4128343b8ab"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<textFieldExpression><![CDATA[$F{tuesday}]]></textFieldExpression>
 							</textField>
@@ -166,9 +166,9 @@
 								<text><![CDATA[WEDNESDAY]]></text>
 							</staticText>
 						</jr:tableHeader>
-						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+						<jr:detailCell style="table_TD" height="54" rowSpan="1">
 							<textField>
-								<reportElement x="0" y="0" width="90" height="20" uuid="7abb109d-024f-4b8a-bbaa-a1fc5040fdf1"/>
+								<reportElement x="0" y="0" width="90" height="54" uuid="7abb109d-024f-4b8a-bbaa-a1fc5040fdf1"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<textFieldExpression><![CDATA[$F{wednesday}]]></textFieldExpression>
 							</textField>
@@ -182,9 +182,9 @@
 								<text><![CDATA[THURSDAY]]></text>
 							</staticText>
 						</jr:tableHeader>
-						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+						<jr:detailCell style="table_TD" height="54" rowSpan="1">
 							<textField>
-								<reportElement x="0" y="0" width="90" height="20" uuid="55fdc6de-fca1-4cbc-9e7a-eab0eb0f9b46"/>
+								<reportElement x="0" y="0" width="90" height="54" uuid="55fdc6de-fca1-4cbc-9e7a-eab0eb0f9b46"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<textFieldExpression><![CDATA[$F{thursday}]]></textFieldExpression>
 							</textField>
@@ -198,9 +198,9 @@
 								<text><![CDATA[FRIDAY]]></text>
 							</staticText>
 						</jr:tableHeader>
-						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+						<jr:detailCell style="table_TD" height="54" rowSpan="1">
 							<textField>
-								<reportElement x="0" y="0" width="90" height="20" uuid="49df7d8d-e384-45e9-bf77-82daa1343751"/>
+								<reportElement x="0" y="0" width="90" height="54" uuid="49df7d8d-e384-45e9-bf77-82daa1343751"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<textFieldExpression><![CDATA[$F{friday}]]></textFieldExpression>
 							</textField>

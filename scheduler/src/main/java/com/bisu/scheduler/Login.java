@@ -25,7 +25,7 @@ public class Login extends javax.swing.JFrame {
         user = new User();
         initComponents();
         menu = new MainMenu(this);
-        menu.setVisible(false);
+       menu.setVisible(false);
     }
 
     /**
@@ -66,11 +66,11 @@ public class Login extends javax.swing.JFrame {
 
         jLabel1.setText("Username:");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(271, 158, 66, 16);
+        jLabel1.setBounds(240, 160, 52, 14);
 
         jLabel2.setText("Password:");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(274, 190, 63, 16);
+        jLabel2.setBounds(240, 190, 50, 14);
 
         usernameTb.setForeground(Color.GRAY);
         usernameTb.setText("Enter Username");
@@ -83,7 +83,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
         getContentPane().add(usernameTb);
-        usernameTb.setBounds(343, 153, 205, 26);
+        usernameTb.setBounds(343, 153, 205, 30);
 
         passwordTb.setForeground(Color.GRAY);
         passwordTb.setText("Password");
@@ -96,7 +96,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
         getContentPane().add(passwordTb);
-        passwordTb.setBounds(343, 185, 205, 26);
+        passwordTb.setBounds(343, 185, 205, 30);
 
         jButton1.setText("Login");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -105,9 +105,9 @@ public class Login extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(343, 223, 79, 29);
+        jButton1.setBounds(343, 223, 90, 23);
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logpng.png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/name.png"))); // NOI18N
         getContentPane().add(jLabel4);
         jLabel4.setBounds(0, 0, 640, 370);
 

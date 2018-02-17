@@ -36,7 +36,7 @@ public class MainMenu extends javax.swing.JFrame {
    
     public MainMenu() {
         initComponents();
-        facultyLoadList = new FacultyLoadList();
+        facultyLoadList = new FacultyLoadList(this);
         facultyLoadList.setVisible(false);
         
         roomUtil = new RoomUtilization(this);

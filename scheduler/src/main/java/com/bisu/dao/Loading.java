@@ -97,5 +97,50 @@ public class Loading extends AbstractModel {
         }
         return false;
     }
+    
+    
+    public boolean isAvailable(Integer schoolYear, Integer teacher, Date hr_start, Date hr_end, boolean m, boolean t, boolean w, boolean th, boolean f) {
+
+        java.sql.Time sqlStart = new java.sql.Time(hr_start.getTime());
+        java.sql.Time sqlEnd = new java.sql.Time(hr_end.getTime());
+
+        String query_string = "SELECT teachers_loadings.teacher_id from teachers_loadings JOIN teachers_loading_details ON teachers_loadings.id = teachers_loading_details.loading_id ";
+
+        query_string = query_string + "WHERE teachers_loadings.school_year_id = " + schoolYear;
+
+        query_string = query_string + " AND teachers_loadings.teacher_id = " + teacher;
+        query_string = query_string + " AND teachers_loadings.school_year_id = " + schoolYear;
+        query_string = query_string + " AND (teachers_loading_details.hour_start < '" + sqlEnd + "'";
+        query_string = query_string + " AND teachers_loading_details.hour_end > '" + sqlStart + "') AND";
+
+        if (m) {
+            query_string = query_string + " teachers_loading_details.M = 1 OR";
+        }
+        if (t) {
+            query_string = query_string + " teachers_loading_details.T = 1 OR";
+        }
+        if (w) {
+            query_string = query_string + " teachers_loading_details.W = 1 OR";
+        }
+        if (th) {
+            query_string = query_string + " teachers_loading_details.Th = 1 OR";
+        }
+        if (f) {
+            query_string = query_string + " teachers_loading_details.F = 1 OR";
+        }
+
+        query_string = StringUtils.removeEnd(query_string, "OR");
+        List result;
+        begin();
+        Query query = session().createSQLQuery(
+                query_string);
+        result = query.list();
+        end();
+        if (result.size() > 0) {
+            return true;
+
+        }
+        return false;
+    }
 
 }

@@ -6,6 +6,7 @@
 package com.bisu.report;
 
 import com.bisu.entities.Faculties;
+import com.bisu.entities.LoadCourses;
 import com.bisu.entities.Rooms;
 import com.bisu.entities.TeachersLoadingDetails;
 import com.bisu.entities.TeachersLoadings;
@@ -28,6 +29,7 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.apache.commons.lang.StringUtils;
 
 /**
  *
@@ -146,7 +148,13 @@ public class TeachersLoadReport {
 
         for (TeachersLoadingDetails data : first) {
             TeachersLoadings load = data.getTeachersLoadings();
-            String value = "" + load.getSubjects().getCode() + " / Rm: " + data.getRooms().getNumber();
+             String c = "";
+                for (LoadCourses lc : data.getLoadCourseses()) {
+                    c = c + "/" + lc.getCourses().getCode();
+                }
+                c = StringUtils.removeEnd(c, "/");
+               // c = StringUtils.removeStart(c, "/");
+            String value = "" + load.getSubjects().getCode() + " / Rm: " + data.getRooms().getNumber() + c;
             if (data.isM()) {
                 result.setMonday(value);
             }
