@@ -19,6 +19,7 @@ import com.bisu.report.FacultyLoadReportCreator;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import org.apache.commons.lang.StringUtils;
 
 /**
  *
@@ -242,7 +243,7 @@ public class FacultyLoadList extends javax.swing.JFrame {
         model.setRowCount(0);
         if (item.getValue() > 0) {
             Faculties faculty = (Faculties) teacher.find(item.getValue());
-            Object row[] = new Object[7];
+            Object row[] = new Object[8];
             Integer lecHrs = 0;
             Integer labHrs = 0;
             Integer units = 0;
@@ -254,9 +255,11 @@ public class FacultyLoadList extends javax.swing.JFrame {
                 for (SubjectCourses lc : sub.getSubjectCourseses()) {
                     c = c + "/" + lc.getCourses().getCode()+"-"+sub.getYearLevel();
                 }
+                    c = StringUtils.removeEnd(c, "/");
+                    c = StringUtils.removeStart(c, "/");
                     lecHrs += sub.getLecHours();
                     labHrs += sub.getLabHours();
-                    row[0] = sub.getCode() ;
+                    row[0] = c ;
                     row[1] = sub.getCode() ;
                     row[2] = unit;
                     row[3] = sub.getLecHours();

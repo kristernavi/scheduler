@@ -56,7 +56,7 @@
 		<variable name="total_lec" class="java.lang.Integer" calculation="Sum">
 			<variableExpression><![CDATA[$F{lecHrs}]]></variableExpression>
 		</variable>
-		<variable name="total_lab" class="java.lang.String" calculation="Sum">
+		<variable name="total_lab" class="java.lang.Integer" calculation="Sum">
 			<variableExpression><![CDATA[$F{labHrs}]]></variableExpression>
 		</variable>
 	</subDataset>
@@ -178,10 +178,8 @@
 						</jr:tableHeader>
 						<jr:tableFooter style="table 1_TH" height="30" rowSpan="1">
 							<textField>
-								<reportElement x="0" y="0" width="90" height="30" uuid="188f02e7-9546-4527-be01-3f517820e3f8"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font isBold="true"/>
-								</textElement>
+								<reportElement x="0" y="0" width="90" height="30" uuid="32d19e6d-20fb-4464-bf6c-bbc98b4cafa1"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<textFieldExpression><![CDATA[$V{total_load}]]></textFieldExpression>
 							</textField>
 						</jr:tableFooter>
@@ -205,10 +203,8 @@
 						</jr:tableHeader>
 						<jr:tableFooter style="table 1_TH" height="30" rowSpan="1">
 							<textField>
-								<reportElement x="0" y="0" width="90" height="30" uuid="5482b36e-f6ff-423f-b39d-42c211bde7a6"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font isBold="true"/>
-								</textElement>
+								<reportElement x="0" y="0" width="90" height="30" uuid="72a27d60-9064-4223-b83c-774909efaeb8"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<textFieldExpression><![CDATA[$V{total_lec}]]></textFieldExpression>
 							</textField>
 						</jr:tableFooter>
@@ -232,10 +228,8 @@
 						</jr:tableHeader>
 						<jr:tableFooter style="table 1_TH" height="30" rowSpan="1">
 							<textField>
-								<reportElement x="0" y="0" width="100" height="30" uuid="970e32e6-3c60-4a23-a588-dfe7085608d9"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font isBold="true"/>
-								</textElement>
+								<reportElement x="0" y="0" width="100" height="30" uuid="1bb2bb13-8185-4619-b784-eb0c846a92e7"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<textFieldExpression><![CDATA[$V{total_lab}]]></textFieldExpression>
 							</textField>
 						</jr:tableFooter>

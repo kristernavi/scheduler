@@ -333,7 +333,7 @@ public class TeachersLoad extends javax.swing.JFrame {
                 }
                 row[1] = day;
                 row[2] = detail.getRooms().getNumber();
-                row[3] = loads.getSubjects().getDescription();
+                row[3] = loads.getSubjects().getCode();
                 row[4] = detail.getId();
                 String c = "";
                 for (LoadCourses lc : detail.getLoadCourseses()) {

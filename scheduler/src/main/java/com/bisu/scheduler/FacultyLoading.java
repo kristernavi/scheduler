@@ -480,6 +480,8 @@ public class FacultyLoading extends javax.swing.JFrame {
             Integer subjectUnit = sub.getLecHours() + sub.getLabHours();
             Integer maxload = (faculties.getRegularLoad() - faculties.getDeloading()) + faculties.getOverload();
             Integer loadAdded = currentLoad + subjectUnit;
+            
+            Integer units = Integer.parseInt(tLoadLbl.getText());
 
             if (maxload < loadAdded) {
                 throw new Exception("Unable to add subject due to the hours exceed to the max limit");
@@ -500,7 +502,11 @@ public class FacultyLoading extends javax.swing.JFrame {
             loadings.setSubjects(sub);
             overloadLbl.setText("" + over);
             teacherLoading.save(loadings);
-            tLoadLbl.setText("" + loadAdded);
+            loadsLbl.setText(""+loadAdded);
+            
+            Integer unit_added =  sub.getLecHours() + (sub.getLabHours() /3);
+            units = units + sub.getLecHours() + (sub.getLabHours() /3);
+            tLoadLbl.setText("" + units);
             Object row[] = new Object[7];
             Integer unit = sub.getLecHours() + (sub.getLabHours() / 3);
             row[0] = sub.getCode();
@@ -590,16 +596,28 @@ public class FacultyLoading extends javax.swing.JFrame {
         int row = loadingTable.rowAtPoint(evt.getPoint());
         int col = loadingTable.columnAtPoint(evt.getPoint());
         Integer currentLoad = Integer.parseInt(tLoadLbl.getText());
+        Integer overload = Integer.parseInt(overloadLbl.getText());
+        Integer t_load = Integer.parseInt(loadsLbl.getText());
         if (row >= 0 && col >= 4) {
             if (Helper.confirmationMessage()) {
                 try {
 
                     Integer id = Integer.parseInt(loadingTable.getValueAt(row, 5).toString());
                     TeachersLoadings tl = (TeachersLoadings) this.teacherLoading.find(id);
-                    currentLoad = currentLoad - (tl.getSubjects().getLecHours() + tl.getSubjects().getLabHours());
+                    Integer subtracted = tl.getSubjects().getLecHours() + tl.getSubjects().getLabHours();
+                    currentLoad = currentLoad - (tl.getSubjects().getLecHours() + (tl.getSubjects().getLabHours()/3));
+                    if(overload > 0 ){
+                    overload = overload - subtracted;
+                    }
+                    if(overload < 0){
+                     overload = 0;
+                    }
+                    t_load = t_load - (tl.getSubjects().getLecHours() + tl.getSubjects().getLabHours());
                     this.teacherLoading.delete(tl);
                     model.removeRow(row);
+                    overloadLbl.setText(""+overload);
                     tLoadLbl.setText("" + currentLoad);
+                    loadsLbl.setText(""+t_load);
                 } catch (Exception ex) {
                     Helper.errorMessage("This might have a schedule already", "Whoppps!");
                     Helper.closeSession();
