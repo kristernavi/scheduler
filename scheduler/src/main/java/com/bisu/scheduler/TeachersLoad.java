@@ -327,6 +327,7 @@ public class TeachersLoad extends javax.swing.JFrame {
                 if (detail.isTh()) {
                     day = day + "Th";
                 }
+                
                 if (detail.isF()) {
                     day = day + "F";
                 }
@@ -336,7 +337,7 @@ public class TeachersLoad extends javax.swing.JFrame {
                 row[4] = detail.getId();
                 String c = "";
                 for (LoadCourses lc : detail.getLoadCourseses()) {
-                    c = c + "/" + lc.getCourses().getCode();
+                    c = c + "/" + lc.getCourses().getCode()+"-"+loads.getSubjects().getYearLevel();
                 }
                 c = StringUtils.removeEnd(c, "/");
                 c = StringUtils.removeStart(c, "/");

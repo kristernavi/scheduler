@@ -11,6 +11,8 @@ import com.bisu.dao.Subject;
 import com.bisu.dao.SubjectCourse;
 import com.bisu.dao.Teacher;
 import com.bisu.entities.Faculties;
+import com.bisu.entities.LoadCourses;
+import com.bisu.entities.SubjectCourses;
 import com.bisu.entities.Subjects;
 import com.bisu.entities.TeachersLoadings;
 import com.bisu.report.FacultyLoadReportCreator;
@@ -94,11 +96,11 @@ public class FacultyLoadList extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Subject Code", "Load", "Lecture Hours", "Laboratory Hours"
+                "Course", "Subject Code", "Load", "Lecture Hours", "Laboratory Hours"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -248,16 +250,20 @@ public class FacultyLoadList extends javax.swing.JFrame {
                 if(loadings.getSchoolYears().isActived()){
                     Subjects sub = loadings.getSubjects();
                     Integer unit = sub.getLecHours() + (sub.getLabHours() / 3);
-
+                    String c = "";
+                for (SubjectCourses lc : sub.getSubjectCourseses()) {
+                    c = c + "/" + lc.getCourses().getCode()+"-"+sub.getYearLevel();
+                }
                     lecHrs += sub.getLecHours();
                     labHrs += sub.getLabHours();
-                    row[0] = sub.getCode();
-                    row[1] = unit;
-                    row[2] = sub.getLecHours();
-                    row[3] = sub.getLabHours();
-                    row[4] = "Delete";
-                    row[5] = loadings.getId();
-                    row[6] = sub.getId();
+                    row[0] = sub.getCode() ;
+                    row[1] = sub.getCode() ;
+                    row[2] = unit;
+                    row[3] = sub.getLecHours();
+                    row[4] = sub.getLabHours();
+                    row[5] = "Delete";
+                    row[6] = loadings.getId();
+                    row[7] = sub.getId();
                     model.addRow(row);
                 }
             }

@@ -26,6 +26,7 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         menu = new MainMenu(this);
        menu.setVisible(false);
+       this.getRootPane().setDefaultButton(submitButton);
     }
 
     /**
@@ -43,7 +44,7 @@ public class Login extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         usernameTb = new javax.swing.JTextField();
         passwordTb = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        submitButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
 
         jTextField1.setText("jTextField1");
@@ -66,11 +67,11 @@ public class Login extends javax.swing.JFrame {
 
         jLabel1.setText("Username:");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(240, 160, 52, 14);
+        jLabel1.setBounds(240, 160, 66, 16);
 
         jLabel2.setText("Password:");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(240, 190, 50, 14);
+        jLabel2.setBounds(240, 190, 63, 16);
 
         usernameTb.setForeground(Color.GRAY);
         usernameTb.setText("Enter Username");
@@ -98,14 +99,14 @@ public class Login extends javax.swing.JFrame {
         getContentPane().add(passwordTb);
         passwordTb.setBounds(343, 185, 205, 30);
 
-        jButton1.setText("Login");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        submitButton.setText("Login");
+        submitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                submitButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(343, 223, 90, 23);
+        getContentPane().add(submitButton);
+        submitButton.setBounds(343, 223, 90, 29);
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/name.png"))); // NOI18N
         getContentPane().add(jLabel4);
@@ -147,7 +148,7 @@ public class Login extends javax.swing.JFrame {
         usernameTb.setText("Enter Username");
         passwordTb.setText("Password");
     }
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // TODO add your handling code here:
         Users userLogging = user.getByUsername(usernameTb.getText());
 
@@ -164,7 +165,7 @@ public class Login extends javax.swing.JFrame {
         this.menu.setUserLogin(userLogging);
         this.menu.setVisible(true);
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_submitButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,13 +204,13 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JPasswordField passwordTb;
+    private javax.swing.JButton submitButton;
     private javax.swing.JTextField usernameTb;
     // End of variables declaration//GEN-END:variables
 }
