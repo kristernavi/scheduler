@@ -23,7 +23,7 @@ import javax.validation.ValidatorFactory;
 
 /**
  *
- * @author ivankrister
+ * @author ANGGIE
  */
 public class Tester {
 

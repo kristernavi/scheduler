@@ -162,6 +162,7 @@ public class RoomMaster extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Room Master");
 
+        add.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         add.setText("New");
         add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -169,6 +170,7 @@ public class RoomMaster extends javax.swing.JFrame {
             }
         });
 
+        save.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         save.setText("Save");
         save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -176,6 +178,7 @@ public class RoomMaster extends javax.swing.JFrame {
             }
         });
 
+        delete.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         delete.setText("Delete");
         delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -183,8 +186,10 @@ public class RoomMaster extends javax.swing.JFrame {
             }
         });
 
+        cancel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         cancel.setText("Cancel");
 
+        cancel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         cancel1.setText("Back");
         cancel1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

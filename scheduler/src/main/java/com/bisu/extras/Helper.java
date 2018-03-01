@@ -14,7 +14,7 @@ import org.hibernate.Session;
 
 /**
  *
- * @author ivankrister
+ * @author ANGGIE
  */
 public class Helper {
 

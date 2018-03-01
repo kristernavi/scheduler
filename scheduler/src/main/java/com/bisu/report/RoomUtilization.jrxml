@@ -81,7 +81,7 @@
 	<detail>
 		<band height="94" splitType="Stretch">
 			<componentElement>
-				<reportElement key="table" style="table" x="0" y="0" width="555" height="94" uuid="a6f10dd8-df43-4456-ac46-218924dbd5aa"/>
+				<reportElement key="table" style="table" x="0" y="0" width="555" height="103" uuid="a6f10dd8-df43-4456-ac46-218924dbd5aa"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="RoomDataset" uuid="38561031-d33d-4e3a-914e-d94c35879505">
 						<dataSourceExpression><![CDATA[$P{RoomDataSource}]]></dataSourceExpression>
@@ -189,7 +189,7 @@
 	<pageFooter>
 		<band height="91" splitType="Stretch">
 			<staticText>
-				<reportElement x="23" y="4" width="100" height="20" uuid="7be3f9df-4ee5-4c03-a59d-b829c079c5e9"/>
+				<reportElement x="23" y="9" width="100" height="20" uuid="7be3f9df-4ee5-4c03-a59d-b829c079c5e9"/>
 				<textElement verticalAlignment="Bottom">
 					<font isBold="true"/>
 				</textElement>

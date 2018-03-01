@@ -10,7 +10,7 @@ import com.bisu.entities.Rooms;
 
 /**
  *
- * @author ivankrister
+ * @author ANGGIE
  */
 public class Room extends AbstractModel{
     

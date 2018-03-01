@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  *
- * @author ivankrister
+ * @author ANGGIE
  */
 public class RoomUtilizationReport {
     private int room_number;

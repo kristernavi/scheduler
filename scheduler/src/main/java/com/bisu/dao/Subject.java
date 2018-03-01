@@ -15,7 +15,7 @@ import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 /**
  *
- * @author ivankrister
+ * @author ANGGIE
  */
 public class Subject extends AbstractModel{
 

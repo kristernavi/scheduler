@@ -19,7 +19,7 @@ import org.hibernate.criterion.Restrictions;
 
 /**
  *
- * @author ivankrister
+ * @author ANGGIE
  */
 public class Loading extends AbstractModel {
 

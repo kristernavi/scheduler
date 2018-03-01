@@ -8,7 +8,7 @@ import com.bisu.report.Sample;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 /**
  *
- * @author ivankrister
+ * @author ANGGIE
  */
 public class Sample {
     

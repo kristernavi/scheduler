@@ -17,7 +17,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author ivankrister
+ * @author ANGGIE
  */
 
 @Entity

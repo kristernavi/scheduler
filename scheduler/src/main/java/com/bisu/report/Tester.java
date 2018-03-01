@@ -24,7 +24,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 /**
  *
- * @author ivankrister
+ * @author ANGGIE
  */
 public class Tester {
 
@@ -63,7 +63,7 @@ public class Tester {
             parameters.put("ItemDataSource", itemsJRBean);
 
             /* Using compiled version(.jasper) of Jasper report to generate PDF */
-            JasperPrint jasperPrint = JasperFillManager.fillReport("/Users/ivankrister/Documents/java/scheduler/scheduler/src/main/java/com/bisu/report/template_Table.jasper", parameters, new JREmptyDataSource());
+            JasperPrint jasperPrint = JasperFillManager.fillReport("/Users/ANGGIE/Documents/java/scheduler/scheduler/src/main/java/com/bisu/report/template_Table.jasper", parameters, new JREmptyDataSource());
 
             /* outputStream to create PDF */
             OutputStream outputStream = new FileOutputStream(new File(outputFile));

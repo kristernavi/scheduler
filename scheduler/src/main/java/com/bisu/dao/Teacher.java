@@ -15,7 +15,7 @@ import org.hibernate.criterion.Restrictions;
 
 /**
  *
- * @author ivankrister
+ * @author ANGGIE
  */
 public class Teacher extends AbstractModel {
     

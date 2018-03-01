@@ -13,7 +13,7 @@ import java.io.File;
 
 /**
  *
- * @author ivankrister
+ * @author ANGGIE
  */
 public class NewMain {
 

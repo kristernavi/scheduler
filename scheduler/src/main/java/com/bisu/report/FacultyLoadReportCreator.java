@@ -32,7 +32,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 /**
  *
- * @author ivankrister
+ * @author ANGGIE
  */
 public class FacultyLoadReportCreator {
     

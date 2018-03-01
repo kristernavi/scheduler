@@ -10,7 +10,7 @@ import com.bisu.entities.Courses;
 
 /**
  *
- * @author ivankrister
+ * @author ANGGIE
  */
 public class Course extends AbstractModel{
 

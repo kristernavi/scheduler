@@ -136,10 +136,13 @@ public class DepartmentMaster extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Department Information"));
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Department Code:");
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Description:");
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Department Head:");
 
         code.setEnabled(true);
@@ -171,7 +174,7 @@ public class DepartmentMaster extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(51, 51, 51)
                         .addComponent(hiddenID)))
-                .addContainerGap(333, Short.MAX_VALUE))
+                .addContainerGap(307, Short.MAX_VALUE))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {code, description, head});
@@ -243,6 +246,7 @@ public class DepartmentMaster extends javax.swing.JFrame {
 
         pane_nav.addTab("List", jPanel3);
 
+        add.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         add.setText("New");
         add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -250,6 +254,7 @@ public class DepartmentMaster extends javax.swing.JFrame {
             }
         });
 
+        save.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         save.setText("Save");
         save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -257,6 +262,7 @@ public class DepartmentMaster extends javax.swing.JFrame {
             }
         });
 
+        delete.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         delete.setText("Delete");
         delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -264,6 +270,7 @@ public class DepartmentMaster extends javax.swing.JFrame {
             }
         });
 
+        cancel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         cancel.setText("Cancel");
         cancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -271,6 +278,7 @@ public class DepartmentMaster extends javax.swing.JFrame {
             }
         });
 
+        edit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         edit.setText("Edit");
         edit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -278,6 +286,7 @@ public class DepartmentMaster extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton1.setText("Back");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -325,7 +334,7 @@ public class DepartmentMaster extends javax.swing.JFrame {
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pane_nav, javax.swing.GroupLayout.DEFAULT_SIZE, 725, Short.MAX_VALUE)
+                .addComponent(pane_nav)
                 .addContainerGap())
         );
         layout.setVerticalGroup(

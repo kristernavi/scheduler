@@ -134,7 +134,7 @@ public class MainMenu extends javax.swing.JFrame {
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, 0, 1580, 760);
 
-        jMenuBar1.setBackground(new java.awt.Color(0, 102, 204));
+        jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
 
         jMenu1.setText("File");
         jMenu1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -303,12 +303,14 @@ public class MainMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
         courseMaster.setVisible(true);
         courseMaster.offScreen();
+     
     }//GEN-LAST:event_courseActionPerformed
 
     private void departmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_departmentActionPerformed
         // TODO add your handling code here:
         departmentMaster.setVisible(true);
         departmentMaster.offScreen();
+     
     }//GEN-LAST:event_departmentActionPerformed
 
     private void subjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subjectActionPerformed
@@ -327,6 +329,7 @@ public class MainMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.roomMaster.setVisible(true);
         this.roomMaster.offScreen();
+        
     }//GEN-LAST:event_roomActionPerformed
 
     private void t_loadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_loadActionPerformed

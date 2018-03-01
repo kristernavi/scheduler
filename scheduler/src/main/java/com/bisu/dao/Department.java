@@ -9,7 +9,7 @@ import com.bisu.contracts.AbstractModel;
 import com.bisu.entities.Departments;
 /**
  *
- * @author ivankrister
+ * @author ANGGIE
  */
 public class Department extends AbstractModel {
     public Department() {

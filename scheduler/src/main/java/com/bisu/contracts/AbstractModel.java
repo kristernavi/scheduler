@@ -7,7 +7,7 @@ package com.bisu.contracts;
 
 /**
  *
- * @author ivankrister
+ * @author ANGGIE
  */
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,7 +17,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 /**
  *
- * @author ivankrister
+ * @author ANGGIE
  */
 abstract public class AbstractModel {
     private SessionFactory session = HibernateUtil.getSessionFactory();

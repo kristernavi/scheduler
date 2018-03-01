@@ -7,7 +7,7 @@ package com.bisu.report;
 
 /**
  *
- * @author ivankrister
+ * @author ANGGIE
  */
 public class LoadItem {
     Integer load = 0;

@@ -12,7 +12,7 @@ import org.hibernate.Query;
 
 /**
  *
- * @author ivankrister
+ * @author ANGGIE
  */
 public class Tester {
 

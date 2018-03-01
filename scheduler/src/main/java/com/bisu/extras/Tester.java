@@ -12,7 +12,7 @@ import java.util.Date;
 
 /**
  *
- * @author ivankrister
+ * @author ANGGIE
  */
 public class Tester {
 
