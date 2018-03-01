@@ -742,45 +742,61 @@ public class TeachersLoading extends javax.swing.JFrame {
                    
                     if (monday.isSelected()) {
                         if ((Boolean) scheduleTable.getValueAt(index, 3)) {
+                            Integer room_id = (Integer)scheduleTable.getValueAt(index, 9);
+                            if(room_id == item.getValue()){
                             Date d3 = (Date) scheduleTable.getValueAt(index, 10);
                             Date d4 = (Date) scheduleTable.getValueAt(index, 11);
                             conflict = this.IsConflict(d3, d4, d1, d2);
+                            }
 
                         }
                     }
                     if (tuesday.isSelected()) {
 
                         if ((Boolean) scheduleTable.getValueAt(index, 4)) {
+                            Integer room_id = (Integer)scheduleTable.getValueAt(index, 9);
+                            if(room_id == item.getValue()){
                             Date d3 = (Date) scheduleTable.getValueAt(index, 10);
                             Date d4 = (Date) scheduleTable.getValueAt(index, 11);
                             conflict = this.IsConflict(d3, d4, d1, d2);
+                            }
                         }
 
                     }
                     if (wednesday.isSelected()) {
 
                         if ((Boolean) scheduleTable.getValueAt(index, 5)) {
+                            Integer room_id = (Integer)scheduleTable.getValueAt(index, 9);
+                            if(room_id == item.getValue()){
                             Date d3 = (Date) scheduleTable.getValueAt(index, 10);
                             Date d4 = (Date) scheduleTable.getValueAt(index, 11);
                             conflict = this.IsConflict(d3, d4, d1, d2);
+                            }
                         }
 
                     }
                     if (thursday.isSelected()) {
 
                         if ((Boolean) scheduleTable.getValueAt(index, 6)) {
+                            
+                            Integer room_id = (Integer)scheduleTable.getValueAt(index, 9);
+                            if(room_id == item.getValue()){
                             Date d3 = (Date) scheduleTable.getValueAt(index, 10);
                             Date d4 = (Date) scheduleTable.getValueAt(index, 11);
                             conflict = this.IsConflict(d3, d4, d1, d2);
+                            }
                         }
 
                     }
                     if (friday.isSelected()) {
 
                         if ((Boolean) scheduleTable.getValueAt(index, 7)) {
+                            Integer room_id = (Integer)scheduleTable.getValueAt(index, 9);
+                            if(room_id == item.getValue()){
                             Date d3 = (Date) scheduleTable.getValueAt(index, 10);
                             Date d4 = (Date) scheduleTable.getValueAt(index, 11);
                             conflict = this.IsConflict(d3, d4, d1, d2);
+                            }
                         }
 
                     }
