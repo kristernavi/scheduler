@@ -48,6 +48,9 @@ public class FacultyLoading extends javax.swing.JFrame {
         teacherLoading = new Loading();
         schoolYear = new SchoolYear();
         initComponents();
+        this.semesterCb.setSelectedIndex(this.schoolYear.getActive().getSemester() -1 );
+        this.semesterCb.setEditable(false);
+        this.semesterCb.setEnabled(false);
         model = (DefaultTableModel) loadingTable.getModel();
           setExtendedState(JFrame.MAXIMIZED_BOTH);
 
@@ -137,11 +140,11 @@ public class FacultyLoading extends javax.swing.JFrame {
 
     private void subject_populate() {
         ComboItem year_level = (ComboItem) year_levelCb.getSelectedItem();
-        ComboItem semester = (ComboItem) semesterCb.getSelectedItem();
+        Integer semester = Integer.parseInt(""+this.schoolYear.getActive().getSemester());
         ComboItem course = (ComboItem) courseCb.getSelectedItem();
 
-        if (year_level.getValue() > 0 && semester.getValue() > 0 && course.getValue() > 0) {
-            subjectCb.setModel(new javax.swing.DefaultComboBoxModel(comboSubjectItem(year_level.getValue(), semester.getValue(), course.getValue()).toArray()));
+        if (year_level.getValue() > 0 && course.getValue() > 0) {
+            subjectCb.setModel(new javax.swing.DefaultComboBoxModel(comboSubjectItem(year_level.getValue(),semester, course.getValue()).toArray()));
 
         }
     }

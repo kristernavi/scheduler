@@ -58,14 +58,12 @@ public class TeachersLoading extends javax.swing.JFrame {
     SubjectCourse sc;
     DefaultTableModel model2;
     LoadCourse loadCourse;
-     
 
     public TeachersLoading(MainMenu mainMenu) {
         this();
         this.mainMenu = mainMenu;
         int op = this.getDefaultCloseOperation(); // HIDE_ON_CLOSE
         this.setDefaultCloseOperation(this.DO_NOTHING_ON_CLOSE);
-         
 
     }
 
@@ -91,7 +89,7 @@ public class TeachersLoading extends javax.swing.JFrame {
             room = new Room();
             load = new Loading();
             teacher = new Teacher();
-            
+
             String startTime = "07:30";
             String endTime = "17:30";
             String startTime2 = "08:30";
@@ -101,7 +99,7 @@ public class TeachersLoading extends javax.swing.JFrame {
             Date date2 = sdf.parse(startTime2);
             Date dateEnd1 = sdf.parse(endTime);
             Date dateEnd2 = sdf.parse(endTime2);
-            
+
             SpinnerDateModel sm2 = new SpinnerDateModel(date, date, dateEnd1, Calendar.MINUTE);
             SpinnerDateModel sm1 = new SpinnerDateModel(date2, date2, dateEnd2, Calendar.MINUTE);
             initComponents();
@@ -619,20 +617,20 @@ public class TeachersLoading extends javax.swing.JFrame {
 
         List<ComboItem> combo = new ArrayList<ComboItem>();
         combo.add(new ComboItem(0, "Select Subject"));
-        if(id > 0){
-        Faculties instructor = (Faculties) teacher.find(id);
-        
-        List loadOfTeacher = load.getByInstructor(instructor,this.schoolYear.getActive());
-        try {
+        if (id > 0) {
+            Faculties instructor = (Faculties) teacher.find(id);
 
-            for (Object obj : loadOfTeacher) {
-                TeachersLoadings mods = (TeachersLoadings) obj;
-                Subjects model = mods.getSubjects();
-                combo.add(new ComboItem(mods.getId(), model.getCode() + " - " + model.getDescription()));
+            List loadOfTeacher = load.getByInstructor(instructor, this.schoolYear.getActive());
+            try {
+
+                for (Object obj : loadOfTeacher) {
+                    TeachersLoadings mods = (TeachersLoadings) obj;
+                    Subjects model = mods.getSubjects();
+                    combo.add(new ComboItem(mods.getId(), model.getCode() + " - " + model.getDescription()));
+                }
+            } catch (Exception e) {
+
             }
-        } catch (Exception e) {
-
-        }
         }
 
         return combo;
@@ -651,8 +649,7 @@ public class TeachersLoading extends javax.swing.JFrame {
     }
 
     private boolean IsConflict(Date s1, Date e1, Date s2, Date e2) {
-        return false;
-      //  return (s1.compareTo(e2) < 0) && (e1.compareTo(s2) > 0);
+          return (s1.compareTo(e2) < 0) && (e1.compareTo(s2) > 0);
     }
 
     private boolean hasDay() {
@@ -692,16 +689,15 @@ public class TeachersLoading extends javax.swing.JFrame {
 
         Date d1 = (Date) this.start_timespinner.getValue();
         Date d2 = (Date) this.end_timespinner.getValue();
-        System.out.println(""+d1.getTime());
-                System.out.println(""+d2.getTime());
+        System.out.println("" + d1.getTime());
+        System.out.println("" + d2.getTime());
 
         boolean already = false;
         boolean conflict = false;
         try {
-            
-            
-            if(courseTable.getRowCount() < 1){
-               throw new Exception("Must select a course");
+
+            if (courseTable.getRowCount() < 1) {
+                throw new Exception("Must select a course");
             }
             if (instructorSelected.getValue() < 1) {
                 throw new Exception("Selected an instructor");
@@ -712,46 +708,55 @@ public class TeachersLoading extends javax.swing.JFrame {
             if (!this.hasDay()) {
                 throw new Exception("No day/days selected");
             }
-           
+
             if (d1.compareTo(d2) >= 0) {
                 throw new Exception("Time end must be greater than start");
             }
             for (int index = 0; index < scheduleTable.getRowCount(); index++) {
                 if (true) {
                     //if (Integer.parseInt(scheduleTable.getValueAt(index, 9).toString()) == item.getValue()) {
-                    Date d3 = (Date) scheduleTable.getValueAt(index, 10);
-                    Date d4 = (Date) scheduleTable.getValueAt(index, 11);
+
                     if (monday.isSelected()) {
-                        conflict = this.IsConflict(d3, d4, d1, d2);
                         if ((Boolean) scheduleTable.getValueAt(index, 3)) {
-                            throw new Exception("Day already exists");
+                            Date d3 = (Date) scheduleTable.getValueAt(index, 10);
+                            Date d4 = (Date) scheduleTable.getValueAt(index, 11);
+                            conflict = this.IsConflict(d3, d4, d1, d2);
+
                         }
                     }
                     if (tuesday.isSelected()) {
-                        conflict = this.IsConflict(d3, d4, d1, d2);
+
                         if ((Boolean) scheduleTable.getValueAt(index, 4)) {
-                            throw new Exception("Day already exists");
+                            Date d3 = (Date) scheduleTable.getValueAt(index, 10);
+                            Date d4 = (Date) scheduleTable.getValueAt(index, 11);
+                            conflict = this.IsConflict(d3, d4, d1, d2);
                         }
 
                     }
                     if (wednesday.isSelected()) {
-                        conflict = this.IsConflict(d3, d4, d1, d2);
+
                         if ((Boolean) scheduleTable.getValueAt(index, 5)) {
-                            throw new Exception("Day already exists");
+                            Date d3 = (Date) scheduleTable.getValueAt(index, 10);
+                            Date d4 = (Date) scheduleTable.getValueAt(index, 11);
+                            conflict = this.IsConflict(d3, d4, d1, d2);
                         }
 
                     }
                     if (thursday.isSelected()) {
-                        conflict = this.IsConflict(d3, d4, d1, d2);
+
                         if ((Boolean) scheduleTable.getValueAt(index, 6)) {
-                            throw new Exception("Day already exists");
+                            Date d3 = (Date) scheduleTable.getValueAt(index, 10);
+                            Date d4 = (Date) scheduleTable.getValueAt(index, 11);
+                            conflict = this.IsConflict(d3, d4, d1, d2);
                         }
 
                     }
                     if (friday.isSelected()) {
-                        conflict = this.IsConflict(d3, d4, d1, d2);
+
                         if ((Boolean) scheduleTable.getValueAt(index, 7)) {
-                            throw new Exception("Day already exists");
+                            Date d3 = (Date) scheduleTable.getValueAt(index, 10);
+                            Date d4 = (Date) scheduleTable.getValueAt(index, 11);
+                            conflict = this.IsConflict(d3, d4, d1, d2);
                         }
 
                     }
@@ -762,14 +767,13 @@ public class TeachersLoading extends javax.swing.JFrame {
                 }
 
             }
-            if(this.load.hasConflict(this.schoolYear.getActive().getId(), item.getValue(), d1, d2, monday.isSelected(), tuesday.isSelected(), wednesday.isSelected(), thursday.isSelected(), friday.isSelected())){
+            if (this.load.hasConflict(this.schoolYear.getActive().getId(), item.getValue(), d1, d2, monday.isSelected(), tuesday.isSelected(), wednesday.isSelected(), thursday.isSelected(), friday.isSelected())) {
                 throw new Exception("This schedule already occupied");
             }
-            
-            if(this.load.isAvailable(this.schoolYear.getActive().getId(), instructorSelected.getValue(), d1, d2, monday.isSelected(), tuesday.isSelected(), wednesday.isSelected(), thursday.isSelected(), friday.isSelected())){
+
+            if (this.load.isAvailable(this.schoolYear.getActive().getId(), instructorSelected.getValue(), d1, d2, monday.isSelected(), tuesday.isSelected(), wednesday.isSelected(), thursday.isSelected(), friday.isSelected())) {
                 throw new Exception("Teacher not available on this time");
             }
-
 
             row[0] = item.getLabel();
             row[1] = Helper.timeFormat(d1);
@@ -784,10 +788,10 @@ public class TeachersLoading extends javax.swing.JFrame {
             row[10] = d1;
             row[11] = d2;
             String imploded = "";
-            for(int i = 0; i < courseTable.getRowCount(); i++){
-                
-                imploded = imploded+" "+courseTable.getValueAt(i,2);
-            
+            for (int i = 0; i < courseTable.getRowCount(); i++) {
+
+                imploded = imploded + " " + courseTable.getValueAt(i, 2);
+
             }
             row[12] = imploded.trim();
 
@@ -829,17 +833,17 @@ public class TeachersLoading extends javax.swing.JFrame {
                 detail.setTeachersLoadings(res);
                 detail.setSection(sectionCb.getSelectedItem().toString());
                 TeachersLoadingDetails res2 = (TeachersLoadingDetails) loadDetail.save(detail);
-                
+
                 String course_ids = scheduleTable.getValueAt(i, 12).toString();
-                String[] exploded=course_ids.split(" ");
-                
-                for(String id: exploded){
+                String[] exploded = course_ids.split(" ");
+
+                for (String id : exploded) {
                     Courses c = (Courses) this.course.find(Integer.parseInt(id));
-                    LoadCourses loadCourses= new LoadCourses();
+                    LoadCourses loadCourses = new LoadCourses();
                     loadCourses.setCourses(c);
                     loadCourses.setTeachersLoadingDetails(res2);
                     this.loadCourse.save(loadCourses);
-                
+
                 }
 
             }
@@ -852,14 +856,14 @@ public class TeachersLoading extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void clear(){
-    
+    private void clear() {
+
         model2.setRowCount(0);
         model.setRowCount(0);
         scheduleClear();
         instructorCb.setSelectedIndex(0);
         roomCb.setSelectedIndex(0);
-        
+
     }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -947,7 +951,6 @@ public class TeachersLoading extends javax.swing.JFrame {
         subjectCb.setModel(new javax.swing.DefaultComboBoxModel(comboSubjectItem(item.getValue()).toArray()));
 
         if (item.getValue() > 0) {
-            
 
         }
     }
