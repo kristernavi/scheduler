@@ -31,7 +31,7 @@ public class TeachersLoadings  implements java.io.Serializable {
      private SchoolYears schoolYears;
      private Subjects subjects;
      private Set<TeachersLoadingDetails> teachersLoadingDetailses = new HashSet<TeachersLoadingDetails>(0);
-
+     private Integer times;
     public TeachersLoadings() {
     }
 
@@ -59,6 +59,16 @@ public class TeachersLoadings  implements java.io.Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+   @Column(name="times", nullable=true)
+    public Integer getTimes() {
+        return times;
+    }
+
+    public void setTimes(Integer times) {
+        this.times = times;
+    }
+    
+    
 
 @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="teacher_id", nullable=false)

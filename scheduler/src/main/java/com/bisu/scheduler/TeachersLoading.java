@@ -149,7 +149,6 @@ public class TeachersLoading extends javax.swing.JFrame {
         wednesday = new javax.swing.JCheckBox();
         tuesday = new javax.swing.JCheckBox();
         friday = new javax.swing.JCheckBox();
-        roomCb = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         end_timespinner = new javax.swing.JSpinner();
         start_timespinner = new javax.swing.JSpinner();
@@ -158,6 +157,7 @@ public class TeachersLoading extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         courseTable = new javax.swing.JTable();
         addCourse = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
         instructorCb = new javax.swing.JComboBox<>();
         subjectCb = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
@@ -165,6 +165,8 @@ public class TeachersLoading extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         scheduleTable = new javax.swing.JTable();
         jButton6 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        hrsRemain = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Plotting");
@@ -221,11 +223,8 @@ public class TeachersLoading extends javax.swing.JFrame {
 
         friday.setText("Friday");
 
-        roomCb.setModel(new javax.swing.DefaultComboBoxModel(comboRoomItem().toArray()));
-
         jLabel9.setText("End:");
 
-        roomCb.setModel(new javax.swing.DefaultComboBoxModel(comboRoomItem().toArray()));
 
         jLabel4.setText("Course:");
 
@@ -272,6 +271,8 @@ public class TeachersLoading extends javax.swing.JFrame {
             }
         });
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -279,18 +280,13 @@ public class TeachersLoading extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(add_schedule))
+                    .addComponent(add_schedule, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(5, 5, 5)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(roomCb, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel3)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addGap(18, 18, 18)
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,8 +300,10 @@ public class TeachersLoading extends javax.swing.JFrame {
                                             .addGroup(jPanel2Layout.createSequentialGroup()
                                                 .addComponent(jLabel8)
                                                 .addGap(18, 18, 18)
-                                                .addComponent(monday, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(monday, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                .addGap(69, 69, 69)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(jLabel7)
@@ -337,7 +335,7 @@ public class TeachersLoading extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(roomCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
@@ -490,6 +488,10 @@ public class TeachersLoading extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setText("Hours Remaining:");
+
+        hrsRemain.setText("0");
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -501,13 +503,17 @@ public class TeachersLoading extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 738, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 13, Short.MAX_VALUE))
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton5)
+                        .addGap(32, 32, 32)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(hrsRemain, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton6)
                         .addContainerGap())))
@@ -525,7 +531,9 @@ public class TeachersLoading extends javax.swing.JFrame {
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1)
                             .addComponent(jButton3)
-                            .addComponent(jButton5))
+                            .addComponent(jButton5)
+                            .addComponent(jLabel6)
+                            .addComponent(hrsRemain))
                         .addGap(15, 15, 15)))
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -539,7 +547,7 @@ public class TeachersLoading extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 10, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -562,17 +570,34 @@ public class TeachersLoading extends javax.swing.JFrame {
         return combo;
     }
 
-    private List comboRoomItem() {
+    private List comboRoomItem(Subjects subjects) {
 
         List<ComboItem> combo = new ArrayList<ComboItem>();
         combo.add(new ComboItem(0, "Select Room"));
 
+
+        if(subjects.getLabHours() > 1)
+        {
         try {
             for (Object obj : room.all()) {
                 Rooms model = (Rooms) obj;
+
                 combo.add(new ComboItem(model.getId(), "" + model.getNumber()));
             }
         } catch (Exception e) {
+
+        }
+        }
+        else{
+         try {
+            for (Object obj : room.all()) {
+                Rooms model = (Rooms) obj;
+                if(model.getType().equals("lecture"))
+                combo.add(new ComboItem(model.getId(), "" + model.getNumber()));
+            }
+        } catch (Exception e) {
+
+        }
 
         }
 
@@ -682,17 +707,16 @@ public class TeachersLoading extends javax.swing.JFrame {
 
     private void add_scheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_scheduleActionPerformed
         Object row[] = new Object[13];
-        ComboItem item = (ComboItem) roomCb.getSelectedItem();
+        ComboItem item = (ComboItem) jComboBox1.getSelectedItem();
         ComboItem instructorSelected = (ComboItem) instructorCb.getSelectedItem();
 
         ComboItem subjectSelected = (ComboItem) subjectCb.getSelectedItem();
-
+        TeachersLoadings loading = (TeachersLoadings) this.load.find(subjectSelected.getValue());
         Date d1 = (Date) this.start_timespinner.getValue();
         Date d2 = (Date) this.end_timespinner.getValue();
-        System.out.println("" + d1.getTime());
-        System.out.println("" + d2.getTime());
+        long diff1 = Helper.hourDiff( d2.getTime() - d1.getTime());
+            
 
-        boolean already = false;
         boolean conflict = false;
         try {
 
@@ -712,10 +736,10 @@ public class TeachersLoading extends javax.swing.JFrame {
             if (d1.compareTo(d2) >= 0) {
                 throw new Exception("Time end must be greater than start");
             }
+            long times = 0;
             for (int index = 0; index < scheduleTable.getRowCount(); index++) {
                 if (true) {
-                    //if (Integer.parseInt(scheduleTable.getValueAt(index, 9).toString()) == item.getValue()) {
-
+                   
                     if (monday.isSelected()) {
                         if ((Boolean) scheduleTable.getValueAt(index, 3)) {
                             Date d3 = (Date) scheduleTable.getValueAt(index, 10);
@@ -774,6 +798,15 @@ public class TeachersLoading extends javax.swing.JFrame {
             if (this.load.isAvailable(this.schoolYear.getActive().getId(), instructorSelected.getValue(), d1, d2, monday.isSelected(), tuesday.isSelected(), wednesday.isSelected(), thursday.isSelected(), friday.isSelected())) {
                 throw new Exception("Teacher not available on this time");
             }
+
+            long remaining = Long.parseLong(hrsRemain.getText());
+            
+            long afterAdding = remaining - diff1;
+            if(afterAdding < 0){
+                throw new Exception("Unable to add exceed in max limit of time");
+            }
+            
+            hrsRemain.setText(""+afterAdding);
 
             row[0] = item.getLabel();
             row[1] = Helper.timeFormat(d1);
@@ -862,7 +895,7 @@ public class TeachersLoading extends javax.swing.JFrame {
         model.setRowCount(0);
         scheduleClear();
         instructorCb.setSelectedIndex(0);
-        roomCb.setSelectedIndex(0);
+        jComboBox1.setSelectedIndex(0);
 
     }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -926,13 +959,26 @@ public class TeachersLoading extends javax.swing.JFrame {
 
     private void subjectCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subjectCbActionPerformed
         // TODO add your handling code here:
+        model.setRowCount(0);
         model2.setRowCount(0);
         ComboItem selected = (ComboItem) subjectCb.getSelectedItem();
         List<ComboItem> combo = new ArrayList<ComboItem>();
         combo.add(new ComboItem(0, "Select Course"));
+        long accumulated = 0;
+        int available = 0;
+        int remaining = 0;
         if (selected.getValue() > 0) {
 
             TeachersLoadings loading = (TeachersLoadings) this.load.find(selected.getValue());
+            available = loading.getSubjects().getLabHours() + loading.getSubjects().getLecHours();
+            available = available * loading.getTimes();
+            for(TeachersLoadingDetails detail: loading.getTeachersLoadingDetailses()){
+                accumulated+= detail.getHourEnd().getTime() - detail.getHourStart().getTime();
+            }
+            accumulated = Helper.hourDiff(accumulated);
+            remaining = available - Integer.parseInt(""+accumulated);
+            hrsRemain.setText(""+remaining);
+            jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(comboRoomItem(loading.getSubjects()).toArray()));
 
             for (SubjectCourses sc : loading.getSubjects().getSubjectCourseses()) {
 
@@ -962,7 +1008,7 @@ public class TeachersLoading extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -998,16 +1044,19 @@ public class TeachersLoading extends javax.swing.JFrame {
     private javax.swing.ButtonGroup daysGroup;
     private javax.swing.JSpinner end_timespinner;
     private javax.swing.JCheckBox friday;
+    private javax.swing.JLabel hrsRemain;
     private javax.swing.JComboBox<String> instructorCb;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -1017,7 +1066,6 @@ public class TeachersLoading extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JCheckBox monday;
-    private javax.swing.JComboBox<String> roomCb;
     private javax.swing.JTable scheduleTable;
     private javax.swing.JComboBox<String> sectionCb;
     private javax.swing.JSpinner start_timespinner;

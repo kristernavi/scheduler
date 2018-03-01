@@ -218,6 +218,8 @@ public class FacultyLoading extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         loadsLbl = new javax.swing.JLabel();
         semLbl = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        timeTb = new javax.swing.JTextField();
 
         jLabel2.setText("jLabel2");
 
@@ -357,6 +359,8 @@ public class FacultyLoading extends javax.swing.JFrame {
 
         semLbl.setText("jLabel11");
 
+        jLabel11.setText("Times:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -365,10 +369,12 @@ public class FacultyLoading extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel7)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel6))
+                    .addComponent(jLabel6)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel11)
+                        .addComponent(jLabel7)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -376,7 +382,8 @@ public class FacultyLoading extends javax.swing.JFrame {
                         .addComponent(courseCb, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(instructorCb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(year_levelCb, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(semLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(semLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(timeTb, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 715, Short.MAX_VALUE)
                 .addContainerGap())
@@ -440,7 +447,11 @@ public class FacultyLoading extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(instructorCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(instructorCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(timeTb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(45, Short.MAX_VALUE))
         );
 
@@ -539,6 +550,7 @@ public class FacultyLoading extends javax.swing.JFrame {
             loadings.setSchoolYears(sy);
             loadings.setFaculties(faculties);
             loadings.setSubjects(sub);
+            loadings.setTimes(Integer.parseInt(timeTb.getText()));
             overloadLbl.setText("" + over);
             teacherLoading.save(loadings);
             loadsLbl.setText(""+loadAdded);
@@ -600,12 +612,12 @@ public class FacultyLoading extends javax.swing.JFrame {
                     Subjects sub = loadings.getSubjects();
                     Integer unit = sub.getLecHours() + (sub.getLabHours() / 3);
 
-                    lecHrs += sub.getLecHours();
-                    labHrs += sub.getLabHours();
+                    lecHrs += sub.getLecHours() * loadings.getTimes();
+                    labHrs += sub.getLabHours() * loadings.getTimes();
                     row[0] = sub.getCode();
                     row[1] = unit;
-                    row[2] = sub.getLecHours();
-                    row[3] = sub.getLabHours();
+                    row[2] = sub.getLecHours() * loadings.getTimes();
+                    row[3] = sub.getLabHours() * loadings.getTimes();
                     row[4] = "Delete";
                     row[5] = loadings.getId();
                     row[6] = sub.getId();
@@ -705,6 +717,7 @@ public class FacultyLoading extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -723,6 +736,7 @@ public class FacultyLoading extends javax.swing.JFrame {
     private javax.swing.JLabel semLbl;
     private javax.swing.JComboBox<String> subjectCb;
     private javax.swing.JLabel tLoadLbl;
+    private javax.swing.JTextField timeTb;
     private javax.swing.JComboBox<String> year_levelCb;
     // End of variables declaration//GEN-END:variables
 }

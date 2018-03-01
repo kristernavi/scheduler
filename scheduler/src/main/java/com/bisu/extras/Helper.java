@@ -79,6 +79,10 @@ public class Helper {
         long minutes = TimeUnit.MILLISECONDS.toMinutes(duration) % 60;
         return String.format("%02d:%02d", hours, minutes);
     }
+    
+    public static long hourDiff(long duration){
+        return TimeUnit.MILLISECONDS.toHours(duration);
+    }
     public static String timeFormat(Date date){
         SimpleDateFormat formats = new SimpleDateFormat("hh:mm a");
         return  formats.format(date);
