@@ -528,6 +528,7 @@ public class FacultyLoading extends javax.swing.JFrame {
             Faculties faculties = (Faculties) teacher.find(faculty_item.getValue());
             Integer currentLoad = Integer.parseInt(loadsLbl.getText());
             Integer subjectUnit = sub.getLecHours() + sub.getLabHours();
+            subjectUnit = subjectUnit * Integer.parseInt(""+timeTb.getText());
             Integer maxload = (faculties.getRegularLoad() - faculties.getDeloading()) + faculties.getOverload();
             Integer loadAdded = currentLoad + subjectUnit;
             
@@ -557,13 +558,13 @@ public class FacultyLoading extends javax.swing.JFrame {
             
             Integer unit_added =  sub.getLecHours() + (sub.getLabHours() /3);
             units = units + sub.getLecHours() + (sub.getLabHours() /3);
-            tLoadLbl.setText("" + units);
+            tLoadLbl.setText("" + (units * loadings.getTimes()));
             Object row[] = new Object[7];
             Integer unit = sub.getLecHours() + (sub.getLabHours() / 3);
             row[0] = sub.getCode();
-            row[1] = unit;
-            row[2] = sub.getLecHours();
-            row[3] = sub.getLabHours();
+            row[1] = unit * loadings.getTimes();
+            row[2] = sub.getLecHours() * loadings.getTimes();
+            row[3] = sub.getLabHours() * loadings.getTimes();
             row[4] = "Delete";
             row[5] = loadings.getId();
             row[6] = sub.getId();

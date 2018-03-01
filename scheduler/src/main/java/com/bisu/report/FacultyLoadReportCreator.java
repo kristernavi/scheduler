@@ -55,8 +55,9 @@ public class FacultyLoadReportCreator {
                 LoadItem item = new LoadItem();
                 Subjects subject = load.getSubjects();
                 Integer unitLoad = subject.getLabHours() + ( subject.getLecHours() /3);
-                item.setLabHrs(subject.getLabHours());
-                item.setLecHrs(subject.getLecHours());
+                unitLoad = unitLoad * load.getTimes();
+                item.setLabHrs(subject.getLabHours() * load.getTimes());
+                item.setLecHrs(subject.getLecHours() * load.getTimes());
                 item.setLoad(unitLoad);
                 item.setSubject(subject.getCode());
                 loadData.add(item);
