@@ -48,9 +48,7 @@ public class FacultyLoading extends javax.swing.JFrame {
         teacherLoading = new Loading();
         schoolYear = new SchoolYear();
         initComponents();
-        this.semesterCb.setSelectedIndex(this.schoolYear.getActive().getSemester() -1 );
-        this.semesterCb.setEditable(false);
-        this.semesterCb.setEnabled(false);
+        opening();
         model = (DefaultTableModel) loadingTable.getModel();
           setExtendedState(JFrame.MAXIMIZED_BOTH);
 
@@ -58,6 +56,7 @@ public class FacultyLoading extends javax.swing.JFrame {
 
     public void offScreen() {
         this.mainMenu.setVisible(false);
+        opening();
 
     }
 
@@ -73,6 +72,22 @@ public class FacultyLoading extends javax.swing.JFrame {
         this.setDefaultCloseOperation(this.DO_NOTHING_ON_CLOSE);
       
 
+    }
+    
+    private void opening(){
+        
+        Integer semester = Integer.parseInt(""+this.schoolYear.getActive().getSemester());
+    
+       if(1 == semester){
+           semLbl.setText("First Semester");
+       }
+       else if(2 == semester){
+           semLbl.setText("Second Semester");
+       }
+       else{
+            semLbl.setText("No Year Selected");
+           
+       }
     }
 
     private List comboSubjectItem(Integer year_level, Integer semester, Integer course) {
@@ -185,7 +200,6 @@ public class FacultyLoading extends javax.swing.JFrame {
         year_levelCb = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         courseCb = new javax.swing.JComboBox<>();
-        semesterCb = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         subjectCb = new javax.swing.JComboBox<>();
@@ -203,6 +217,7 @@ public class FacultyLoading extends javax.swing.JFrame {
         tLoadLbl = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         loadsLbl = new javax.swing.JLabel();
+        semLbl = new javax.swing.JLabel();
 
         jLabel2.setText("jLabel2");
 
@@ -253,13 +268,6 @@ public class FacultyLoading extends javax.swing.JFrame {
         courseCb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 courseCbActionPerformed(evt);
-            }
-        });
-
-        semesterCb.setModel(new javax.swing.DefaultComboBoxModel(comboSemItems().toArray()));
-        semesterCb.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                semesterCbActionPerformed(evt);
             }
         });
 
@@ -347,6 +355,8 @@ public class FacultyLoading extends javax.swing.JFrame {
         loadsLbl.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         loadsLbl.setText("0");
 
+        semLbl.setText("jLabel11");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -360,12 +370,13 @@ public class FacultyLoading extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(subjectCb, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(courseCb, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(instructorCb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(year_levelCb, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(semesterCb, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(subjectCb, javax.swing.GroupLayout.Alignment.LEADING, 0, 200, Short.MAX_VALUE)
+                        .addComponent(courseCb, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(instructorCb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(year_levelCb, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(semLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 715, Short.MAX_VALUE)
                 .addContainerGap())
@@ -413,7 +424,7 @@ public class FacultyLoading extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
-                            .addComponent(semesterCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(semLbl))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
@@ -476,7 +487,6 @@ public class FacultyLoading extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     private void clear() {
-        this.semesterCb.setSelectedIndex(0);
         this.year_levelCb.setSelectedIndex(0);
         this.courseCb.setSelectedIndex(0);
         this.subjectCb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{}));
@@ -574,11 +584,6 @@ public class FacultyLoading extends javax.swing.JFrame {
         subject_populate();
 
     }//GEN-LAST:event_courseCbActionPerformed
-
-    private void semesterCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_semesterCbActionPerformed
-        // TODO add your handling code here:
-        subject_populate();
-    }//GEN-LAST:event_semesterCbActionPerformed
 
     private void instructorCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instructorCbActionPerformed
         // TODO add your handling code here:
@@ -715,7 +720,7 @@ public class FacultyLoading extends javax.swing.JFrame {
     private javax.swing.JTable loadingTable;
     private javax.swing.JLabel loadsLbl;
     private javax.swing.JLabel overloadLbl;
-    private javax.swing.JComboBox<String> semesterCb;
+    private javax.swing.JLabel semLbl;
     private javax.swing.JComboBox<String> subjectCb;
     private javax.swing.JLabel tLoadLbl;
     private javax.swing.JComboBox<String> year_levelCb;
